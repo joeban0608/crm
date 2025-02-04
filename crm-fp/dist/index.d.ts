@@ -1,1 +1,5 @@
-export declare const hello = "hello world";
+declare const fingerprint: {
+    useragent: string;
+    id: string;
+};
+export { fingerprint };

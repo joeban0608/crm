@@ -1,4 +1,7 @@
-const l = "hello world";
+const t = () => navigator.userAgent, e = t(), n = {
+  useragent: e,
+  id: "..."
+};
 export {
-  l as hello
+  n as fingerprint
 };
