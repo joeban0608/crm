@@ -1,4 +1,5 @@
-import { type Feature, hash } from '.';
+import { type Feature } from '.';
+import { sha256 } from './hash';
 
 export default class CanvasFeature implements Feature {
 	name = 'Canvas Feature';
@@ -27,7 +28,7 @@ export default class CanvasFeature implements Feature {
 
 		this.#data = this.#ctx.canvas.toDataURL();
 		return {
-			fingerprint: await hash(this.#data),
+			fingerprint: await sha256(this.#data),
 			info: {
 				image: this.#data
 			}

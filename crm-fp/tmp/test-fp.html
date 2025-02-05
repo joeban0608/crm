@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<script src="https://storage.googleapis.com/tt-fp/fp.v0.1.2.umd.js"></script>
+	</head>
+	<body>
+		<h1>Test fp</h1>
+		<p id="fp"></p>
+		<p id="ua"></p>
+		<script defer>
+			document.addEventListener('DOMContentLoaded', async () => {
+				const fpElement = document.getElementById('fp');
+				const uaElement = document.getElementById('ua');
+
+				console.log(
+					'window.CRMFingerprint',
+					JSON.stringify({
+						a: '123'
+						// t: `${window.CRMFingerprint.fpPromise}`
+					})
+				);
+				// alert(
+				// 	'window.CRMFingerprint' + JSON.stringify({ a: '123', t: `${window.CRMFingerprint}` })
+				// );
+				// Assuming your UMD build exposes `fpPromise` as a global variable
+				if (window.CRMFingerprint) {
+					try {
+						alert('start fp')
+						alert('fpPromise: '+ window.CRMFingerprint.fpPromise)
+						const fp = await window.CRMFingerprint.fpPromise();
+						alert('fp: '+ JSON.stringify(fp))
+						fpElement.textContent = `Fingerprint: ${fp.id}`;
+						uaElement.textContent = `Useragent: ${fp.useragent}`;
+					} catch (error) {
+						console.error('Error fetching fingerprint:', error);
+						fpElement.textContent = 'Error fetching fingerprint';
+					}
+				} else {
+					fpElement.textContent = 'Fingerprint library is not loaded';
+				}
+			});
+		</script>
+	</body>
+</html>
