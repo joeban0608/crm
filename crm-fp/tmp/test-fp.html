@@ -4,7 +4,7 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Document</title>
-		<script src="https://storage.googleapis.com/tt-fp/fp.v0.1.2.umd.js"></script>
+		<script src="https://storage.googleapis.com/tt-fp/fp.v0.1.3.umd.js"></script>
 	</head>
 	<body>
 		<h1>Test fp</h1>
@@ -15,16 +15,6 @@
 				const fpElement = document.getElementById('fp');
 				const uaElement = document.getElementById('ua');
 
-				console.log(
-					'window.CRMFingerprint',
-					JSON.stringify({
-						a: '123'
-						// t: `${window.CRMFingerprint.fpPromise}`
-					})
-				);
-				// alert(
-				// 	'window.CRMFingerprint' + JSON.stringify({ a: '123', t: `${window.CRMFingerprint}` })
-				// );
 				// Assuming your UMD build exposes `fpPromise` as a global variable
 				if (window.CRMFingerprint) {
 					try {
