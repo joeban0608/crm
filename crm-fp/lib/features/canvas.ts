@@ -8,6 +8,8 @@ export default class CanvasFeature implements Feature {
 	#ctx: CanvasRenderingContext2D | null = null;
 	#data: string | null = null;
 
+	// TODO: Safari 瀏覽器的 canvas 不同裝置指纹目前會一模一樣，需要進行更多的測試
+	// chrome, edge 目前測試不同裝置，會不一樣
 	async support() {
 		if (!document) return false;
 		this.#ctx = document.createElement('canvas').getContext('2d');

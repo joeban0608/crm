@@ -13,7 +13,12 @@ interface Feature {
 declare const fpPromise: () => Promise<{
     id: string;
     canvas: {
-        image: string;
+        hash: string;
+        text: string;
+    };
+    audio: {
+        hash: string;
+        value: string;
     };
     useragent: string;
 }>;

@@ -1,3 +1,4 @@
+import AudioFeature from './features/audio';
 import CanvasFeature from './features/canvas';
 import { sha256 } from './hash';
 
@@ -38,15 +39,20 @@ const fpPromise = async () => {
 };
 
 const hashFpFeatures = async () => {
-	const features = [new CanvasFeature()];
+	const features = [new CanvasFeature(), new AudioFeature()];
 	let image: string = '';
+	let audio: string = '';
 	const results: string[] = [];
 	for (const feature of features) {
 		const data = await run(feature);
 		console.log(feature.name, data?.fingerprint);
 		console.log(data?.info?.image);
+		console.log(data?.info?.audio);
 		if (data?.info?.image) {
 			image = data?.info?.image as string;
+		}
+		if (data?.info?.audio) {
+			audio = data?.info?.audio as string;
 		}
 		results.push(data?.fingerprint || '');
 	}
@@ -54,7 +60,12 @@ const hashFpFeatures = async () => {
 	return {
 		id: await sha256(JSON.stringify(results)),
 		canvas: {
-			image: image
+			hash: await sha256(image),
+			text: image
+		},
+		audio: {
+			hash: await sha256(audio),
+			value: audio
 		}
 	};
 };

@@ -1,15 +1,15 @@
-var D = Object.defineProperty;
-var R = (t) => {
+var q = Object.defineProperty;
+var j = (t) => {
   throw TypeError(t);
 };
-var H = (t, n, i) => n in t ? D(t, n, { enumerable: !0, configurable: !0, writable: !0, value: i }) : t[n] = i;
-var C = (t, n, i) => H(t, typeof n != "symbol" ? n + "" : n, i), T = (t, n, i) => n.has(t) || R("Cannot " + i);
-var l = (t, n, i) => (T(t, n, "read from private field"), i ? i.call(t) : n.get(t)), A = (t, n, i) => n.has(t) ? R("Cannot add the same private member more than once") : n instanceof WeakSet ? n.add(t) : n.set(t, i), E = (t, n, i, f) => (T(t, n, "write to private field"), f ? f.call(t, i) : n.set(t, i), i);
-function U(t) {
-  function n(o, c) {
-    return o >>> c | o << 32 - c;
+var G = (t, e, i) => e in t ? q(t, e, { enumerable: !0, configurable: !0, writable: !0, value: i }) : t[e] = i;
+var C = (t, e, i) => G(t, typeof e != "symbol" ? e + "" : e, i), I = (t, e, i) => e.has(t) || j("Cannot " + i);
+var l = (t, e, i) => (I(t, e, "read from private field"), i ? i.call(t) : e.get(t)), p = (t, e, i) => e.has(t) ? j("Cannot add the same private member more than once") : e instanceof WeakSet ? e.add(t) : e.set(t, i), x = (t, e, i, r) => (I(t, e, "write to private field"), r ? r.call(t, i) : e.set(t, i), i), T = (t, e, i) => (I(t, e, "access private method"), i);
+function F(t) {
+  function e(a, u) {
+    return a >>> u | a << 32 - u;
   }
-  const i = new TextEncoder().encode(t), f = Array.from(i), y = [
+  const i = new TextEncoder().encode(t), r = Array.from(i), f = [
     1116352408,
     1899447441,
     3049323471,
@@ -74,7 +74,7 @@ function U(t) {
     2756734187,
     3204031479,
     3329325298
-  ], s = [
+  ], o = [
     1779033703,
     3144134277,
     1013904242,
@@ -83,75 +83,124 @@ function U(t) {
     2600822924,
     528734635,
     1541459225
-  ], w = f.length * 8;
-  for (f.push(128); (f.length * 8 + 64) % 512 !== 0; )
-    f.push(0);
-  const r = new Array(8).fill(0);
-  for (let o = 0; o < 8; o++)
-    r[7 - o] = w >>> o * 8 & 255;
-  f.push(...r);
-  const B = [];
-  for (let o = 0; o < f.length; o += 64)
-    B.push(f.slice(o, o + 64));
-  return B.forEach((o) => {
-    const c = new Array(64);
-    for (let e = 0; e < 16; e++)
-      c[e] = o[e * 4] << 24 | o[e * 4 + 1] << 16 | o[e * 4 + 2] << 8 | o[e * 4 + 3];
-    for (let e = 16; e < 64; e++) {
-      const F = n(c[e - 15], 7) ^ n(c[e - 15], 18) ^ c[e - 15] >>> 3, S = n(c[e - 2], 17) ^ n(c[e - 2], 19) ^ c[e - 2] >>> 10;
-      c[e] = c[e - 16] + F + c[e - 7] + S | 0;
+  ], w = r.length * 8;
+  for (r.push(128); (r.length * 8 + 64) % 512 !== 0; )
+    r.push(0);
+  const g = new Array(8).fill(0);
+  for (let a = 0; a < 8; a++)
+    g[7 - a] = w >>> a * 8 & 255;
+  r.push(...g);
+  const v = [];
+  for (let a = 0; a < r.length; a += 64)
+    v.push(r.slice(a, a + 64));
+  return v.forEach((a) => {
+    const u = new Array(64);
+    for (let s = 0; s < 16; s++)
+      u[s] = a[s * 4] << 24 | a[s * 4 + 1] << 16 | a[s * 4 + 2] << 8 | a[s * 4 + 3];
+    for (let s = 16; s < 64; s++) {
+      const R = e(u[s - 15], 7) ^ e(u[s - 15], 18) ^ u[s - 15] >>> 3, U = e(u[s - 2], 17) ^ e(u[s - 2], 19) ^ u[s - 2] >>> 10;
+      u[s] = u[s - 16] + R + u[s - 7] + U | 0;
     }
-    let [u, p, m, v, h, b, d, x] = s;
-    for (let e = 0; e < 64; e++) {
-      const F = n(h, 6) ^ n(h, 11) ^ n(h, 25), S = h & b ^ ~h & d, L = x + F + S + y[e] + c[e] | 0, j = n(u, 2) ^ n(u, 13) ^ n(u, 22), I = u & p ^ u & m ^ p & m, $ = j + I | 0;
-      x = d, d = b, b = h, h = v + L | 0, v = m, m = p, p = u, u = L + $ | 0;
+    let [n, A, b, D, h, E, O, L] = o;
+    for (let s = 0; s < 64; s++) {
+      const R = e(h, 6) ^ e(h, 11) ^ e(h, 25), U = h & E ^ ~h & O, V = L + R + U + f[s] + u[s] | 0, P = e(n, 2) ^ e(n, 13) ^ e(n, 22), $ = n & A ^ n & b ^ A & b, k = P + $ | 0;
+      L = O, O = E, E = h, h = D + V | 0, D = b, b = A, A = n, n = V + k | 0;
     }
-    s[0] = s[0] + u | 0, s[1] = s[1] + p | 0, s[2] = s[2] + m | 0, s[3] = s[3] + v | 0, s[4] = s[4] + h | 0, s[5] = s[5] + b | 0, s[6] = s[6] + d | 0, s[7] = s[7] + x | 0;
-  }), s.map((o) => (o >>> 0).toString(16).padStart(8, "0")).join("");
+    o[0] = o[0] + n | 0, o[1] = o[1] + A | 0, o[2] = o[2] + b | 0, o[3] = o[3] + D | 0, o[4] = o[4] + h | 0, o[5] = o[5] + E | 0, o[6] = o[6] + O | 0, o[7] = o[7] + L | 0;
+  }), o.map((a) => (a >>> 0).toString(16).padStart(8, "0")).join("");
 }
-var a, g;
+var d, S, B, y, H, N;
 class J {
   constructor() {
-    C(this, "name", "Canvas Feature");
+    p(this, y);
+    C(this, "name", "Audio Feature");
     C(this, "enabled", !0);
-    A(this, a, null);
-    A(this, g, null);
+    p(this, d, null);
+    p(this, S, null);
+    p(this, B, 5e3);
   }
+  // TODO: 不同裝置各瀏覽器測試結果目前都一樣，需要進行更多的測試
   async support() {
-    return document ? (E(this, a, document.createElement("canvas").getContext("2d")), l(this, a) !== null) : !1;
+    const e = window.OfflineAudioContext || window.webkitOfflineAudioContext;
+    return e ? (x(this, d, new e(1, l(this, B), 44100)), l(this, d) !== null) : !1;
   }
   async data() {
-    return l(this, a) === null ? null : (l(this, a).textBaseline = "top", l(this, a).font = "14px 'Arial'", l(this, a).textBaseline = "alphabetic", l(this, a).fillStyle = "#f60", l(this, a).fillRect(100, 1, 55, 20), l(this, a).fillStyle = "#069", l(this, a).fillText("Cyber Universe Canvas", 2, 15), l(this, a).fillStyle = "rgba(102, 204, 0, 0.7)", l(this, a).fillText("Cyber Universe Canvas", 4, 17), E(this, g, l(this, a).canvas.toDataURL()), {
-      fingerprint: await U(l(this, g)),
+    if (l(this, d) === null) return null;
+    const e = await T(this, y, H).call(this, l(this, d));
+    return e === null ? null : (x(this, S, await F(e.toString())), {
+      fingerprint: l(this, S),
       info: {
-        image: l(this, g)
+        audio: e
       }
     });
   }
 }
-a = new WeakMap(), g = new WeakMap();
-const K = async (t) => t.enabled ? await t.support() ? await t.data() : (console.log(`Feature ${t.name} is not supported`), null) : (console.log(`Feature ${t.name} is disabled`), null), P = async () => {
-  const t = await N();
+d = new WeakMap(), S = new WeakMap(), B = new WeakMap(), y = new WeakSet(), H = function(e) {
+  return new Promise((i) => {
+    const r = e.createOscillator();
+    r.type = "triangle", r.frequency.value = 1e4;
+    const f = e.createDynamicsCompressor();
+    f.threshold.value = -50, f.knee.value = 40, f.ratio.value = 12, f.attack.value = 0, f.release.value = 0.2, r.connect(f), f.connect(e.destination), r.start(), e.oncomplete = (o) => {
+      const w = o.renderedBuffer.getChannelData(0), g = T(this, y, N).call(this, w);
+      i(g);
+    }, e.startRendering();
+  });
+}, N = function(e) {
+  let i = 0;
+  for (let r = 0; r < e.length; ++r)
+    i += Math.abs(e[r]);
+  return i;
+};
+var c, m;
+class K {
+  constructor() {
+    C(this, "name", "Canvas Feature");
+    C(this, "enabled", !0);
+    p(this, c, null);
+    p(this, m, null);
+  }
+  // TODO: Safari 瀏覽器的 canvas 不同裝置指纹目前會一模一樣，需要進行更多的測試
+  // chrome, edge 目前測試不同裝置，會不一樣
+  async support() {
+    return document ? (x(this, c, document.createElement("canvas").getContext("2d")), l(this, c) !== null) : !1;
+  }
+  async data() {
+    return l(this, c) === null ? null : (l(this, c).textBaseline = "top", l(this, c).font = "14px 'Arial'", l(this, c).textBaseline = "alphabetic", l(this, c).fillStyle = "#f60", l(this, c).fillRect(100, 1, 55, 20), l(this, c).fillStyle = "#069", l(this, c).fillText("Cyber Universe Canvas", 2, 15), l(this, c).fillStyle = "rgba(102, 204, 0, 0.7)", l(this, c).fillText("Cyber Universe Canvas", 4, 17), x(this, m, l(this, c).canvas.toDataURL()), {
+      fingerprint: await F(l(this, m)),
+      info: {
+        image: l(this, m)
+      }
+    });
+  }
+}
+c = new WeakMap(), m = new WeakMap();
+const M = async (t) => t.enabled ? await t.support() ? await t.data() : (console.log(`Feature ${t.name} is not supported`), null) : (console.log(`Feature ${t.name} is disabled`), null), Q = async () => {
+  const t = await _();
   return console.log("fpFeatureInfo", t), {
     useragent: navigator.userAgent,
     ...t
   };
-}, N = async () => {
-  var f, y, s;
-  const t = [new J()];
-  let n = "";
-  const i = [];
-  for (const w of t) {
-    const r = await K(w);
-    console.log(w.name, r == null ? void 0 : r.fingerprint), console.log((f = r == null ? void 0 : r.info) == null ? void 0 : f.image), (y = r == null ? void 0 : r.info) != null && y.image && (n = (s = r == null ? void 0 : r.info) == null ? void 0 : s.image), i.push((r == null ? void 0 : r.fingerprint) || "");
+}, _ = async () => {
+  var f, o, w, g, v, a;
+  const t = [new K(), new J()];
+  let e = "", i = "";
+  const r = [];
+  for (const u of t) {
+    const n = await M(u);
+    console.log(u.name, n == null ? void 0 : n.fingerprint), console.log((f = n == null ? void 0 : n.info) == null ? void 0 : f.image), console.log((o = n == null ? void 0 : n.info) == null ? void 0 : o.audio), (w = n == null ? void 0 : n.info) != null && w.image && (e = (g = n == null ? void 0 : n.info) == null ? void 0 : g.image), (v = n == null ? void 0 : n.info) != null && v.audio && (i = (a = n == null ? void 0 : n.info) == null ? void 0 : a.audio), r.push((n == null ? void 0 : n.fingerprint) || "");
   }
   return {
-    id: await U(JSON.stringify(i)),
+    id: await F(JSON.stringify(r)),
     canvas: {
-      image: n
+      hash: await F(e),
+      text: e
+    },
+    audio: {
+      hash: await F(i),
+      value: i
     }
   };
 };
 export {
-  P as fpPromise
+  Q as fpPromise
 };
