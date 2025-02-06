@@ -30,12 +30,8 @@ const run = async (feature: Feature): Promise<Data | null> => {
 
 const fpPromise = async () => {
 	const fpFeatureInfo = await hashFpFeatures();
-	console.log('fpFeatureInfo', fpFeatureInfo);
-	const fp = {
-		useragent: navigator.userAgent,
-		...fpFeatureInfo
-	};
-	return fp;
+	// console.log('fpFeatureInfo', fpFeatureInfo);
+	return fpFeatureInfo;
 };
 
 const hashFpFeatures = async () => {
@@ -59,13 +55,16 @@ const hashFpFeatures = async () => {
 
 	return {
 		id: await sha256(JSON.stringify(results)),
-		canvas: {
-			hash: await sha256(image),
-			text: image
-		},
-		audio: {
-			hash: await sha256(audio),
-			value: audio
+		useragent: navigator.userAgent,
+		rawData: {
+			canvas: {
+				hash: await sha256(image),
+				'text image': image
+			},
+			audio: {
+				hash: await sha256(audio),
+				value: audio
+			}
 		}
 	};
 };

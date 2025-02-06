@@ -12,14 +12,16 @@ interface Feature {
 }
 declare const fpPromise: () => Promise<{
     id: string;
-    canvas: {
-        hash: string;
-        text: string;
-    };
-    audio: {
-        hash: string;
-        value: string;
-    };
     useragent: string;
+    rawData: {
+        canvas: {
+            hash: string;
+            'text image': string;
+        };
+        audio: {
+            hash: string;
+            value: string;
+        };
+    };
 }>;
 export { type Feature, fpPromise };

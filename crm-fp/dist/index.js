@@ -4,12 +4,12 @@ var j = (t) => {
 };
 var G = (t, e, i) => e in t ? q(t, e, { enumerable: !0, configurable: !0, writable: !0, value: i }) : t[e] = i;
 var C = (t, e, i) => G(t, typeof e != "symbol" ? e + "" : e, i), I = (t, e, i) => e.has(t) || j("Cannot " + i);
-var l = (t, e, i) => (I(t, e, "read from private field"), i ? i.call(t) : e.get(t)), p = (t, e, i) => e.has(t) ? j("Cannot add the same private member more than once") : e instanceof WeakSet ? e.add(t) : e.set(t, i), x = (t, e, i, r) => (I(t, e, "write to private field"), r ? r.call(t, i) : e.set(t, i), i), T = (t, e, i) => (I(t, e, "access private method"), i);
+var l = (t, e, i) => (I(t, e, "read from private field"), i ? i.call(t) : e.get(t)), p = (t, e, i) => e.has(t) ? j("Cannot add the same private member more than once") : e instanceof WeakSet ? e.add(t) : e.set(t, i), x = (t, e, i, a) => (I(t, e, "write to private field"), a ? a.call(t, i) : e.set(t, i), i), T = (t, e, i) => (I(t, e, "access private method"), i);
 function F(t) {
-  function e(a, u) {
-    return a >>> u | a << 32 - u;
+  function e(r, u) {
+    return r >>> u | r << 32 - u;
   }
-  const i = new TextEncoder().encode(t), r = Array.from(i), f = [
+  const i = new TextEncoder().encode(t), a = Array.from(i), f = [
     1116352408,
     1899447441,
     3049323471,
@@ -83,33 +83,33 @@ function F(t) {
     2600822924,
     528734635,
     1541459225
-  ], w = r.length * 8;
-  for (r.push(128); (r.length * 8 + 64) % 512 !== 0; )
-    r.push(0);
+  ], w = a.length * 8;
+  for (a.push(128); (a.length * 8 + 64) % 512 !== 0; )
+    a.push(0);
   const g = new Array(8).fill(0);
-  for (let a = 0; a < 8; a++)
-    g[7 - a] = w >>> a * 8 & 255;
-  r.push(...g);
+  for (let r = 0; r < 8; r++)
+    g[7 - r] = w >>> r * 8 & 255;
+  a.push(...g);
   const v = [];
-  for (let a = 0; a < r.length; a += 64)
-    v.push(r.slice(a, a + 64));
-  return v.forEach((a) => {
+  for (let r = 0; r < a.length; r += 64)
+    v.push(a.slice(r, r + 64));
+  return v.forEach((r) => {
     const u = new Array(64);
     for (let s = 0; s < 16; s++)
-      u[s] = a[s * 4] << 24 | a[s * 4 + 1] << 16 | a[s * 4 + 2] << 8 | a[s * 4 + 3];
+      u[s] = r[s * 4] << 24 | r[s * 4 + 1] << 16 | r[s * 4 + 2] << 8 | r[s * 4 + 3];
     for (let s = 16; s < 64; s++) {
       const R = e(u[s - 15], 7) ^ e(u[s - 15], 18) ^ u[s - 15] >>> 3, U = e(u[s - 2], 17) ^ e(u[s - 2], 19) ^ u[s - 2] >>> 10;
       u[s] = u[s - 16] + R + u[s - 7] + U | 0;
     }
-    let [n, A, b, D, h, E, O, L] = o;
+    let [n, A, b, B, h, D, E, L] = o;
     for (let s = 0; s < 64; s++) {
-      const R = e(h, 6) ^ e(h, 11) ^ e(h, 25), U = h & E ^ ~h & O, V = L + R + U + f[s] + u[s] | 0, P = e(n, 2) ^ e(n, 13) ^ e(n, 22), $ = n & A ^ n & b ^ A & b, k = P + $ | 0;
-      L = O, O = E, E = h, h = D + V | 0, D = b, b = A, A = n, n = V + k | 0;
+      const R = e(h, 6) ^ e(h, 11) ^ e(h, 25), U = h & D ^ ~h & E, V = L + R + U + f[s] + u[s] | 0, P = e(n, 2) ^ e(n, 13) ^ e(n, 22), $ = n & A ^ n & b ^ A & b, k = P + $ | 0;
+      L = E, E = D, D = h, h = B + V | 0, B = b, b = A, A = n, n = V + k | 0;
     }
-    o[0] = o[0] + n | 0, o[1] = o[1] + A | 0, o[2] = o[2] + b | 0, o[3] = o[3] + D | 0, o[4] = o[4] + h | 0, o[5] = o[5] + E | 0, o[6] = o[6] + O | 0, o[7] = o[7] + L | 0;
-  }), o.map((a) => (a >>> 0).toString(16).padStart(8, "0")).join("");
+    o[0] = o[0] + n | 0, o[1] = o[1] + A | 0, o[2] = o[2] + b | 0, o[3] = o[3] + B | 0, o[4] = o[4] + h | 0, o[5] = o[5] + D | 0, o[6] = o[6] + E | 0, o[7] = o[7] + L | 0;
+  }), o.map((r) => (r >>> 0).toString(16).padStart(8, "0")).join("");
 }
-var d, S, B, y, H, N;
+var d, S, O, y, H, N;
 class J {
   constructor() {
     p(this, y);
@@ -117,12 +117,12 @@ class J {
     C(this, "enabled", !0);
     p(this, d, null);
     p(this, S, null);
-    p(this, B, 5e3);
+    p(this, O, 5e3);
   }
   // TODO: 不同裝置各瀏覽器測試結果目前都一樣，需要進行更多的測試
   async support() {
     const e = window.OfflineAudioContext || window.webkitOfflineAudioContext;
-    return e ? (x(this, d, new e(1, l(this, B), 44100)), l(this, d) !== null) : !1;
+    return e ? (x(this, d, new e(1, l(this, O), 44100)), l(this, d) !== null) : !1;
   }
   async data() {
     if (l(this, d) === null) return null;
@@ -135,20 +135,20 @@ class J {
     });
   }
 }
-d = new WeakMap(), S = new WeakMap(), B = new WeakMap(), y = new WeakSet(), H = function(e) {
+d = new WeakMap(), S = new WeakMap(), O = new WeakMap(), y = new WeakSet(), H = function(e) {
   return new Promise((i) => {
-    const r = e.createOscillator();
-    r.type = "triangle", r.frequency.value = 1e4;
+    const a = e.createOscillator();
+    a.type = "triangle", a.frequency.value = 1e4;
     const f = e.createDynamicsCompressor();
-    f.threshold.value = -50, f.knee.value = 40, f.ratio.value = 12, f.attack.value = 0, f.release.value = 0.2, r.connect(f), f.connect(e.destination), r.start(), e.oncomplete = (o) => {
+    f.threshold.value = -50, f.knee.value = 40, f.ratio.value = 12, f.attack.value = 0, f.release.value = 0.2, a.connect(f), f.connect(e.destination), a.start(), e.oncomplete = (o) => {
       const w = o.renderedBuffer.getChannelData(0), g = T(this, y, N).call(this, w);
       i(g);
     }, e.startRendering();
   });
 }, N = function(e) {
   let i = 0;
-  for (let r = 0; r < e.length; ++r)
-    i += Math.abs(e[r]);
+  for (let a = 0; a < e.length; ++a)
+    i += Math.abs(e[a]);
   return i;
 };
 var c, m;
@@ -174,30 +174,27 @@ class K {
   }
 }
 c = new WeakMap(), m = new WeakMap();
-const M = async (t) => t.enabled ? await t.support() ? await t.data() : (console.log(`Feature ${t.name} is not supported`), null) : (console.log(`Feature ${t.name} is disabled`), null), Q = async () => {
-  const t = await _();
-  return console.log("fpFeatureInfo", t), {
-    useragent: navigator.userAgent,
-    ...t
-  };
-}, _ = async () => {
-  var f, o, w, g, v, a;
+const M = async (t) => t.enabled ? await t.support() ? await t.data() : (console.log(`Feature ${t.name} is not supported`), null) : (console.log(`Feature ${t.name} is disabled`), null), Q = async () => await _(), _ = async () => {
+  var f, o, w, g, v, r;
   const t = [new K(), new J()];
   let e = "", i = "";
-  const r = [];
+  const a = [];
   for (const u of t) {
     const n = await M(u);
-    console.log(u.name, n == null ? void 0 : n.fingerprint), console.log((f = n == null ? void 0 : n.info) == null ? void 0 : f.image), console.log((o = n == null ? void 0 : n.info) == null ? void 0 : o.audio), (w = n == null ? void 0 : n.info) != null && w.image && (e = (g = n == null ? void 0 : n.info) == null ? void 0 : g.image), (v = n == null ? void 0 : n.info) != null && v.audio && (i = (a = n == null ? void 0 : n.info) == null ? void 0 : a.audio), r.push((n == null ? void 0 : n.fingerprint) || "");
+    console.log(u.name, n == null ? void 0 : n.fingerprint), console.log((f = n == null ? void 0 : n.info) == null ? void 0 : f.image), console.log((o = n == null ? void 0 : n.info) == null ? void 0 : o.audio), (w = n == null ? void 0 : n.info) != null && w.image && (e = (g = n == null ? void 0 : n.info) == null ? void 0 : g.image), (v = n == null ? void 0 : n.info) != null && v.audio && (i = (r = n == null ? void 0 : n.info) == null ? void 0 : r.audio), a.push((n == null ? void 0 : n.fingerprint) || "");
   }
   return {
-    id: await F(JSON.stringify(r)),
-    canvas: {
-      hash: await F(e),
-      text: e
-    },
-    audio: {
-      hash: await F(i),
-      value: i
+    id: await F(JSON.stringify(a)),
+    useragent: navigator.userAgent,
+    rawData: {
+      canvas: {
+        hash: await F(e),
+        "text image": e
+      },
+      audio: {
+        hash: await F(i),
+        value: i
+      }
     }
   };
 };
