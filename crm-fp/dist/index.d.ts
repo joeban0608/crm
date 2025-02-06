@@ -11,7 +11,10 @@ interface Feature {
     data: () => Promise<Data | null>;
 }
 declare const fpPromise: () => Promise<{
-    useragent: string;
     id: string;
+    canvas: {
+        image: string;
+    };
+    useragent: string;
 }>;
 export { type Feature, fpPromise };

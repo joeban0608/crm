@@ -1,4 +1,4 @@
-import { Feature } from '.';
+import { Feature } from '..';
 export default class CanvasFeature implements Feature {
     #private;
     name: string;

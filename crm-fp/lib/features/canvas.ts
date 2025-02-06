@@ -1,5 +1,5 @@
-import { type Feature } from '.';
-import { sha256 } from './hash';
+import { type Feature } from '..';
+import { sha256 } from '../hash';
 
 export default class CanvasFeature implements Feature {
 	name = 'Canvas Feature';
