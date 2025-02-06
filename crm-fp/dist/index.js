@@ -1,16 +1,16 @@
-var O = Object.defineProperty;
-var U = (n) => {
-  throw TypeError(n);
+var H = Object.defineProperty;
+var B = (t) => {
+  throw TypeError(t);
 };
-var P = (n, t, e) => t in n ? O(n, t, { enumerable: !0, configurable: !0, writable: !0, value: e }) : n[t] = e;
-var I = (n, t, e) => P(n, typeof t != "symbol" ? t + "" : t, e), T = (n, t, e) => t.has(n) || U("Cannot " + e);
-var d = (n, t, e) => (T(n, t, "read from private field"), e ? e.call(n) : t.get(n)), E = (n, t, e) => t.has(n) ? U("Cannot add the same private member more than once") : t instanceof WeakSet ? t.add(n) : t.set(n, e), R = (n, t, e, s) => (T(n, t, "write to private field"), s ? s.call(n, e) : t.set(n, e), e), v = (n, t, e) => (T(n, t, "access private method"), e);
-const q = () => navigator.userAgent;
-function j(n) {
-  function t(i, l) {
-    return i >>> l | i << 32 - l;
+var J = (t, n, s) => n in t ? H(t, n, { enumerable: !0, configurable: !0, writable: !0, value: s }) : t[n] = s;
+var S = (t, n, s) => J(t, typeof n != "symbol" ? n + "" : n, s), L = (t, n, s) => n.has(t) || B("Cannot " + s);
+var a = (t, n, s) => (L(t, n, "read from private field"), s ? s.call(t) : n.get(t)), A = (t, n, s) => n.has(t) ? B("Cannot add the same private member more than once") : n instanceof WeakSet ? n.add(t) : n.set(t, s), C = (t, n, s, c) => (L(t, n, "write to private field"), c ? c.call(t, s) : n.set(t, s), s);
+const K = () => navigator.userAgent;
+function R(t) {
+  function n(r, l) {
+    return r >>> l | r << 32 - l;
   }
-  const e = new TextEncoder().encode(n), s = Array.from(e), r = [
+  const s = new TextEncoder().encode(t), c = Array.from(s), u = [
     1116352408,
     1899447441,
     3049323471,
@@ -75,7 +75,7 @@ function j(n) {
     2756734187,
     3204031479,
     3329325298
-  ], o = [
+  ], i = [
     1779033703,
     3144134277,
     1013904242,
@@ -84,97 +84,68 @@ function j(n) {
     2600822924,
     528734635,
     1541459225
-  ], C = s.length * 8;
-  for (s.push(128); (s.length * 8 + 64) % 512 !== 0; )
-    s.push(0);
-  const u = new Array(8).fill(0);
-  for (let i = 0; i < 8; i++)
-    u[7 - i] = C >>> i * 8 & 255;
-  s.push(...u);
-  const w = [];
-  for (let i = 0; i < s.length; i += 64)
-    w.push(s.slice(i, i + 64));
-  return w.forEach((i) => {
+  ], T = c.length * 8;
+  for (c.push(128); (c.length * 8 + 64) % 512 !== 0; )
+    c.push(0);
+  const F = new Array(8).fill(0);
+  for (let r = 0; r < 8; r++)
+    F[7 - r] = T >>> r * 8 & 255;
+  c.push(...F);
+  const E = [];
+  for (let r = 0; r < c.length; r += 64)
+    E.push(c.slice(r, r + 64));
+  return E.forEach((r) => {
     const l = new Array(64);
-    for (let a = 0; a < 16; a++)
-      l[a] = i[a * 4] << 24 | i[a * 4 + 1] << 16 | i[a * 4 + 2] << 8 | i[a * 4 + 3];
-    for (let a = 16; a < 64; a++) {
-      const x = t(l[a - 15], 7) ^ t(l[a - 15], 18) ^ l[a - 15] >>> 3, A = t(l[a - 2], 17) ^ t(l[a - 2], 19) ^ l[a - 2] >>> 10;
-      l[a] = l[a - 16] + x + l[a - 7] + A | 0;
+    for (let e = 0; e < 16; e++)
+      l[e] = r[e * 4] << 24 | r[e * 4 + 1] << 16 | r[e * 4 + 2] << 8 | r[e * 4 + 3];
+    for (let e = 16; e < 64; e++) {
+      const x = n(l[e - 15], 7) ^ n(l[e - 15], 18) ^ l[e - 15] >>> 3, v = n(l[e - 2], 17) ^ n(l[e - 2], 19) ^ l[e - 2] >>> 10;
+      l[e] = l[e - 16] + x + l[e - 7] + v | 0;
     }
-    let [c, m, y, D, f, S, b, F] = o;
-    for (let a = 0; a < 64; a++) {
-      const x = t(f, 6) ^ t(f, 11) ^ t(f, 25), A = f & S ^ ~f & b, L = F + x + A + r[a] + l[a] | 0, J = t(c, 2) ^ t(c, 13) ^ t(c, 22), K = c & m ^ c & y ^ m & y, N = J + K | 0;
-      F = b, b = S, S = f, f = D + L | 0, D = y, y = m, m = c, c = L + N | 0;
+    let [f, p, y, w, h, m, d, b] = i;
+    for (let e = 0; e < 64; e++) {
+      const x = n(h, 6) ^ n(h, 11) ^ n(h, 25), v = h & m ^ ~h & d, U = b + x + v + u[e] + l[e] | 0, j = n(f, 2) ^ n(f, 13) ^ n(f, 22), $ = f & p ^ f & y ^ p & y, D = j + $ | 0;
+      b = d, d = m, m = h, h = w + U | 0, w = y, y = p, p = f, f = U + D | 0;
     }
-    o[0] = o[0] + c | 0, o[1] = o[1] + m | 0, o[2] = o[2] + y | 0, o[3] = o[3] + D | 0, o[4] = o[4] + f | 0, o[5] = o[5] + S | 0, o[6] = o[6] + b | 0, o[7] = o[7] + F | 0;
-  }), o.map((i) => (i >>> 0).toString(16).padStart(8, "0")).join("");
+    i[0] = i[0] + f | 0, i[1] = i[1] + p | 0, i[2] = i[2] + y | 0, i[3] = i[3] + w | 0, i[4] = i[4] + h | 0, i[5] = i[5] + m | 0, i[6] = i[6] + d | 0, i[7] = i[7] + b | 0;
+  }), i.map((r) => (r >>> 0).toString(16).padStart(8, "0")).join("");
 }
-var g, p, h, B, _, $, H;
-class z {
+var o, g;
+class N {
   constructor() {
-    E(this, h);
-    I(this, "name", "Canvas Feature");
-    I(this, "enabled", !0);
-    E(this, g, null);
-    E(this, p, null);
+    S(this, "name", "Canvas Feature");
+    S(this, "enabled", !0);
+    A(this, o, null);
+    A(this, g, null);
   }
   async support() {
-    return document ? (R(this, g, document.createElement("canvas").getContext("2d")), d(this, g) !== null) : !1;
+    return document ? (C(this, o, document.createElement("canvas").getContext("2d")), a(this, o) !== null) : !1;
   }
   async data() {
-    if (d(this, g) === null) return null;
-    await v(this, h, B).call(this, d(this, g).canvas, d(this, g));
-    const t = await v(this, h, $).call(this, d(this, g).canvas), e = v(this, h, H).call(this, t);
-    return R(this, p, await v(this, h, _).call(this, e)), {
-      fingerprint: await j(d(this, p)),
+    return a(this, o) === null ? null : (a(this, o).textBaseline = "top", a(this, o).font = "14px 'Arial'", a(this, o).textBaseline = "alphabetic", a(this, o).fillStyle = "#f60", a(this, o).fillRect(100, 1, 55, 20), a(this, o).fillStyle = "#069", a(this, o).fillText("Cyber Universe Canvas", 2, 15), a(this, o).fillStyle = "rgba(102, 204, 0, 0.7)", a(this, o).fillText("Cyber Universe Canvas", 4, 17), C(this, g, a(this, o).canvas.toDataURL()), {
+      fingerprint: await R(a(this, g)),
       info: {
-        image: d(this, p)
+        image: a(this, g)
       }
-    };
+    });
   }
 }
-g = new WeakMap(), p = new WeakMap(), h = new WeakSet(), B = function(t, e) {
-  const s = "Cyber Universe Canvas";
-  t.width = 300, t.height = 75, e.fillStyle = "#fff", e.fillRect(0, 0, e.canvas.width, e.canvas.height), e.imageSmoothingEnabled = !1, e.font = "14px 'Arial'", e.textBaseline = "alphabetic", e.fillStyle = "#f60", e.fillRect(100, 1, 55, 20), e.fillStyle = "#069", e.fillText(s, 2, 15), e.fillStyle = "rgba(102, 204, 0, 0.7)", e.fillText(s, 4, 17);
-}, _ = function(t) {
-  return t.toDataURL();
-}, // ref: https://github.com/google/security-research/security/advisories/GHSA-24cm-69m9-fpw3
-$ = function(t) {
-  const s = document.createElement("canvas");
-  s.width = t.width * 3, s.height = t.height * 3;
-  const r = s.getContext("2d");
-  if (!r)
-    throw new Error("Failed to get 2D _ctx");
-  r.imageSmoothingEnabled = !1, r.scale(3, 3), r.drawImage(t, 0, 0);
-  const o = r.getImageData(0, 0, s.width, s.height), C = new ImageData(t.width, t.height);
-  for (let u = 0; u < t.height; u += 1)
-    for (let w = 0; w < t.width; w += 1) {
-      const i = (u * t.width + w) * 4, l = (u * 3 * s.width + w * 3 + 1) * 4;
-      for (let c = 0; c < 4; c += 1)
-        C.data[i + c] = o.data[l + c];
-    }
-  return C;
-}, H = function(t) {
-  const e = document.createElement("canvas");
-  e.width = t.width, e.height = t.height;
-  const s = e.getContext("2d");
-  if (!s)
-    throw new Error("Failed to get 2D context");
-  return s.putImageData(t, 0, 0), e;
-};
-const G = async (n) => n.enabled ? await n.support() ? await n.data() : (console.log(`Feature ${n.name} is not supported`), null) : (console.log(`Feature ${n.name} is disabled`), null), M = async () => {
-  var e;
-  const n = [new z()], t = [];
-  for (const s of n) {
-    const r = await G(s);
-    console.log(s.name, r == null ? void 0 : r.fingerprint), console.log((e = r == null ? void 0 : r.info) == null ? void 0 : e.image), t.push((r == null ? void 0 : r.fingerprint) || "");
+o = new WeakMap(), g = new WeakMap();
+const O = async (t) => t.enabled ? await t.support() ? await t.data() : (console.log(`Feature ${t.name} is not supported`), null) : (console.log(`Feature ${t.name} is disabled`), null), P = async () => {
+  var s;
+  const t = [new N()], n = [];
+  for (const c of t) {
+    const u = await O(c);
+    console.log(c.name, u == null ? void 0 : u.fingerprint), console.log((s = u == null ? void 0 : u.info) == null ? void 0 : s.image), n.push((u == null ? void 0 : u.fingerprint) || "");
   }
-  return await j(JSON.stringify(t));
-}, Q = q(), W = async () => ({
-  useragent: Q,
-  id: await M()
-});
+  return await R(JSON.stringify(n));
+}, q = K(), G = async () => {
+  const t = {
+    useragent: q,
+    id: await P()
+  };
+  return console.log("fp", t), t;
+};
 export {
-  W as fpPromise
+  G as fpPromise
 };

@@ -49,6 +49,7 @@ const fpPromise = async () => {
 		useragent: useragent,
 		id: await hashFpFeatures()
 	};
+	console.log('fp', fp);
 	return fp;
 };
 export { type Feature, fpPromise };

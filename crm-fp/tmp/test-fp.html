@@ -28,7 +28,10 @@
 				// Assuming your UMD build exposes `fpPromise` as a global variable
 				if (window.CRMFingerprint) {
 					try {
+						alert('start fp')
+						alert('fpPromise: '+ window.CRMFingerprint.fpPromise)
 						const fp = await window.CRMFingerprint.fpPromise();
+						alert('fp: '+ JSON.stringify(fp))
 						fpElement.textContent = `Fingerprint: ${fp.id}`;
 						uaElement.textContent = `Useragent: ${fp.useragent}`;
 					} catch (error) {
