@@ -1,15 +1,15 @@
-var q = Object.defineProperty;
-var j = (t) => {
+var Y = Object.defineProperty;
+var U = (t) => {
   throw TypeError(t);
 };
-var G = (t, e, i) => e in t ? q(t, e, { enumerable: !0, configurable: !0, writable: !0, value: i }) : t[e] = i;
-var C = (t, e, i) => G(t, typeof e != "symbol" ? e + "" : e, i), I = (t, e, i) => e.has(t) || j("Cannot " + i);
-var l = (t, e, i) => (I(t, e, "read from private field"), i ? i.call(t) : e.get(t)), p = (t, e, i) => e.has(t) ? j("Cannot add the same private member more than once") : e instanceof WeakSet ? e.add(t) : e.set(t, i), x = (t, e, i, a) => (I(t, e, "write to private field"), a ? a.call(t, i) : e.set(t, i), i), T = (t, e, i) => (I(t, e, "access private method"), i);
-function F(t) {
-  function e(r, u) {
-    return r >>> u | r << 32 - u;
+var ee = (t, e, n) => e in t ? Y(t, e, { enumerable: !0, configurable: !0, writable: !0, value: n }) : t[e] = n;
+var y = (t, e, n) => ee(t, typeof e != "symbol" ? e + "" : e, n), F = (t, e, n) => e.has(t) || U("Cannot " + n);
+var u = (t, e, n) => (F(t, e, "read from private field"), n ? n.call(t) : e.get(t)), b = (t, e, n) => e.has(t) ? U("Cannot add the same private member more than once") : e instanceof WeakSet ? e.add(t) : e.set(t, n), x = (t, e, n, r) => (F(t, e, "write to private field"), r ? r.call(t, n) : e.set(t, n), n), D = (t, e, n) => (F(t, e, "access private method"), n);
+function A(t) {
+  function e(a, i) {
+    return a >>> i | a << 32 - i;
   }
-  const i = new TextEncoder().encode(t), a = Array.from(i), f = [
+  const n = new TextEncoder().encode(t), r = Array.from(n), f = [
     1116352408,
     1899447441,
     3049323471,
@@ -74,7 +74,7 @@ function F(t) {
     2756734187,
     3204031479,
     3329325298
-  ], o = [
+  ], s = [
     1779033703,
     3144134277,
     1013904242,
@@ -83,121 +83,401 @@ function F(t) {
     2600822924,
     528734635,
     1541459225
-  ], w = a.length * 8;
-  for (a.push(128); (a.length * 8 + 64) % 512 !== 0; )
-    a.push(0);
-  const g = new Array(8).fill(0);
-  for (let r = 0; r < 8; r++)
-    g[7 - r] = w >>> r * 8 & 255;
-  a.push(...g);
-  const v = [];
-  for (let r = 0; r < a.length; r += 64)
-    v.push(a.slice(r, r + 64));
-  return v.forEach((r) => {
-    const u = new Array(64);
-    for (let s = 0; s < 16; s++)
-      u[s] = r[s * 4] << 24 | r[s * 4 + 1] << 16 | r[s * 4 + 2] << 8 | r[s * 4 + 3];
-    for (let s = 16; s < 64; s++) {
-      const R = e(u[s - 15], 7) ^ e(u[s - 15], 18) ^ u[s - 15] >>> 3, U = e(u[s - 2], 17) ^ e(u[s - 2], 19) ^ u[s - 2] >>> 10;
-      u[s] = u[s - 16] + R + u[s - 7] + U | 0;
+  ], d = r.length * 8;
+  for (r.push(128); (r.length * 8 + 64) % 512 !== 0; )
+    r.push(0);
+  const h = new Array(8).fill(0);
+  for (let a = 0; a < 8; a++)
+    h[7 - a] = d >>> a * 8 & 255;
+  r.push(...h);
+  const w = [];
+  for (let a = 0; a < r.length; a += 64)
+    w.push(r.slice(a, a + 64));
+  return w.forEach((a) => {
+    const i = new Array(64);
+    for (let c = 0; c < 16; c++)
+      i[c] = a[c * 4] << 24 | a[c * 4 + 1] << 16 | a[c * 4 + 2] << 8 | a[c * 4 + 3];
+    for (let c = 16; c < 64; c++) {
+      const G = e(i[c - 15], 7) ^ e(i[c - 15], 18) ^ i[c - 15] >>> 3, L = e(i[c - 2], 17) ^ e(i[c - 2], 19) ^ i[c - 2] >>> 10;
+      i[c] = i[c - 16] + G + i[c - 7] + L | 0;
     }
-    let [n, A, b, B, h, D, E, L] = o;
-    for (let s = 0; s < 64; s++) {
-      const R = e(h, 6) ^ e(h, 11) ^ e(h, 25), U = h & D ^ ~h & E, V = L + R + U + f[s] + u[s] | 0, P = e(n, 2) ^ e(n, 13) ^ e(n, 22), $ = n & A ^ n & b ^ A & b, k = P + $ | 0;
-      L = E, E = D, D = h, h = B + V | 0, B = b, b = A, A = n, n = V + k | 0;
+    let [l, p, m, S, o, O, T, R] = s;
+    for (let c = 0; c < 64; c++) {
+      const G = e(o, 6) ^ e(o, 11) ^ e(o, 25), L = o & O ^ ~o & T, I = R + G + L + f[c] + i[c] | 0, q = e(l, 2) ^ e(l, 13) ^ e(l, 22), Z = l & p ^ l & m ^ p & m, Q = q + Z | 0;
+      R = T, T = O, O = o, o = S + I | 0, S = m, m = p, p = l, l = I + Q | 0;
     }
-    o[0] = o[0] + n | 0, o[1] = o[1] + A | 0, o[2] = o[2] + b | 0, o[3] = o[3] + B | 0, o[4] = o[4] + h | 0, o[5] = o[5] + D | 0, o[6] = o[6] + E | 0, o[7] = o[7] + L | 0;
-  }), o.map((r) => (r >>> 0).toString(16).padStart(8, "0")).join("");
+    s[0] = s[0] + l | 0, s[1] = s[1] + p | 0, s[2] = s[2] + m | 0, s[3] = s[3] + S | 0, s[4] = s[4] + o | 0, s[5] = s[5] + O | 0, s[6] = s[6] + T | 0, s[7] = s[7] + R | 0;
+  }), s.map((a) => (a >>> 0).toString(16).padStart(8, "0")).join("");
 }
-var d, S, O, y, H, N;
-class J {
+var E, C, P, _, B, V;
+class te {
   constructor() {
-    p(this, y);
-    C(this, "name", "Audio Feature");
-    C(this, "enabled", !0);
-    p(this, d, null);
-    p(this, S, null);
-    p(this, O, 5e3);
+    b(this, _);
+    y(this, "name", "Audio Feature");
+    y(this, "enabled", !0);
+    b(this, E, null);
+    b(this, C, null);
+    b(this, P, 5e3);
   }
   // TODO: 不同裝置各瀏覽器測試結果目前都一樣，需要進行更多的測試
   async support() {
     const e = window.OfflineAudioContext || window.webkitOfflineAudioContext;
-    return e ? (x(this, d, new e(1, l(this, O), 44100)), l(this, d) !== null) : !1;
+    return e ? (x(this, E, new e(1, u(this, P), 44100)), u(this, E) !== null) : !1;
   }
   async data() {
-    if (l(this, d) === null) return null;
-    const e = await T(this, y, H).call(this, l(this, d));
-    return e === null ? null : (x(this, S, await F(e.toString())), {
-      fingerprint: l(this, S),
+    if (u(this, E) === null) return null;
+    const e = await D(this, _, B).call(this, u(this, E));
+    return e === null ? null : (x(this, C, await A(e.toString())), {
+      fingerprint: u(this, C),
       info: {
         audio: e
       }
     });
   }
 }
-d = new WeakMap(), S = new WeakMap(), O = new WeakMap(), y = new WeakSet(), H = function(e) {
-  return new Promise((i) => {
-    const a = e.createOscillator();
-    a.type = "triangle", a.frequency.value = 1e4;
+E = new WeakMap(), C = new WeakMap(), P = new WeakMap(), _ = new WeakSet(), B = function(e) {
+  return new Promise((n) => {
+    const r = e.createOscillator();
+    r.type = "triangle", r.frequency.value = 1e4;
     const f = e.createDynamicsCompressor();
-    f.threshold.value = -50, f.knee.value = 40, f.ratio.value = 12, f.attack.value = 0, f.release.value = 0.2, a.connect(f), f.connect(e.destination), a.start(), e.oncomplete = (o) => {
-      const w = o.renderedBuffer.getChannelData(0), g = T(this, y, N).call(this, w);
-      i(g);
+    f.threshold.value = -50, f.knee.value = 40, f.ratio.value = 12, f.attack.value = 0, f.release.value = 0.2, r.connect(f), f.connect(e.destination), r.start(), e.oncomplete = (s) => {
+      const d = s.renderedBuffer.getChannelData(0), h = D(this, _, V).call(this, d);
+      n(h);
     }, e.startRendering();
   });
-}, N = function(e) {
-  let i = 0;
-  for (let a = 0; a < e.length; ++a)
-    i += Math.abs(e[a]);
-  return i;
+}, V = function(e) {
+  let n = 0;
+  for (let r = 0; r < e.length; ++r)
+    n += Math.abs(e[r]);
+  return n;
 };
-var c, m;
-class K {
+var g, v;
+class ne {
   constructor() {
-    C(this, "name", "Canvas Feature");
-    C(this, "enabled", !0);
-    p(this, c, null);
-    p(this, m, null);
+    y(this, "name", "Canvas Feature");
+    y(this, "enabled", !0);
+    b(this, g, null);
+    b(this, v, null);
   }
   // TODO: Safari 瀏覽器的 canvas 不同裝置指纹目前會一模一樣，需要進行更多的測試
   // chrome, edge 目前測試不同裝置，會不一樣
   async support() {
-    return document ? (x(this, c, document.createElement("canvas").getContext("2d")), l(this, c) !== null) : !1;
+    return document ? (x(this, g, document.createElement("canvas").getContext("2d")), u(this, g) !== null) : !1;
   }
   async data() {
-    return l(this, c) === null ? null : (l(this, c).textBaseline = "top", l(this, c).font = "14px 'Arial'", l(this, c).textBaseline = "alphabetic", l(this, c).fillStyle = "#f60", l(this, c).fillRect(100, 1, 55, 20), l(this, c).fillStyle = "#069", l(this, c).fillText("Cyber Universe Canvas", 2, 15), l(this, c).fillStyle = "rgba(102, 204, 0, 0.7)", l(this, c).fillText("Cyber Universe Canvas", 4, 17), x(this, m, l(this, c).canvas.toDataURL()), {
-      fingerprint: await F(l(this, m)),
+    return u(this, g) === null ? null : (u(this, g).textBaseline = "top", u(this, g).font = "14px 'Arial'", u(this, g).textBaseline = "alphabetic", u(this, g).fillStyle = "#f60", u(this, g).fillRect(100, 1, 55, 20), u(this, g).fillStyle = "#069", u(this, g).fillText("Cyber Universe Canvas", 2, 15), u(this, g).fillStyle = "rgba(102, 204, 0, 0.7)", u(this, g).fillText("Cyber Universe Canvas", 4, 17), x(this, v, u(this, g).canvas.toDataURL()), {
+      fingerprint: await A(u(this, v)),
       info: {
-        image: l(this, m)
+        image: u(this, v)
       }
     });
   }
 }
-c = new WeakMap(), m = new WeakMap();
-const M = async (t) => t.enabled ? await t.support() ? await t.data() : (console.log(`Feature ${t.name} is not supported`), null) : (console.log(`Feature ${t.name} is disabled`), null), Q = async () => await _(), _ = async () => {
-  var f, o, w, g, v, r;
-  const t = [new K(), new J()];
-  let e = "", i = "";
-  const a = [];
-  for (const u of t) {
-    const n = await M(u);
-    console.log(u.name, n == null ? void 0 : n.fingerprint), console.log((f = n == null ? void 0 : n.info) == null ? void 0 : f.image), console.log((o = n == null ? void 0 : n.info) == null ? void 0 : o.audio), (w = n == null ? void 0 : n.info) != null && w.image && (e = (g = n == null ? void 0 : n.info) == null ? void 0 : g.image), (v = n == null ? void 0 : n.info) != null && v.audio && (i = (r = n == null ? void 0 : n.info) == null ? void 0 : r.audio), a.push((n == null ? void 0 : n.fingerprint) || "");
-  }
+g = new WeakMap(), v = new WeakMap();
+function M(t) {
+  return t.reduce((e, n) => e + (n ? 1 : 0), 0);
+}
+function oe() {
+  const t = window, e = navigator;
+  return M([
+    "ApplePayError" in t,
+    "CSSPrimitiveValue" in t,
+    "Counter" in t,
+    e.vendor.indexOf("Apple") === 0,
+    "RGBColor" in t,
+    "WebKitMediaKeys" in t
+  ]) >= 4;
+}
+function re() {
+  var e;
+  const t = window;
+  return M([
+    "buildID" in navigator,
+    "MozAppearance" in (((e = document.documentElement) == null ? void 0 : e.style) ?? {}),
+    "onmozfullscreenchange" in t,
+    "mozInnerScreenX" in t,
+    "CSSMozDocumentRule" in t,
+    "CanvasCaptureMediaStream" in t
+  ]) >= 4;
+}
+function ie() {
+  const t = window, e = navigator;
+  return M([
+    "webkitPersistentStorage" in e,
+    "webkitTemporaryStorage" in e,
+    e.vendor.indexOf("Google") === 0,
+    "webkitResolveLocalFileSystemURL" in t,
+    "BatteryManager" in t,
+    "webkitMediaStream" in t,
+    "webkitSpeechGrammar" in t
+  ]) >= 5;
+}
+const H = -1, J = -2, se = /* @__PURE__ */ new Set([
+  10752,
+  2849,
+  2884,
+  2885,
+  2886,
+  2928,
+  2929,
+  2930,
+  2931,
+  2932,
+  2960,
+  2961,
+  2962,
+  2963,
+  2964,
+  2965,
+  2966,
+  2967,
+  2968,
+  2978,
+  3024,
+  3042,
+  3088,
+  3089,
+  3106,
+  3107,
+  32773,
+  32777,
+  32777,
+  32823,
+  32824,
+  32936,
+  32937,
+  32938,
+  32939,
+  32968,
+  32969,
+  32970,
+  32971,
+  3317,
+  33170,
+  3333,
+  3379,
+  3386,
+  33901,
+  33902,
+  34016,
+  34024,
+  34076,
+  3408,
+  3410,
+  3411,
+  3412,
+  3413,
+  3414,
+  3415,
+  34467,
+  34816,
+  34817,
+  34818,
+  34819,
+  34877,
+  34921,
+  34930,
+  35660,
+  35661,
+  35724,
+  35738,
+  35739,
+  36003,
+  36004,
+  36005,
+  36347,
+  36348,
+  36349,
+  37440,
+  37441,
+  37443,
+  7936,
+  7937,
+  7938
+  // SAMPLE_ALPHA_TO_COVERAGE (32926) and SAMPLE_COVERAGE (32928) are excluded because they trigger a console warning
+  // in IE, Chrome ≤ 59 and Safari ≤ 13 and give no entropy.
+]), ae = /* @__PURE__ */ new Set([
+  34047,
+  // MAX_TEXTURE_MAX_ANISOTROPY_EXT
+  35723,
+  // FRAGMENT_SHADER_DERIVATIVE_HINT_OES
+  36063,
+  // MAX_COLOR_ATTACHMENTS_WEBGL
+  34852,
+  // MAX_DRAW_BUFFERS_WEBGL
+  34853,
+  // DRAW_BUFFER0_WEBGL
+  34854,
+  // DRAW_BUFFER1_WEBGL
+  34229,
+  // VERTEX_ARRAY_BINDING_OES
+  36392,
+  // TIMESTAMP_EXT
+  36795,
+  // GPU_DISJOINT_EXT
+  38449
+  // MAX_VIEWS_OVR
+]), ce = ["FRAGMENT_SHADER", "VERTEX_SHADER"], le = [
+  "LOW_FLOAT",
+  "MEDIUM_FLOAT",
+  "HIGH_FLOAT",
+  "LOW_INT",
+  "MEDIUM_INT",
+  "HIGH_INT"
+], K = "WEBGL_debug_renderer_info", ue = "WEBGL_polygon_mode";
+function $({ cache: t }) {
+  var r, f, s, d, h, w;
+  const e = j(t);
+  if (!e)
+    return H;
+  if (!X(e))
+    return J;
+  const n = z() ? null : e.getExtension(K);
   return {
-    id: await F(JSON.stringify(a)),
+    version: ((r = e.getParameter(e.VERSION)) == null ? void 0 : r.toString()) || "",
+    vendor: ((f = e.getParameter(e.VENDOR)) == null ? void 0 : f.toString()) || "",
+    vendorUnmasked: n ? (s = e.getParameter(n.UNMASKED_VENDOR_WEBGL)) == null ? void 0 : s.toString() : "",
+    renderer: ((d = e.getParameter(e.RENDERER)) == null ? void 0 : d.toString()) || "",
+    rendererUnmasked: n ? (h = e.getParameter(n.UNMASKED_RENDERER_WEBGL)) == null ? void 0 : h.toString() : "",
+    shadingLanguageVersion: ((w = e.getParameter(e.SHADING_LANGUAGE_VERSION)) == null ? void 0 : w.toString()) || ""
+  };
+}
+function k({ cache: t }) {
+  const e = j(t);
+  if (!e)
+    return H;
+  if (!X(e))
+    return J;
+  const n = e.getSupportedExtensions(), r = e.getContextAttributes(), f = [], s = [], d = [], h = [], w = [];
+  if (r)
+    for (const i of Object.keys(
+      r
+    ))
+      s.push(`${i}=${r[i]}`);
+  const a = W(e);
+  for (const i of a) {
+    const l = e[i];
+    d.push(
+      `${i}=${l}${se.has(l) ? `=${e.getParameter(l)}` : ""}`
+    );
+  }
+  if (n)
+    for (const i of n) {
+      if (i === K && z() || i === ue && he())
+        continue;
+      const l = e.getExtension(i);
+      if (!l) {
+        f.push(i);
+        continue;
+      }
+      for (const p of W(l)) {
+        const m = l[p];
+        h.push(
+          `${p}=${m}${ae.has(m) ? `=${e.getParameter(m)}` : ""}`
+        );
+      }
+    }
+  for (const i of ce)
+    for (const l of le) {
+      const p = fe(e, i, l);
+      w.push(`${i}.${l}=${p.join(",")}`);
+    }
+  return h.sort(), d.sort(), {
+    contextAttributes: s,
+    parameters: d,
+    shaderPrecisions: w,
+    extensions: n,
+    extensionParameters: h,
+    unsupportedExtensions: f
+  };
+}
+function j(t) {
+  if (t.webgl)
+    return t.webgl.context;
+  const e = document.createElement("canvas");
+  let n;
+  e.addEventListener("webglCreateContextError", () => n = void 0);
+  for (const r of ["webgl", "experimental-webgl"]) {
+    try {
+      n = e.getContext(r);
+    } catch {
+    }
+    if (n)
+      break;
+  }
+  return t.webgl = { context: n }, n;
+}
+function fe(t, e, n) {
+  const r = t.getShaderPrecisionFormat(t[e], t[n]);
+  return r ? [r.rangeMin, r.rangeMax, r.precision] : [];
+}
+function W(t) {
+  return Object.keys(t.__proto__).filter(ge);
+}
+function ge(t) {
+  return typeof t == "string" && !t.match(/[^A-Z0-9_x]/);
+}
+function z() {
+  return re();
+}
+function he() {
+  return ie() || oe();
+}
+function X(t) {
+  return typeof t.getParameter == "function";
+}
+var N;
+class de {
+  constructor() {
+    y(this, "name", "Canvas Feature");
+    y(this, "enabled", !0);
+    // #ctx: CanvasRenderingContext2D | null = null;
+    b(this, N, null);
+  }
+  async support() {
+    return !0;
+  }
+  async data() {
+    return x(this, N, JSON.stringify($({ cache: {} })) + JSON.stringify(k({ cache: {} }))), {
+      fingerprint: u(this, N),
+      info: {
+        webgl: {
+          basics: $({ cache: {} }),
+          extensions: k({ cache: {} })
+        }
+      }
+    };
+  }
+}
+N = new WeakMap();
+const pe = async (t) => t.enabled ? await t.support() ? await t.data() : (console.log(`Feature ${t.name} is not supported`), null) : (console.log(`Feature ${t.name} is disabled`), null), be = async () => await me(), me = async () => {
+  var s, d, h, w, a, i, l, p, m;
+  const t = [new ne(), new te(), new de()];
+  let e = "", n = "", r = { basics: {}, extensions: {} };
+  const f = [];
+  for (const S of t) {
+    const o = await pe(S);
+    console.log(S.name, o == null ? void 0 : o.fingerprint), console.log((s = o == null ? void 0 : o.info) == null ? void 0 : s.image), console.log((d = o == null ? void 0 : o.info) == null ? void 0 : d.audio), console.log((h = o == null ? void 0 : o.info) == null ? void 0 : h.webgl), (w = o == null ? void 0 : o.info) != null && w.image && (e = (a = o == null ? void 0 : o.info) == null ? void 0 : a.image), (i = o == null ? void 0 : o.info) != null && i.audio && (n = (l = o == null ? void 0 : o.info) == null ? void 0 : l.audio), (p = o == null ? void 0 : o.info) != null && p.webgl && (r = (m = o == null ? void 0 : o.info) == null ? void 0 : m.webgl), f.push((o == null ? void 0 : o.fingerprint) || "");
+  }
+  return console.log("JSON.stringify(webgl)", JSON.stringify(r)), {
+    id: await A(JSON.stringify(f)),
     useragent: navigator.userAgent,
     rawData: {
       canvas: {
-        hash: await F(e),
+        hash: await A(e),
         "text image": e
       },
       audio: {
-        hash: await F(i),
-        value: i
+        hash: await A(n),
+        value: n
+      },
+      webgl: {
+        hash: await A(JSON.stringify(r)),
+        value: r
       }
     }
   };
 };
 export {
-  Q as fpPromise
+  be as fpPromise
 };

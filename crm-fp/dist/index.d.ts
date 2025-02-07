@@ -22,6 +22,17 @@ declare const fpPromise: () => Promise<{
             hash: string;
             value: string;
         };
+        webgl: {
+            hash: string;
+            value: {
+                basics: {
+                    [key: string]: unknown;
+                };
+                extensions: {
+                    [key: string]: unknown;
+                };
+            };
+        };
     };
 }>;
 export { type Feature, fpPromise };

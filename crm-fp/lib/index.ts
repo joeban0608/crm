@@ -1,5 +1,6 @@
 import AudioFeature from './features/audio';
 import CanvasFeature from './features/canvas';
+import WebglFeature from './features/webgl';
 import { sha256 } from './hash';
 
 type Data = {
@@ -35,24 +36,36 @@ const fpPromise = async () => {
 };
 
 const hashFpFeatures = async () => {
-	const features = [new CanvasFeature(), new AudioFeature()];
+	const features = [new CanvasFeature(), new AudioFeature(), new WebglFeature()];
 	let image: string = '';
 	let audio: string = '';
+	let webgl: {
+		basics: { [key: string]: unknown };
+		extensions: { [key: string]: unknown };
+	} = { basics: {}, extensions: {} };
 	const results: string[] = [];
 	for (const feature of features) {
 		const data = await run(feature);
 		console.log(feature.name, data?.fingerprint);
 		console.log(data?.info?.image);
 		console.log(data?.info?.audio);
+		console.log(data?.info?.webgl);
 		if (data?.info?.image) {
 			image = data?.info?.image as string;
 		}
 		if (data?.info?.audio) {
 			audio = data?.info?.audio as string;
 		}
+		if (data?.info?.webgl) {
+			webgl = data?.info?.webgl as {
+				basics: { [key: string]: unknown };
+				extensions: { [key: string]: unknown };
+			};
+		}
 		results.push(data?.fingerprint || '');
 	}
 
+	console.log('JSON.stringify(webgl)', JSON.stringify(webgl));
 	return {
 		id: await sha256(JSON.stringify(results)),
 		useragent: navigator.userAgent,
@@ -64,6 +77,10 @@ const hashFpFeatures = async () => {
 			audio: {
 				hash: await sha256(audio),
 				value: audio
+			},
+			webgl: {
+				hash: await sha256(JSON.stringify(webgl)),
+				value: webgl
 			}
 		}
 	};
