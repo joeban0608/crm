@@ -22,6 +22,10 @@ declare const fpPromise: () => Promise<{
             hash: string;
             value: string;
         };
+        timezone: {
+            hash: string;
+            value: string;
+        };
     };
 }>;
 export { type Feature, fpPromise };
