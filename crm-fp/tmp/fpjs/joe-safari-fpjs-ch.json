@@ -1,0 +1,498 @@
+{
+	"products": {
+		"identification": {
+			"data": {
+				"visitorId": "Hch7MfJQXzdddcx0nGyq",
+				"requestId": "1738924551578.1Ue8rq",
+				"browserDetails": {
+					"browserName": "Safari",
+					"browserMajorVersion": "18",
+					"browserFullVersion": "18.3",
+					"os": "Mac OS X",
+					"osVersion": "10.15.7",
+					"device": "Other",
+					"userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.3 Safari/605.1.15"
+				},
+				"incognito": false,
+				"ip": "123.194.163.21",
+				"ipLocation": {
+					"accuracyRadius": 5,
+					"latitude": 25.053,
+					"longitude": 121.5259,
+					"timezone": "Asia/Taipei",
+					"city": {
+						"name": "Taipei"
+					},
+					"country": {
+						"code": "TW",
+						"name": "Taiwan"
+					},
+					"continent": {
+						"code": "AS",
+						"name": "Asia"
+					},
+					"subdivisions": [
+						{
+							"isoCode": "TPE",
+							"name": "Taipei City"
+						}
+					]
+				},
+				"timestamp": 1738924551587,
+				"time": "2025-02-07T10:35:51Z",
+				"url": "https://demo.fingerprint.com/playground",
+				"tag": {},
+				"confidence": {
+					"score": 0.99,
+					"revision": "v1.1"
+				},
+				"visitorFound": true,
+				"firstSeenAt": {
+					"global": "2025-02-07T10:31:49.059Z",
+					"subscription": "2025-02-07T10:31:49.059Z"
+				},
+				"lastSeenAt": {
+					"global": "2025-02-07T10:32:42.53Z",
+					"subscription": "2025-02-07T10:32:42.53Z"
+				}
+			}
+		},
+		"botd": {
+			"data": {
+				"bot": {
+					"result": "notDetected"
+				},
+				"url": "https://demo.fingerprint.com/playground",
+				"ip": "123.194.163.21",
+				"time": "2025-02-07T10:35:51.695Z",
+				"userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.3 Safari/605.1.15",
+				"requestId": "1738924551578.1Ue8rq"
+			}
+		},
+		"rootApps": {
+			"data": {
+				"result": false
+			}
+		},
+		"emulator": {
+			"data": {
+				"result": false
+			}
+		},
+		"ipInfo": {
+			"data": {
+				"v4": {
+					"address": "123.194.163.21",
+					"geolocation": {
+						"accuracyRadius": 5,
+						"latitude": 25.053,
+						"longitude": 121.5259,
+						"timezone": "Asia/Taipei",
+						"city": {
+							"name": "Taipei"
+						},
+						"country": {
+							"code": "TW",
+							"name": "Taiwan"
+						},
+						"continent": {
+							"code": "AS",
+							"name": "Asia"
+						},
+						"subdivisions": [
+							{
+								"isoCode": "TPE",
+								"name": "Taipei City"
+							}
+						]
+					},
+					"asn": {
+						"asn": "38841",
+						"name": "kbro CO. Ltd.",
+						"network": "123.192.0.0/14"
+					},
+					"datacenter": {
+						"result": false,
+						"name": ""
+					}
+				}
+			}
+		},
+		"ipBlocklist": {
+			"data": {
+				"result": false,
+				"details": {
+					"emailSpam": false,
+					"attackSource": false
+				}
+			}
+		},
+		"tor": {
+			"data": {
+				"result": false
+			}
+		},
+		"vpn": {
+			"data": {
+				"result": false,
+				"confidence": "high",
+				"originTimezone": "Asia/Taipei",
+				"originCountry": "unknown",
+				"methods": {
+					"timezoneMismatch": false,
+					"publicVPN": false,
+					"auxiliaryMobile": false,
+					"osMismatch": false,
+					"relay": false
+				}
+			}
+		},
+		"proxy": {
+			"data": {
+				"result": false
+			}
+		},
+		"incognito": {
+			"data": {
+				"result": false
+			}
+		},
+		"tampering": {
+			"data": {
+				"result": false,
+				"anomalyScore": 0,
+				"antiDetectBrowser": false
+			}
+		},
+		"clonedApp": {
+			"data": {
+				"result": false
+			}
+		},
+		"factoryReset": {
+			"data": {
+				"time": "1970-01-01T00:00:00Z",
+				"timestamp": 0
+			}
+		},
+		"jailbroken": {
+			"data": {
+				"result": false
+			}
+		},
+		"frida": {
+			"data": {
+				"result": false
+			}
+		},
+		"privacySettings": {
+			"data": {
+				"result": false
+			}
+		},
+		"virtualMachine": {
+			"data": {
+				"result": false
+			}
+		},
+		"rawDeviceAttributes": {
+			"data": {
+				"architecture": {
+					"value": 127
+				},
+				"audio": {
+					"value": 124.04346622781304
+				},
+				"audioBaseLatency": {
+					"value": 0.0026666666666666666
+				},
+				"canvas": {
+					"value": {
+						"Geometry": "7b000d0325bca1a1cf8f9effc2c44835",
+						"Text": "0852feea66b52696a75294b3a2ecc5cd",
+						"Winding": true
+					}
+				},
+				"colorDepth": {
+					"value": 24
+				},
+				"colorGamut": {
+					"value": "p3"
+				},
+				"contrast": {
+					"value": 0
+				},
+				"cookiesEnabled": {
+					"value": true
+				},
+				"cpuClass": {},
+				"deviceMemory": {},
+				"domBlockers": {
+					"value": []
+				},
+				"emoji": {
+					"value": {
+						"bottom": 32,
+						"font": "-webkit-standard",
+						"height": 18,
+						"left": 8,
+						"right": 1688,
+						"top": 14,
+						"width": 1680,
+						"x": 8,
+						"y": 14
+					}
+				},
+				"fontPreferences": {
+					"value": {
+						"apple": 121.72265625,
+						"default": 147.5625,
+						"min": 9.22265625,
+						"mono": 132.62158203125,
+						"sans": 144.0078125,
+						"serif": 147.5625,
+						"system": 146.09375
+					}
+				},
+				"fonts": {
+					"value": ["Arial Unicode MS", "Gill Sans", "Helvetica Neue", "Menlo"]
+				},
+				"forcedColors": {
+					"value": false
+				},
+				"hardwareConcurrency": {
+					"value": 8
+				},
+				"hdr": {
+					"value": true
+				},
+				"indexedDB": {
+					"value": true
+				},
+				"invertedColors": {
+					"value": false
+				},
+				"languages": {
+					"value": [["zh-TW"], ["zh-TW"]]
+				},
+				"localStorage": {
+					"value": true
+				},
+				"math": {
+					"value": "fde394cd050c47a94fa5a2e663470533"
+				},
+				"mathML": {
+					"value": {
+						"bottom": 26,
+						"font": "-webkit-standard",
+						"height": 18,
+						"left": 8,
+						"right": 293.722900390625,
+						"top": 8,
+						"width": 285.722900390625,
+						"x": 8,
+						"y": 8
+					}
+				},
+				"monochrome": {
+					"value": 0
+				},
+				"openDatabase": {
+					"value": false
+				},
+				"osCpu": {},
+				"pdfViewerEnabled": {
+					"value": true
+				},
+				"platform": {
+					"value": "MacIntel"
+				},
+				"plugins": {
+					"value": [
+						{
+							"description": "Portable Document Format",
+							"mimeTypes": [
+								{
+									"suffixes": "pdf",
+									"type": "application/pdf"
+								},
+								{
+									"suffixes": "pdf",
+									"type": "text/pdf"
+								}
+							],
+							"name": "PDF Viewer"
+						},
+						{
+							"description": "Portable Document Format",
+							"mimeTypes": [
+								{
+									"suffixes": "pdf",
+									"type": "application/pdf"
+								},
+								{
+									"suffixes": "pdf",
+									"type": "text/pdf"
+								}
+							],
+							"name": "Chrome PDF Viewer"
+						},
+						{
+							"description": "Portable Document Format",
+							"mimeTypes": [
+								{
+									"suffixes": "pdf",
+									"type": "application/pdf"
+								},
+								{
+									"suffixes": "pdf",
+									"type": "text/pdf"
+								}
+							],
+							"name": "Chromium PDF Viewer"
+						},
+						{
+							"description": "Portable Document Format",
+							"mimeTypes": [
+								{
+									"suffixes": "pdf",
+									"type": "application/pdf"
+								},
+								{
+									"suffixes": "pdf",
+									"type": "text/pdf"
+								}
+							],
+							"name": "Microsoft Edge PDF Viewer"
+						},
+						{
+							"description": "Portable Document Format",
+							"mimeTypes": [
+								{
+									"suffixes": "pdf",
+									"type": "application/pdf"
+								},
+								{
+									"suffixes": "pdf",
+									"type": "text/pdf"
+								}
+							],
+							"name": "WebKit built-in PDF"
+						}
+					]
+				},
+				"privateClickMeasurement": {
+					"value": "0"
+				},
+				"reducedMotion": {
+					"value": false
+				},
+				"screenFrame": {
+					"value": [30, 0, 70, 0]
+				},
+				"screenResolution": {
+					"value": [900, 1440]
+				},
+				"sessionStorage": {
+					"value": true
+				},
+				"timezone": {
+					"value": "Asia/Taipei"
+				},
+				"touchSupport": {
+					"value": {
+						"maxTouchPoints": 0,
+						"touchEvent": false,
+						"touchStart": false
+					}
+				},
+				"vendor": {
+					"value": "Apple Computer, Inc."
+				},
+				"vendorFlavors": {
+					"value": ["safari"]
+				},
+				"webGlBasics": {
+					"value": {
+						"renderer": "WebKit WebGL",
+						"rendererUnmasked": "Apple GPU",
+						"shadingLanguageVersion": "WebGL GLSL ES 1.0 (1.0)",
+						"vendor": "WebKit",
+						"vendorUnmasked": "Apple Inc.",
+						"version": "WebGL 1.0"
+					}
+				},
+				"webGlExtensions": {
+					"value": {
+						"contextAttributes": "48e630ae802ba2dc7ed36e8728edf4fc",
+						"extensionParameters": "bb4aec574a9e534c898e793682f31298",
+						"extensions": "983b3ca72c2b2ba3bd549db82c33e6a0",
+						"parameters": "b4d458f59193d4badfb2417418dfd37b",
+						"shaderPrecisions": "f223dfbcd580cf142da156d93790eb83",
+						"unsupportedExtensions": []
+					}
+				}
+			}
+		},
+		"highActivity": {
+			"data": {
+				"result": false
+			}
+		},
+		"locationSpoofing": {
+			"data": {
+				"result": false
+			}
+		},
+		"suspectScore": {
+			"data": {
+				"result": 0
+			}
+		},
+		"remoteControl": {
+			"data": {
+				"result": false
+			}
+		},
+		"velocity": {
+			"data": {
+				"distinctIp": {
+					"intervals": {
+						"5m": 2,
+						"1h": 2,
+						"24h": 2
+					}
+				},
+				"distinctLinkedId": {},
+				"distinctCountry": {
+					"intervals": {
+						"5m": 1,
+						"1h": 1,
+						"24h": 1
+					}
+				},
+				"events": {
+					"intervals": {
+						"5m": 4,
+						"1h": 4,
+						"24h": 4
+					}
+				},
+				"ipEvents": {
+					"intervals": {
+						"5m": 4,
+						"1h": 6,
+						"24h": 43
+					}
+				},
+				"distinctIpByLinkedId": {},
+				"distinctVisitorIdByLinkedId": {}
+			}
+		},
+		"developerTools": {
+			"data": {
+				"result": false
+			}
+		}
+	}
+}
