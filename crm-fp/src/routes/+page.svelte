@@ -52,8 +52,10 @@
 			class=""
 			onclick={() => {
 				if (!fileInfo.value) return;
-				navigator.clipboard.writeText(fileInfo.value);
-				alert('Copied to clipboard: ' + fileInfo.name);
+				if (navigator?.clipboard?.writeText) {
+					navigator.clipboard.writeText(fileInfo.value);
+					alert('Copied to clipboard: ' + fileInfo.name);
+				}
 			}}
 		>
 			<svg
