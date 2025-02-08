@@ -1,14 +1,14 @@
 import { Feature } from '..';
-export default class ColorGamutFeature implements Feature {
+export default class HdrFeature implements Feature {
     #private;
-    static gamutList: string[];
+    static hdrList: string[];
     name: string;
     enabled: boolean;
     support(): Promise<boolean>;
     data(): Promise<{
         fingerprint: string;
         info: {
-            colorGamut: string | null;
+            hdr: string | null;
         };
     } | null>;
 }

@@ -1,6 +1,7 @@
 import AudioFeature from './features/audio';
 import CanvasFeature from './features/canvas';
 import ColorGamutFeature from './features/colorGamut';
+import HdrFeature from './features/hdr';
 import LanguagesFeature from './features/language';
 import { sha256 } from './hash';
 
@@ -46,7 +47,8 @@ const hashFpFeatures = async () => {
 		new CanvasFeature(),
 		new AudioFeature(),
 		new LanguagesFeature(),
-		new ColorGamutFeature()
+		new ColorGamutFeature(),
+		new HdrFeature()
 	];
 	const remixFeatures: string[] = [];
 	const rawData: RawData = {};
@@ -57,6 +59,7 @@ const hashFpFeatures = async () => {
 		_appendRawData(rawData, featureData as Data, 'audio', 'audio');
 		_appendRawData(rawData, featureData as Data, 'languages', 'languages');
 		_appendRawData(rawData, featureData as Data, 'color gamut', 'colorGamut');
+		_appendRawData(rawData, featureData as Data, 'hdr', 'hdr');
 
 		remixFeatures.push(featureData?.fingerprint || '');
 	}
