@@ -16,9 +16,13 @@ declare const fpPromise: () => Promise<{
     rawData: {
         canvas: {
             hash: string;
-            'text image': string;
+            value: string;
         };
         audio: {
+            hash: string;
+            value: string;
+        };
+        languages: {
             hash: string;
             value: string;
         };
