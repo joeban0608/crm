@@ -19,6 +19,7 @@ export default class CanvasFeature implements Feature {
 
 	async data() {
 		if (this.#ctx === null) return null;
+		
 		this.#ctx.textBaseline = 'top';
 		this.#ctx.font = "14px 'Arial'";
 		this.#ctx.textBaseline = 'alphabetic';

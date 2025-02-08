@@ -1,6 +1,7 @@
 import AudioFeature from './features/audio';
 import CanvasFeature from './features/canvas';
 import ColorGamutFeature from './features/colorGamut';
+import HardwareConcurrencyFeature from './features/hardwareConcurrency';
 import HdrFeature from './features/hdr';
 import LanguagesFeature from './features/language';
 import { sha256 } from './hash';
@@ -44,22 +45,24 @@ type RawData = {
 };
 const hashFpFeatures = async () => {
 	const features = [
-		new CanvasFeature(),
 		new AudioFeature(),
-		new LanguagesFeature(),
+		new CanvasFeature(),
 		new ColorGamutFeature(),
-		new HdrFeature()
+		new HdrFeature(),
+		new HardwareConcurrencyFeature(),
+		new LanguagesFeature(),
 	];
 	const remixFeatures: string[] = [];
 	const rawData: RawData = {};
 
 	for (const feature of features) {
 		const featureData = await run(feature);
-		_appendRawData(rawData, featureData as Data, 'canvas', 'image');
 		_appendRawData(rawData, featureData as Data, 'audio', 'audio');
-		_appendRawData(rawData, featureData as Data, 'languages', 'languages');
+		_appendRawData(rawData, featureData as Data, 'canvas', 'image');
 		_appendRawData(rawData, featureData as Data, 'color gamut', 'colorGamut');
 		_appendRawData(rawData, featureData as Data, 'hdr', 'hdr');
+		_appendRawData(rawData, featureData as Data, 'hardware concurrency', 'hardwareConcurrency');
+		_appendRawData(rawData, featureData as Data, 'languages', 'languages');
 
 		remixFeatures.push(featureData?.fingerprint || '');
 	}
