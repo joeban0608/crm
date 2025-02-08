@@ -4,6 +4,7 @@ import ColorGamutFeature from './features/colorGamut';
 import HardwareConcurrencyFeature from './features/hardwareConcurrency';
 import HdrFeature from './features/hdr';
 import LanguagesFeature from './features/language';
+import TimezoneFeature from './features/timezone';
 import { sha256 } from './hash';
 
 type Data = {
@@ -51,6 +52,7 @@ const hashFpFeatures = async () => {
 		new HdrFeature(),
 		new HardwareConcurrencyFeature(),
 		new LanguagesFeature(),
+		new TimezoneFeature()
 	];
 	const remixFeatures: string[] = [];
 	const rawData: RawData = {};
@@ -63,6 +65,7 @@ const hashFpFeatures = async () => {
 		_appendRawData(rawData, featureData as Data, 'hdr', 'hdr');
 		_appendRawData(rawData, featureData as Data, 'hardware concurrency', 'hardwareConcurrency');
 		_appendRawData(rawData, featureData as Data, 'languages', 'languages');
+		_appendRawData(rawData, featureData as Data, 'timezone', 'timezone');
 
 		remixFeatures.push(featureData?.fingerprint || '');
 	}
