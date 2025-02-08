@@ -6,6 +6,7 @@ export default class LanguagesFeature implements Feature {
 	enabled = true;
 	#ctx: string[][] = [];
 	#data: string | null = null;
+  
 	async support() {
 		return !!navigator;
 	}
@@ -18,10 +19,11 @@ export default class LanguagesFeature implements Feature {
 			this.#ctx.push(navigator.languages);
 		}
 		this.#data = JSON.stringify(this.#ctx);
+    
 		return {
 			fingerprint: await sha256(this.#data),
 			info: {
-				languages: this.#ctx
+				languages: JSON.stringify(this.#ctx)
 			}
 		};
 	}

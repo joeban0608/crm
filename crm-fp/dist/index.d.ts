@@ -14,15 +14,7 @@ declare const fpPromise: () => Promise<{
     id: string;
     useragent: string;
     rawData: {
-        canvas: {
-            hash: string;
-            value: string;
-        };
-        audio: {
-            hash: string;
-            value: string;
-        };
-        languages: {
+        [key: string]: {
             hash: string;
             value: string;
         };

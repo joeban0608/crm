@@ -7,7 +7,7 @@ export default class LanguagesFeature implements Feature {
     data(): Promise<{
         fingerprint: string;
         info: {
-            languages: string[][];
+            languages: string;
         };
     }>;
 }

@@ -34,46 +34,40 @@ const fpPromise = async () => {
 	return fpFeatureInfo;
 };
 
+type RawData = {
+	[key: string]: {
+		hash: string;
+		value: string;
+	};
+};
 const hashFpFeatures = async () => {
 	const features = [new CanvasFeature(), new AudioFeature(), new LanguagesFeature()];
-	let image: string = '';
-	let audio: string = '';
-	let languages: string = '';
-	const results: string[] = [];
-	console.log('features', features);
+	const remixFeatures: string[] = [];
+	const rawData: RawData = {};
 
 	for (const feature of features) {
-		const data = await run(feature);
-		// console.log(feature.name, data?.fingerprint);
-		if (data?.info?.image) {
-			image = data?.info?.image as string;
-		}
-		if (data?.info?.audio) {
-			audio = data?.info?.audio as string;
-		}
-		if (data?.info?.languages) {
-			languages = JSON.stringify(data?.info?.languages as string[][]);
-		}
-		results.push(data?.fingerprint || '');
+		const featureData = await run(feature);
+		_appendRawData(rawData, featureData as Data, 'canvas', 'image');
+		_appendRawData(rawData, featureData as Data, 'audio', 'audio');
+		_appendRawData(rawData, featureData as Data, 'languages', 'languages');
+
+		remixFeatures.push(featureData?.fingerprint || '');
 	}
 
 	return {
-		id: await sha256(JSON.stringify(results)),
+		id: await sha256(JSON.stringify(remixFeatures)),
 		useragent: navigator.userAgent,
-		rawData: {
-			canvas: {
-				hash: await sha256(image),
-				value: image
-			},
-			audio: {
-				hash: await sha256(audio),
-				value: audio
-			},
-			languages: {
-				hash: await sha256(languages),
-				value: languages
-			}
-		}
+		rawData
 	};
 };
+
+const _appendRawData = (rawData: RawData, data: Data, dataTitle: string, featureName: string) => {
+	if (data?.info?.[featureName]) {
+		rawData[dataTitle] = {
+			hash: data.fingerprint,
+			value: data.info[featureName] as string
+		};
+	}
+};
+
 export { type Feature, fpPromise };
