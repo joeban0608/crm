@@ -1,6 +1,7 @@
 import { type Feature } from '..';
 import { sha256 } from '../hash';
 
+// ref: https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D
 export default class CanvasFeature implements Feature {
 	name = 'Canvas Feature';
 	enabled = true;

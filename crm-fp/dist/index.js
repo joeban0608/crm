@@ -1,15 +1,15 @@
-var G = Object.defineProperty;
-var j = (e) => {
+var z = Object.defineProperty;
+var M = (e) => {
   throw TypeError(e);
 };
-var K = (e, t, a) => t in e ? G(e, t, { enumerable: !0, configurable: !0, writable: !0, value: a }) : e[t] = a;
-var d = (e, t, a) => K(e, typeof t != "symbol" ? t + "" : t, a), J = (e, t, a) => t.has(e) || j("Cannot " + a);
-var s = (e, t, a) => (J(e, t, "read from private field"), a ? a.call(e) : t.get(e)), h = (e, t, a) => t.has(e) ? j("Cannot add the same private member more than once") : t instanceof WeakSet ? t.add(e) : t.set(e, a), m = (e, t, a, r) => (J(e, t, "write to private field"), r ? r.call(e, a) : t.set(e, a), a), N = (e, t, a) => (J(e, t, "access private method"), a);
-function E(e) {
-  function t(o, c) {
-    return o >>> c | o << 32 - c;
+var W = (e, t, n) => t in e ? z(e, t, { enumerable: !0, configurable: !0, writable: !0, value: n }) : e[t] = n;
+var h = (e, t, n) => W(e, typeof t != "symbol" ? t + "" : t, n), j = (e, t, n) => t.has(e) || M("Cannot " + n);
+var a = (e, t, n) => (j(e, t, "read from private field"), n ? n.call(e) : t.get(e)), f = (e, t, n) => t.has(e) ? M("Cannot add the same private member more than once") : t instanceof WeakSet ? t.add(e) : t.set(e, n), p = (e, t, n, s) => (j(e, t, "write to private field"), s ? s.call(e, n) : t.set(e, n), n), k = (e, t, n) => (j(e, t, "access private method"), n);
+function S(e) {
+  function t(l, c) {
+    return l >>> c | l << 32 - c;
   }
-  const a = new TextEncoder().encode(e), r = Array.from(a), l = [
+  const n = new TextEncoder().encode(e), s = Array.from(n), r = [
     1116352408,
     1899447441,
     3049323471,
@@ -74,7 +74,7 @@ function E(e) {
     2756734187,
     3204031479,
     3329325298
-  ], n = [
+  ], o = [
     1779033703,
     3144134277,
     1013904242,
@@ -83,136 +83,170 @@ function E(e) {
     2600822924,
     528734635,
     1541459225
-  ], v = r.length * 8;
-  for (r.push(128); (r.length * 8 + 64) % 512 !== 0; )
-    r.push(0);
-  const p = new Array(8).fill(0);
-  for (let o = 0; o < 8; o++)
-    p[7 - o] = v >>> o * 8 & 255;
-  r.push(...p);
-  const T = [];
-  for (let o = 0; o < r.length; o += 64)
-    T.push(r.slice(o, o + 64));
-  return T.forEach((o) => {
+  ], U = s.length * 8;
+  for (s.push(128); (s.length * 8 + 64) % 512 !== 0; )
+    s.push(0);
+  const L = new Array(8).fill(0);
+  for (let l = 0; l < 8; l++)
+    L[7 - l] = U >>> l * 8 & 255;
+  s.push(...L);
+  const H = [];
+  for (let l = 0; l < s.length; l += 64)
+    H.push(s.slice(l, l + 64));
+  return H.forEach((l) => {
     const c = new Array(64);
     for (let i = 0; i < 16; i++)
-      c[i] = o[i * 4] << 24 | o[i * 4 + 1] << 16 | o[i * 4 + 2] << 8 | o[i * 4 + 3];
+      c[i] = l[i * 4] << 24 | l[i * 4 + 1] << 16 | l[i * 4 + 2] << 8 | l[i * 4 + 3];
     for (let i = 16; i < 64; i++) {
-      const U = t(c[i - 15], 7) ^ t(c[i - 15], 18) ^ c[i - 15] >>> 3, I = t(c[i - 2], 17) ^ t(c[i - 2], 19) ^ c[i - 2] >>> 10;
-      c[i] = c[i - 16] + U + c[i - 7] + I | 0;
+      const V = t(c[i - 15], 7) ^ t(c[i - 15], 18) ^ c[i - 15] >>> 3, $ = t(c[i - 2], 17) ^ t(c[i - 2], 19) ^ c[i - 2] >>> 10;
+      c[i] = c[i - 16] + V + c[i - 7] + $ | 0;
     }
-    let [f, F, C, R, g, O, D, B] = n;
+    let [g, F, x, I, d, O, D, T] = o;
     for (let i = 0; i < 64; i++) {
-      const U = t(g, 6) ^ t(g, 11) ^ t(g, 25), I = g & O ^ ~g & D, V = B + U + I + l[i] + c[i] | 0, $ = t(f, 2) ^ t(f, 13) ^ t(f, 22), k = f & F ^ f & C ^ F & C, q = $ + k | 0;
-      B = D, D = O, O = g, g = R + V | 0, R = C, C = F, F = f, f = V + q | 0;
+      const V = t(d, 6) ^ t(d, 11) ^ t(d, 25), $ = d & O ^ ~d & D, J = T + V + $ + r[i] + c[i] | 0, q = t(g, 2) ^ t(g, 13) ^ t(g, 22), K = g & F ^ g & x ^ F & x, Q = q + K | 0;
+      T = D, D = O, O = d, d = I + J | 0, I = x, x = F, F = g, g = J + Q | 0;
     }
-    n[0] = n[0] + f | 0, n[1] = n[1] + F | 0, n[2] = n[2] + C | 0, n[3] = n[3] + R | 0, n[4] = n[4] + g | 0, n[5] = n[5] + O | 0, n[6] = n[6] + D | 0, n[7] = n[7] + B | 0;
-  }), n.map((o) => (o >>> 0).toString(16).padStart(8, "0")).join("");
+    o[0] = o[0] + g | 0, o[1] = o[1] + F | 0, o[2] = o[2] + x | 0, o[3] = o[3] + I | 0, o[4] = o[4] + d | 0, o[5] = o[5] + O | 0, o[6] = o[6] + D | 0, o[7] = o[7] + T | 0;
+  }), o.map((l) => (l >>> 0).toString(16).padStart(8, "0")).join("");
 }
-var w, x, L, b, H, P;
-class M {
+var m, C, R, A, N, P;
+class X {
   constructor() {
-    h(this, b);
-    d(this, "name", "Audio Feature");
-    d(this, "enabled", !0);
-    h(this, w, null);
-    h(this, x, null);
-    h(this, L, 5e3);
+    f(this, A);
+    h(this, "name", "Audio Feature");
+    h(this, "enabled", !0);
+    f(this, m, null);
+    f(this, C, null);
+    f(this, R, 5e3);
   }
   // TODO: 不同裝置各瀏覽器測試結果目前都一樣，需要進行更多的測試
   async support() {
     const t = window.OfflineAudioContext || window.webkitOfflineAudioContext;
-    return t ? (m(this, w, new t(1, s(this, L), 44100)), s(this, w) !== null) : !1;
+    return t ? (p(this, m, new t(1, a(this, R), 44100)), a(this, m) !== null) : !1;
   }
   async data() {
-    if (s(this, w) === null) return null;
-    const t = await N(this, b, H).call(this, s(this, w));
-    return t === null ? null : (m(this, x, await E(t.toString())), {
-      fingerprint: s(this, x),
+    if (a(this, m) === null) return null;
+    const t = await k(this, A, N).call(this, a(this, m));
+    return t === null ? null : (p(this, C, t.toString()), {
+      fingerprint: await S(a(this, C)),
       info: {
         audio: t
       }
     });
   }
 }
-w = new WeakMap(), x = new WeakMap(), L = new WeakMap(), b = new WeakSet(), H = function(t) {
-  return new Promise((a) => {
-    const r = t.createOscillator();
-    r.type = "triangle", r.frequency.value = 1e4;
-    const l = t.createDynamicsCompressor();
-    l.threshold.value = -50, l.knee.value = 40, l.ratio.value = 12, l.attack.value = 0, l.release.value = 0.2, r.connect(l), l.connect(t.destination), r.start(), t.oncomplete = (n) => {
-      const v = n.renderedBuffer.getChannelData(0), p = N(this, b, P).call(this, v);
-      a(p);
+m = new WeakMap(), C = new WeakMap(), R = new WeakMap(), A = new WeakSet(), N = function(t) {
+  return new Promise((n) => {
+    const s = t.createOscillator();
+    s.type = "triangle", s.frequency.value = 1e4;
+    const r = t.createDynamicsCompressor();
+    r.threshold.value = -50, r.knee.value = 40, r.ratio.value = 12, r.attack.value = 0, r.release.value = 0.2, s.connect(r), r.connect(t.destination), s.start(), t.oncomplete = (o) => {
+      const U = o.renderedBuffer.getChannelData(0), L = k(this, A, P).call(this, U);
+      n(L);
     }, t.startRendering();
   });
 }, P = function(t) {
-  let a = 0;
-  for (let r = 0; r < t.length; ++r)
-    a += Math.abs(t[r]);
-  return a;
+  let n = 0;
+  for (let s = 0; s < t.length; ++s)
+    n += Math.abs(t[s]);
+  return n;
 };
-var u, A;
-class _ {
+var u, y;
+class Y {
   constructor() {
-    d(this, "name", "Canvas Feature");
-    d(this, "enabled", !0);
-    h(this, u, null);
-    h(this, A, null);
+    h(this, "name", "Canvas Feature");
+    h(this, "enabled", !0);
+    f(this, u, null);
+    f(this, y, null);
   }
   // TODO: Safari 瀏覽器的 canvas 不同裝置指纹目前會一模一樣，需要進行更多的測試
   // chrome, edge 目前測試不同裝置，會不一樣
   async support() {
-    return document ? (m(this, u, document.createElement("canvas").getContext("2d")), s(this, u) !== null) : !1;
+    return document ? (p(this, u, document.createElement("canvas").getContext("2d")), a(this, u) !== null) : !1;
   }
   async data() {
-    return s(this, u) === null ? null : (s(this, u).textBaseline = "top", s(this, u).font = "14px 'Arial'", s(this, u).textBaseline = "alphabetic", s(this, u).fillStyle = "#f60", s(this, u).fillRect(100, 1, 55, 20), s(this, u).fillStyle = "#069", s(this, u).fillText("Cyber Universe Canvas", 2, 15), s(this, u).fillStyle = "rgba(102, 204, 0, 0.7)", s(this, u).fillText("Cyber Universe Canvas", 4, 17), m(this, A, s(this, u).canvas.toDataURL()), {
-      fingerprint: await E(s(this, A)),
+    return a(this, u) === null ? null : (a(this, u).textBaseline = "top", a(this, u).font = "14px 'Arial'", a(this, u).textBaseline = "alphabetic", a(this, u).fillStyle = "#f60", a(this, u).fillRect(100, 1, 55, 20), a(this, u).fillStyle = "#069", a(this, u).fillText("Cyber Universe Canvas", 2, 15), a(this, u).fillStyle = "rgba(102, 204, 0, 0.7)", a(this, u).fillText("Cyber Universe Canvas", 4, 17), p(this, y, a(this, u).canvas.toDataURL()), {
+      fingerprint: await S(a(this, y)),
       info: {
-        image: s(this, A)
+        image: a(this, y)
       }
     });
   }
 }
-u = new WeakMap(), A = new WeakMap();
-var y, S;
-class z {
+u = new WeakMap(), y = new WeakMap();
+var w;
+const B = class B {
   constructor() {
-    d(this, "name", "Languages Feature");
-    d(this, "enabled", !0);
-    h(this, y, []);
-    h(this, S, null);
+    // ref: https://developer.mozilla.org/en-US/docs/Web/CSS/@media/color-gamut
+    h(this, "name", "ColorGamut Feature");
+    h(this, "enabled", !0);
+    f(this, w, null);
+  }
+  async support() {
+    return !0;
+  }
+  async data() {
+    for (const t of B.gamutList) {
+      const n = `(color-gamut: ${t})`;
+      if (matchMedia(n).matches) {
+        p(this, w, t);
+        break;
+      }
+    }
+    return a(this, w) === null ? null : {
+      fingerprint: await S(a(this, w)),
+      info: {
+        colorGamut: a(this, w)
+      }
+    };
+  }
+};
+w = new WeakMap(), h(B, "gamutList", ["rec2020", "p3", "srgb"]);
+let G = B;
+var v, b;
+class Z {
+  constructor() {
+    h(this, "name", "Languages Feature");
+    h(this, "enabled", !0);
+    f(this, v, []);
+    f(this, b, null);
   }
   async support() {
     return !!navigator;
   }
   async data() {
-    return navigator.language && s(this, y).push([navigator.language]), Array.isArray(navigator.languages) && s(this, y).push(navigator.languages), m(this, S, JSON.stringify(s(this, y))), {
-      fingerprint: await E(s(this, S)),
+    return navigator.language && a(this, v).push([navigator.language]), Array.isArray(navigator.languages) && a(this, v).push(navigator.languages), p(this, b, JSON.stringify(a(this, v))), {
+      fingerprint: await S(a(this, b)),
       info: {
-        languages: JSON.stringify(s(this, y))
+        languages: a(this, b)
       }
     };
   }
 }
-y = new WeakMap(), S = new WeakMap();
-const Q = async (e) => e.enabled ? await e.support() ? await e.data() : (console.log(`Feature ${e.name} is not supported`), null) : (console.log(`Feature ${e.name} is disabled`), null), Y = async () => await W(), W = async () => {
-  const e = [new _(), new M(), new z()], t = [], a = {}, r = (l, n, v) => {
-    var p;
-    (p = l == null ? void 0 : l.info) != null && p[v] && (a[n] = {
-      hash: l.fingerprint,
-      value: l.info[v]
-    });
-  };
-  for (const l of e) {
-    const n = await Q(l);
-    r(n, "canvas", "image"), r(n, "audio", "audio"), r(n, "languages", "languages"), t.push((n == null ? void 0 : n.fingerprint) || "");
+v = new WeakMap(), b = new WeakMap();
+const _ = async (e) => e.enabled ? await e.support() ? await e.data() : (console.log(`Feature ${e.name} is not supported`), null) : (console.log(`Feature ${e.name} is disabled`), null), nt = async () => await tt(), tt = async () => {
+  const e = [
+    new Y(),
+    new X(),
+    new Z(),
+    new G()
+  ], t = [], n = {};
+  for (const s of e) {
+    const r = await _(s);
+    E(n, r, "canvas", "image"), E(n, r, "audio", "audio"), E(n, r, "languages", "languages"), E(n, r, "color gamut", "colorGamut"), t.push((r == null ? void 0 : r.fingerprint) || "");
   }
   return {
-    id: await E(JSON.stringify(t)),
+    id: await S(JSON.stringify(t)),
     useragent: navigator.userAgent,
-    rawData: a
+    rawData: n
   };
+}, E = (e, t, n, s) => {
+  var r;
+  (r = t == null ? void 0 : t.info) != null && r[s] && (e[n] = {
+    hash: t.fingerprint,
+    value: t.info[s]
+  });
 };
 export {
-  Y as fpPromise
+  nt as fpPromise
 };

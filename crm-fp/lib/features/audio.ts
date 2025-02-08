@@ -9,7 +9,7 @@ export default class AudioFeature implements Feature {
 	#data: string | null = null;
 	#AUDIO_LEN = 5000;
 
-  // TODO: 不同裝置各瀏覽器測試結果目前都一樣，需要進行更多的測試
+	// TODO: 不同裝置各瀏覽器測試結果目前都一樣，需要進行更多的測試
 	async support() {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		const audioCtx = window.OfflineAudioContext || (window as any).webkitOfflineAudioContext;
@@ -25,10 +25,10 @@ export default class AudioFeature implements Feature {
 		const audioValue = await this.#renderAndGetAudioValue(this.#ctx);
 		if (audioValue === null) return null;
 
-		this.#data = await sha256(audioValue.toString());
+		this.#data = audioValue.toString();
 
 		return {
-			fingerprint: this.#data,
+			fingerprint: await sha256(this.#data),
 			info: {
 				audio: audioValue
 			}

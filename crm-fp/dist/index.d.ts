@@ -13,11 +13,12 @@ interface Feature {
 declare const fpPromise: () => Promise<{
     id: string;
     useragent: string;
-    rawData: {
-        [key: string]: {
-            hash: string;
-            value: string;
-        };
-    };
+    rawData: RawData;
 }>;
+type RawData = {
+    [key: string]: {
+        hash: string;
+        value: string;
+    };
+};
 export { type Feature, fpPromise };
