@@ -1,15 +1,15 @@
-var it = Object.defineProperty;
-var Y = (n) => {
-  throw TypeError(n);
+var ot = Object.defineProperty;
+var tt = (a) => {
+  throw TypeError(a);
 };
-var st = (n, t, e) => t in n ? it(n, t, { enumerable: !0, configurable: !0, writable: !0, value: e }) : n[t] = e;
-var c = (n, t, e) => st(n, typeof t != "symbol" ? t + "" : t, e), q = (n, t, e) => t.has(n) || Y("Cannot " + e);
-var a = (n, t, e) => (q(n, t, "read from private field"), e ? e.call(n) : t.get(n)), u = (n, t, e) => t.has(n) ? Y("Cannot add the same private member more than once") : t instanceof WeakSet ? t.add(n) : t.set(n, e), f = (n, t, e, r) => (q(n, t, "write to private field"), r ? r.call(n, e) : t.set(n, e), e), U = (n, t, e) => (q(n, t, "access private method"), e);
-function y(n) {
-  function t(l, d) {
-    return l >>> d | l << 32 - d;
+var lt = (a, t, e) => t in a ? ot(a, t, { enumerable: !0, configurable: !0, writable: !0, value: e }) : a[t] = e;
+var c = (a, t, e) => lt(a, typeof t != "symbol" ? t + "" : t, e), Z = (a, t, e) => t.has(a) || tt("Cannot " + e);
+var n = (a, t, e) => (Z(a, t, "read from private field"), e ? e.call(a) : t.get(a)), l = (a, t, e) => t.has(a) ? tt("Cannot add the same private member more than once") : t instanceof WeakSet ? t.add(a) : t.set(a, e), h = (a, t, e, r) => (Z(a, t, "write to private field"), r ? r.call(a, e) : t.set(a, e), e), B = (a, t, e) => (Z(a, t, "access private method"), e);
+function g(a) {
+  function t(u, d) {
+    return u >>> d | u << 32 - d;
   }
-  const e = new TextEncoder().encode(n), r = Array.from(e), i = [
+  const e = new TextEncoder().encode(a), r = Array.from(e), i = [
     1116352408,
     1899447441,
     3049323471,
@@ -83,157 +83,157 @@ function y(n) {
     2600822924,
     528734635,
     1541459225
-  ], G = r.length * 8;
+  ], N = r.length * 8;
   for (r.push(128); (r.length * 8 + 64) % 512 !== 0; )
     r.push(0);
-  const V = new Array(8).fill(0);
-  for (let l = 0; l < 8; l++)
-    V[7 - l] = G >>> l * 8 & 255;
-  r.push(...V);
-  const W = [];
-  for (let l = 0; l < r.length; l += 64)
-    W.push(r.slice(l, l + 64));
-  return W.forEach((l) => {
+  const I = new Array(8).fill(0);
+  for (let u = 0; u < 8; u++)
+    I[7 - u] = N >>> u * 8 & 255;
+  r.push(...I);
+  const Y = [];
+  for (let u = 0; u < r.length; u += 64)
+    Y.push(r.slice(u, u + 64));
+  return Y.forEach((u) => {
     const d = new Array(64);
     for (let s = 0; s < 16; s++)
-      d[s] = l[s * 4] << 24 | l[s * 4 + 1] << 16 | l[s * 4 + 2] << 8 | l[s * 4 + 3];
+      d[s] = u[s * 4] << 24 | u[s * 4 + 1] << 16 | u[s * 4 + 2] << 8 | u[s * 4 + 3];
     for (let s = 16; s < 64; s++) {
-      const P = t(d[s - 15], 7) ^ t(d[s - 15], 18) ^ d[s - 15] >>> 3, Q = t(d[s - 2], 17) ^ t(d[s - 2], 19) ^ d[s - 2] >>> 10;
-      d[s] = d[s - 16] + P + d[s - 7] + Q | 0;
+      const q = t(d[s - 15], 7) ^ t(d[s - 15], 18) ^ d[s - 15] >>> 3, K = t(d[s - 2], 17) ^ t(d[s - 2], 19) ^ d[s - 2] >>> 10;
+      d[s] = d[s - 16] + q + d[s - 7] + K | 0;
     }
-    let [g, T, D, J, p, E, I, N] = o;
+    let [p, D, L, P, w, U, k, Q] = o;
     for (let s = 0; s < 64; s++) {
-      const P = t(p, 6) ^ t(p, 11) ^ t(p, 25), Q = p & E ^ ~p & I, X = N + P + Q + i[s] + d[s] | 0, nt = t(g, 2) ^ t(g, 13) ^ t(g, 22), at = g & T ^ g & D ^ T & D, rt = nt + at | 0;
-      N = I, I = E, E = p, p = J + X | 0, J = D, D = T, T = g, g = X + rt | 0;
+      const q = t(w, 6) ^ t(w, 11) ^ t(w, 25), K = w & U ^ ~w & k, _ = Q + q + K + i[s] + d[s] | 0, rt = t(p, 2) ^ t(p, 13) ^ t(p, 22), it = p & D ^ p & L ^ D & L, st = rt + it | 0;
+      Q = k, k = U, U = w, w = P + _ | 0, P = L, L = D, D = p, p = _ + st | 0;
     }
-    o[0] = o[0] + g | 0, o[1] = o[1] + T | 0, o[2] = o[2] + D | 0, o[3] = o[3] + J | 0, o[4] = o[4] + p | 0, o[5] = o[5] + E | 0, o[6] = o[6] + I | 0, o[7] = o[7] + N | 0;
-  }), o.map((l) => (l >>> 0).toString(16).padStart(8, "0")).join("");
+    o[0] = o[0] + p | 0, o[1] = o[1] + D | 0, o[2] = o[2] + L | 0, o[3] = o[3] + P | 0, o[4] = o[4] + w | 0, o[5] = o[5] + U | 0, o[6] = o[6] + k | 0, o[7] = o[7] + Q | 0;
+  }), o.map((u) => (u >>> 0).toString(16).padStart(8, "0")).join("");
 }
-var v, O, B, L, _, tt;
-class ot {
+var b, T, j, $, et, nt;
+class ut {
   constructor() {
-    u(this, L);
+    l(this, $);
     c(this, "name", "Audio Feature");
     c(this, "enabled", !0);
-    u(this, v, null);
-    u(this, O, null);
-    u(this, B, 5e3);
+    l(this, b, null);
+    l(this, T, null);
+    l(this, j, 5e3);
   }
   // TODO: 不同裝置各瀏覽器測試結果目前都一樣，需要進行更多的測試
   async support() {
     const t = window.OfflineAudioContext || window.webkitOfflineAudioContext;
-    return t ? (f(this, v, new t(1, a(this, B), 44100)), a(this, v) !== null) : !1;
+    return t ? (h(this, b, new t(1, n(this, j), 44100)), n(this, b) !== null) : !1;
   }
   async data() {
-    if (a(this, v) === null) return null;
-    const t = await U(this, L, _).call(this, a(this, v));
-    return t === null ? null : (f(this, O, t.toString()), {
-      fingerprint: await y(a(this, O)),
+    if (n(this, b) === null) return null;
+    const t = await B(this, $, et).call(this, n(this, b));
+    return t === null ? null : (h(this, T, t.toString()), {
+      fingerprint: await g(n(this, T)),
       info: {
         audio: t
       }
     });
   }
 }
-v = new WeakMap(), O = new WeakMap(), B = new WeakMap(), L = new WeakSet(), _ = function(t) {
+b = new WeakMap(), T = new WeakMap(), j = new WeakMap(), $ = new WeakSet(), et = function(t) {
   return new Promise((e) => {
     const r = t.createOscillator();
     r.type = "triangle", r.frequency.value = 1e4;
     const i = t.createDynamicsCompressor();
     i.threshold.value = -50, i.knee.value = 40, i.ratio.value = 12, i.attack.value = 0, i.release.value = 0.2, r.connect(i), i.connect(t.destination), r.start(), t.oncomplete = (o) => {
-      const G = o.renderedBuffer.getChannelData(0), V = U(this, L, tt).call(this, G);
-      e(V);
+      const N = o.renderedBuffer.getChannelData(0), I = B(this, $, nt).call(this, N);
+      e(I);
     }, t.startRendering();
   });
-}, tt = function(t) {
+}, nt = function(t) {
   let e = 0;
   for (let r = 0; r < t.length; ++r)
     e += Math.abs(t[r]);
   return e;
 };
-var h, C;
-class lt {
+var f, F;
+class ct {
   constructor() {
     c(this, "name", "Canvas Feature");
     c(this, "enabled", !0);
-    u(this, h, null);
-    u(this, C, null);
+    l(this, f, null);
+    l(this, F, null);
   }
   // TODO: Safari 瀏覽器的 canvas 不同裝置指纹目前會一模一樣，需要進行更多的測試
   // chrome, edge 目前測試不同裝置，會不一樣
   async support() {
-    return document ? (f(this, h, document.createElement("canvas").getContext("2d")), a(this, h) !== null) : !1;
+    return document ? (h(this, f, document.createElement("canvas").getContext("2d")), n(this, f) !== null) : !1;
   }
   async data() {
-    return a(this, h) === null ? null : (a(this, h).textBaseline = "top", a(this, h).font = "14px 'Arial'", a(this, h).textBaseline = "alphabetic", a(this, h).fillStyle = "#f60", a(this, h).fillRect(100, 1, 55, 20), a(this, h).fillStyle = "#069", a(this, h).fillText("Cyber Universe Canvas", 2, 15), a(this, h).fillStyle = "rgba(102, 204, 0, 0.7)", a(this, h).fillText("Cyber Universe Canvas", 4, 17), f(this, C, a(this, h).canvas.toDataURL()), {
-      fingerprint: await y(a(this, C)),
+    return n(this, f) === null ? null : (n(this, f).textBaseline = "top", n(this, f).font = "14px 'Arial'", n(this, f).textBaseline = "alphabetic", n(this, f).fillStyle = "#f60", n(this, f).fillRect(100, 1, 55, 20), n(this, f).fillStyle = "#069", n(this, f).fillText("Cyber Universe Canvas", 2, 15), n(this, f).fillStyle = "rgba(102, 204, 0, 0.7)", n(this, f).fillText("Cyber Universe Canvas", 4, 17), h(this, F, n(this, f).canvas.toDataURL()), {
+      fingerprint: await g(n(this, F)),
       info: {
-        image: a(this, C)
+        image: n(this, F)
       }
     });
   }
 }
-h = new WeakMap(), C = new WeakMap();
-var F, $;
-const k = class k {
+f = new WeakMap(), F = new WeakMap();
+var x, R;
+const G = class G {
   constructor() {
     c(this, "name", "ColorGamut Feature");
     c(this, "enabled", !0);
-    u(this, F, null);
-    u(this, $, null);
+    l(this, x, null);
+    l(this, R, null);
   }
   async support() {
     return !0;
   }
   async data() {
-    for (const t of k.gamutList) {
+    for (const t of G.gamutList) {
       const e = `(color-gamut: ${t})`;
       if (matchMedia(e).matches) {
-        f(this, F, `gamut: ${t}`), f(this, $, t);
+        h(this, x, `gamut: ${t}`), h(this, R, t);
         break;
       }
     }
-    return a(this, F) === null ? null : {
-      fingerprint: await y(a(this, F)),
+    return n(this, x) === null ? null : {
+      fingerprint: await g(n(this, x)),
       info: {
-        colorGamut: a(this, $)
+        colorGamut: n(this, R)
       }
     };
   }
 };
-F = new WeakMap(), $ = new WeakMap(), // ref: https://developer.mozilla.org/en-US/docs/Web/CSS/@media/color-gamut
+x = new WeakMap(), R = new WeakMap(), // ref: https://developer.mozilla.org/en-US/docs/Web/CSS/@media/color-gamut
 // rec2020 > p3 > srgb
-c(k, "gamutList", ["rec2020", "p3", "srgb"]);
-let K = k;
-var A, z, M;
-class ut {
+c(G, "gamutList", ["rec2020", "p3", "srgb"]);
+let W = G;
+var A, z, V;
+class ht {
   constructor() {
     c(this, "name", "Hardware Concurrency Feature");
     c(this, "enabled", !0);
-    u(this, A, null);
-    u(this, z, null);
-    u(this, M, null);
+    l(this, A, null);
+    l(this, z, null);
+    l(this, V, null);
   }
   async support() {
     return !!navigator;
   }
   async data() {
-    return navigator.hardwareConcurrency && (f(this, A, navigator.hardwareConcurrency.toString()), f(this, M, navigator.hardwareConcurrency)), a(this, A) ? (f(this, z, "hardware concurrency: " + a(this, A)), {
-      fingerprint: await y(a(this, z)),
+    return navigator.hardwareConcurrency && (h(this, A, navigator.hardwareConcurrency.toString()), h(this, V, navigator.hardwareConcurrency)), n(this, A) ? (h(this, z, "hardware concurrency: " + n(this, A)), {
+      fingerprint: await g(n(this, z)),
       info: {
-        hardwareConcurrency: a(this, M)
+        hardwareConcurrency: n(this, V)
       }
     }) : null;
   }
 }
-A = new WeakMap(), z = new WeakMap(), M = new WeakMap();
-var S, R;
+A = new WeakMap(), z = new WeakMap(), V = new WeakMap();
+var S, M;
 const H = class H {
   constructor() {
     c(this, "name", "HDR Feature");
     c(this, "enabled", !0);
-    u(this, S, null);
-    u(this, R, null);
+    l(this, S, null);
+    l(this, M, null);
   }
   async support() {
     return !0;
@@ -242,50 +242,75 @@ const H = class H {
     for (const t of H.hdrList) {
       const e = `(dynamic-range: ${t})`;
       if (matchMedia(e).matches) {
-        f(this, S, `dynamic-range: ${t}`), f(this, R, t);
+        h(this, S, `dynamic-range: ${t}`), h(this, M, t);
         break;
       }
     }
-    return a(this, S) === null ? null : {
-      fingerprint: await y(a(this, S)),
+    return n(this, S) === null ? null : {
+      fingerprint: await g(n(this, S)),
       info: {
-        hdr: a(this, R)
+        hdr: n(this, M)
       }
     };
   }
 };
-S = new WeakMap(), R = new WeakMap(), // ref: https://www.w3.org/TR/mediaqueries-5/#dynamic-range
+S = new WeakMap(), M = new WeakMap(), // ref: https://www.w3.org/TR/mediaqueries-5/#dynamic-range
 c(H, "hdrList", ["high", "standard"]);
-let Z = H;
-var b, x;
-class ct {
+let X = H;
+var C, O;
+class ft {
   constructor() {
     c(this, "name", "Languages Feature");
     c(this, "enabled", !0);
-    u(this, b, []);
-    u(this, x, null);
+    l(this, C, []);
+    l(this, O, null);
   }
   async support() {
     return !!navigator;
   }
   async data() {
     var t;
-    return navigator.language && a(this, b).push([navigator.language]), Array.isArray(navigator.languages) && a(this, b).push(navigator.languages), (t = a(this, b)) != null && t.length ? (f(this, x, JSON.stringify(a(this, b))), {
-      fingerprint: await y(a(this, x)),
+    return navigator.language && n(this, C).push([navigator.language]), Array.isArray(navigator.languages) && n(this, C).push(navigator.languages), (t = n(this, C)) != null && t.length ? (h(this, O, JSON.stringify(n(this, C))), {
+      fingerprint: await g(n(this, O)),
       info: {
-        languages: a(this, x)
+        languages: n(this, O)
       }
     }) : null;
   }
 }
-b = new WeakMap(), x = new WeakMap();
-var m, j, et;
-class ht {
+C = new WeakMap(), O = new WeakMap();
+var y, E;
+class dt {
   constructor() {
-    u(this, j);
+    c(this, "name", "Screen resolution Feature");
+    c(this, "enabled", !0);
+    l(this, y, null);
+    l(this, E, null);
+  }
+  async support() {
+    if (!(window.OfflineAudioContext || window.webkitOfflineAudioContext)) return !1;
+    const e = window.screen;
+    return e ? (h(this, y, e), n(this, y) !== null) : !1;
+  }
+  async data() {
+    if (n(this, y) === null) return null;
+    const t = `${n(this, y).width} x ${n(this, y).height}`;
+    return h(this, E, t), {
+      fingerprint: await g(n(this, E)),
+      info: {
+        screenResolution: t
+      }
+    };
+  }
+}
+y = new WeakMap(), E = new WeakMap();
+var v, J, at;
+class gt {
+  constructor() {
+    l(this, J);
     c(this, "name", "Timezone Feature");
     c(this, "enabled", !0);
-    u(this, m, null);
+    l(this, v, null);
   }
   async support() {
     return !0;
@@ -293,48 +318,49 @@ class ht {
   async data() {
     if (Intl.DateTimeFormat) {
       const t = new Intl.DateTimeFormat().resolvedOptions().timeZone;
-      f(this, m, t);
+      h(this, v, t);
     } else
-      f(this, m, U(this, j, et).call(this));
-    return a(this, m) === null ? null : {
-      fingerprint: await y(a(this, m)),
+      h(this, v, B(this, J, at).call(this));
+    return n(this, v) === null ? null : {
+      fingerprint: await g(n(this, v)),
       info: {
-        timezone: a(this, m)
+        timezone: n(this, v)
       }
     };
   }
 }
-m = new WeakMap(), j = new WeakSet(), // https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Date/getTimezoneOffset
-et = function() {
+v = new WeakMap(), J = new WeakSet(), // https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Date/getTimezoneOffset
+at = function() {
   const e = -(/* @__PURE__ */ new Date()).getTimezoneOffset(), r = e >= 0 ? "+" : "-", i = Math.floor(Math.abs(e) / 60).toString().padStart(2, "0"), o = (Math.abs(e) % 60).toString().padStart(2, "0");
   return `UTC${r}${i}:${o}`;
 };
-const ft = async (n) => n.enabled ? await n.support() ? await n.data() : (console.log(`Feature ${n.name} is not supported`), null) : (console.log(`Feature ${n.name} is disabled`), null), pt = async () => await dt(), dt = async () => {
-  const n = [
-    new ot(),
-    new lt(),
-    new K(),
-    new Z(),
+const pt = async (a) => a.enabled ? await a.support() ? await a.data() : (console.log(`Feature ${a.name} is not supported`), null) : (console.log(`Feature ${a.name} is disabled`), null), yt = async () => await wt(), wt = async () => {
+  const a = [
     new ut(),
     new ct(),
-    new ht()
+    new W(),
+    new X(),
+    new ht(),
+    new ft(),
+    new dt(),
+    new gt()
   ], t = [], e = {};
-  for (const r of n) {
-    const i = await ft(r);
-    w(e, i, "audio", "audio"), w(e, i, "canvas", "image"), w(e, i, "color gamut", "colorGamut"), w(e, i, "hdr", "hdr"), w(e, i, "hardware concurrency", "hardwareConcurrency"), w(e, i, "languages", "languages"), w(e, i, "timezone", "timezone"), t.push((i == null ? void 0 : i.fingerprint) || "");
+  for (const r of a) {
+    const i = await pt(r);
+    m(e, i, "audio", "audio"), m(e, i, "canvas", "image"), m(e, i, "color gamut", "colorGamut"), m(e, i, "hdr", "hdr"), m(e, i, "hardware concurrency", "hardwareConcurrency"), m(e, i, "languages", "languages"), m(e, i, "screen resolution", "screenResolution"), m(e, i, "timezone", "timezone"), t.push((i == null ? void 0 : i.fingerprint) || "");
   }
   return {
-    id: await y(JSON.stringify(t)),
+    id: await g(JSON.stringify(t)),
     useragent: navigator.userAgent,
     rawData: e
   };
-}, w = (n, t, e, r) => {
+}, m = (a, t, e, r) => {
   var i;
-  (i = t == null ? void 0 : t.info) != null && i[r] && (n[e] = {
+  (i = t == null ? void 0 : t.info) != null && i[r] && (a[e] = {
     hash: t.fingerprint,
     value: t.info[r]
   });
 };
 export {
-  pt as fpPromise
+  yt as fpPromise
 };

@@ -55,7 +55,7 @@ export default class AudioFeature implements Feature {
 			ctx.oncomplete = (event) => {
 				// We have only one channel, so we get it by index
 				const samples = event.renderedBuffer.getChannelData(0);
-				const audioValue = this.#calculateHash(samples);
+				const audioValue = this.#calculateData(samples);
 				resolve(audioValue);
 			};
 
@@ -63,7 +63,7 @@ export default class AudioFeature implements Feature {
 		});
 	}
 
-	#calculateHash(samples: ArrayLike<number>) {
+	#calculateData(samples: ArrayLike<number>) {
 		let hash = 0;
 		for (let i = 0; i < samples.length; ++i) {
 			hash += Math.abs(samples[i]);
