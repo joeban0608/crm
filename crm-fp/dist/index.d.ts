@@ -10,10 +10,12 @@ interface Feature {
     support: () => Promise<boolean>;
     data: () => Promise<Data | null>;
 }
-declare const fpPromise: () => Promise<{
+declare const fpPromise: (serverParams?: {
+    [key: string]: unknown;
+}) => Promise<{
     id: string;
     useragent: string;
-    rawData: RawData;
+    _rawData: RawData;
 }>;
 type RawData = {
     [key: string]: {

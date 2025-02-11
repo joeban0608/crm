@@ -2,11 +2,15 @@
 	import { onMount } from 'svelte';
 	import { fpPromise } from '../../dist/index';
 	import { buildFingerprintStructure, type FileTreeItem } from '$lib/helper';
+	import type { PageData } from './$types';
 
 	let fingerprint = $state<null | { [key: string]: any }>(null);
-
+	let { data }: { data: PageData } = $props();
 	onMount(async () => {
-		fingerprint = await fpPromise();
+		// console.log('clientIp in frontend', data.clientIp);
+		fingerprint = await fpPromise({
+			client_ip: data.clientIp
+		});
 	});
 </script>
 

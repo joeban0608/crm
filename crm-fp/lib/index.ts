@@ -34,8 +34,8 @@ const run = async (feature: Feature): Promise<Data | null> => {
 	return await feature.data();
 };
 
-const fpPromise = async () => {
-	const fpFeatureInfo = await hashFpFeatures();
+const fpPromise = async (serverParams?: { [key: string]: unknown }) => {
+	const fpFeatureInfo = await hashFpFeatures(serverParams);
 	return fpFeatureInfo;
 };
 
@@ -45,7 +45,7 @@ type RawData = {
 		value: string;
 	};
 };
-const hashFpFeatures = async () => {
+const hashFpFeatures = async (serverParams?: { [key: string]: unknown }) => {
 	const features = [
 		new AudioFeature(),
 		new CanvasFeature(),
@@ -57,18 +57,39 @@ const hashFpFeatures = async () => {
 		new TimezoneFeature()
 	];
 	const remixFeatures: string[] = [];
-	const rawData: RawData = {};
-
+	const _rawData: RawData = {};
+	// console.log('serverParams===', serverParams);
 	for (const feature of features) {
 		const featureData = await run(feature);
-		_appendRawData(rawData, featureData as Data, 'audio', 'audio');
-		_appendRawData(rawData, featureData as Data, 'canvas', 'image');
-		_appendRawData(rawData, featureData as Data, 'color gamut', 'colorGamut');
-		_appendRawData(rawData, featureData as Data, 'hdr', 'hdr');
-		_appendRawData(rawData, featureData as Data, 'hardware concurrency', 'hardwareConcurrency');
-		_appendRawData(rawData, featureData as Data, 'languages', 'languages');
-		_appendRawData(rawData, featureData as Data, 'screen resolution', 'screenResolution');
-		_appendRawData(rawData, featureData as Data, 'timezone', 'timezone');
+		await _appendRawData(_rawData, featureData as Data, 'audio', 'audio');
+		await _appendRawData(_rawData, featureData as Data, 'canvas', 'image');
+		await _appendRawData(_rawData, featureData as Data, 'color gamut', 'colorGamut');
+		await _appendRawData(_rawData, featureData as Data, 'hdr', 'hdr');
+		await _appendRawData(
+			_rawData,
+			featureData as Data,
+			'hardware concurrency',
+			'hardwareConcurrency'
+		);
+		await _appendRawData(_rawData, featureData as Data, 'languages', 'languages');
+		await _appendRawData(_rawData, featureData as Data, 'screen resolution', 'screenResolution');
+		await _appendRawData(_rawData, featureData as Data, 'timezone', 'timezone');
+		if (serverParams) {
+			if (serverParams?.client_ip) {
+				await _appendRawData(
+					_rawData,
+					{
+						fingerprint: sha256(serverParams.client_ip as string),
+						info: {
+							client_ip: serverParams.client_ip
+						}
+					},
+					'client ip',
+					'client_ip'
+				);
+				remixFeatures.push(serverParams?.client_ip as string);
+			}
+		}
 
 		remixFeatures.push(featureData?.fingerprint || '');
 	}
@@ -76,13 +97,13 @@ const hashFpFeatures = async () => {
 	return {
 		id: await sha256(JSON.stringify(remixFeatures)),
 		useragent: navigator.userAgent,
-		rawData
+		_rawData
 	};
 };
 
-const _appendRawData = (rawData: RawData, data: Data, dataTitle: string, featureName: string) => {
+const _appendRawData = (_rawData: RawData, data: Data, dataTitle: string, featureName: string) => {
 	if (data?.info?.[featureName]) {
-		rawData[dataTitle] = {
+		_rawData[dataTitle] = {
 			hash: data.fingerprint,
 			value: data.info[featureName] as string
 		};
