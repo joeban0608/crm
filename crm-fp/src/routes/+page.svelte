@@ -7,10 +7,10 @@
 	let fingerprint = $state<null | { [key: string]: any }>(null);
 	let { data }: { data: PageData } = $props();
 	onMount(async () => {
-		// console.log('clientIp in frontend', data.clientIp);
-		fingerprint = await fpPromise({
+		const serverData = {
 			client_ip: data.clientIp
-		});
+		};
+		fingerprint = await fpPromise(serverData);
 	});
 </script>
 

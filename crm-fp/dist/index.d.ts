@@ -15,7 +15,8 @@ declare const fpPromise: (serverParams?: {
 }) => Promise<{
     id: string;
     useragent: string;
-    _rawData: RawData;
+    rawData: RawData;
+    serverData: RawData;
 }>;
 type RawData = {
     [key: string]: {

@@ -58,55 +58,70 @@ const hashFpFeatures = async (serverParams?: { [key: string]: unknown }) => {
 	];
 	const remixFeatures: string[] = [];
 	const _rawData: RawData = {};
-	// console.log('serverParams===', serverParams);
+	const _serverRawData: RawData = {};
+
 	for (const feature of features) {
 		const featureData = await run(feature);
-		await _appendRawData(_rawData, featureData as Data, 'audio', 'audio');
-		await _appendRawData(_rawData, featureData as Data, 'canvas', 'image');
-		await _appendRawData(_rawData, featureData as Data, 'color gamut', 'colorGamut');
-		await _appendRawData(_rawData, featureData as Data, 'hdr', 'hdr');
+		await _appendRawData(featureData as Data, 'audio', 'audio', _rawData);
+		await _appendRawData(featureData as Data, 'canvas', 'image', _rawData);
+		await _appendRawData(featureData as Data, 'color gamut', 'colorGamut', _rawData);
+		await _appendRawData(featureData as Data, 'hdr', 'hdr', _rawData);
 		await _appendRawData(
-			_rawData,
 			featureData as Data,
 			'hardware concurrency',
-			'hardwareConcurrency'
+			'hardwareConcurrency',
+			_rawData
 		);
-		await _appendRawData(_rawData, featureData as Data, 'languages', 'languages');
-		await _appendRawData(_rawData, featureData as Data, 'screen resolution', 'screenResolution');
-		await _appendRawData(_rawData, featureData as Data, 'timezone', 'timezone');
-		if (serverParams) {
-			if (serverParams?.client_ip) {
-				await _appendRawData(
-					_rawData,
-					{
-						fingerprint: sha256(serverParams.client_ip as string),
-						info: {
-							client_ip: serverParams.client_ip
-						}
-					},
-					'client ip',
-					'client_ip'
-				);
-				remixFeatures.push(serverParams?.client_ip as string);
-			}
-		}
+		await _appendRawData(featureData as Data, 'languages', 'languages', _rawData);
+		await _appendRawData(featureData as Data, 'screen resolution', 'screenResolution', _rawData);
+		await _appendRawData(featureData as Data, 'timezone', 'timezone', _rawData);
 
 		remixFeatures.push(featureData?.fingerprint || '');
 	}
 
+	await _appendSystemData(_serverRawData, remixFeatures, serverParams);
+
 	return {
 		id: await sha256(JSON.stringify(remixFeatures)),
 		useragent: navigator.userAgent,
-		_rawData
+		rawData: _rawData,
+		serverData: _serverRawData
 	};
 };
 
-const _appendRawData = (_rawData: RawData, data: Data, dataTitle: string, featureName: string) => {
+const _appendRawData = (data: Data, dataTitle: string, featureName: string, rawData: RawData) => {
 	if (data?.info?.[featureName]) {
-		_rawData[dataTitle] = {
+		rawData[dataTitle] = {
 			hash: data.fingerprint,
 			value: data.info[featureName] as string
 		};
+	}
+};
+
+const _appendSystemData = (
+	rawData: RawData,
+	_remixFeatures: string[],
+	serverData?: { [key: string]: unknown }
+) => {
+	if (!serverData) return;
+	for (const key in serverData) {
+		const featureData = {
+			fingerprint: sha256(serverData[key] as string),
+			info: {
+				[key]: serverData[key]
+			}
+		};
+		const dataTitle = (() => {
+			if (key.includes('_')) {
+				return key.split('_').join(' ');
+			} else if (key.includes('-')) {
+				return key.split('-').join(' ');
+			} else {
+				return key;
+			}
+		})();
+		_appendRawData(featureData, dataTitle, key, rawData);
+		_remixFeatures.push(featureData.fingerprint);
 	}
 };
 
