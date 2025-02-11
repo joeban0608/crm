@@ -5,6 +5,6 @@ export const fingerprint = pgTable('fingerprint', {
 	fp_id: text('fp_id'),
 	useragent: text('useragent'),
 	data: text('data'),
-	server_data: text('server_data'),
+	server_feature: text('server_feature'),
 	createdAt: timestamp('created_at').notNull().defaultNow()
 });
