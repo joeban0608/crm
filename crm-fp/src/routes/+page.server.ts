@@ -1,4 +1,5 @@
-import type { PageServerLoad } from './$types';
+import Fingerprints from '$lib/server/db/tables/fingerprint';
+import type { Actions, PageServerLoad } from './$types';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 // function convertToJSON(obj: Record<string, any>): unknown {
@@ -71,3 +72,42 @@ export const load = (async (route) => {
 
 	return { clientIp };
 }) satisfies PageServerLoad;
+
+export const actions: Actions = {
+	createFp: async (event) => {
+		const formData = await event.request.formData();
+		let data = null;
+		let serverData = null;
+		const admin = {
+			db: {
+				fingerprint: new Fingerprints()
+			}
+		};
+		const id = formData.get('id');
+		const useragent = formData.get('useragent');
+		if (!id) {
+			throw new Error('fingerprintId is required');
+		}
+		if (!useragent) {
+			throw new Error('fingerprintId is required');
+		}
+
+		if (formData.get('data')) {
+			data = formData.get('data') as string;
+		}
+
+		if (formData.get('serverData')) {
+			serverData = formData.get('serverData') as string;
+		}
+		console.log('data', data);
+		console.log('serverData', serverData);
+
+		const res = await admin.db.fingerprint.create(
+			id as string,
+			useragent as string,
+			data,
+			serverData
+		);
+		console.log('res', res);
+	}
+};
