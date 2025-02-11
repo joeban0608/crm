@@ -12,28 +12,22 @@
 			client_ip: data.clientIp
 		};
 		fingerprint = await fpPromise(serverData);
+
 		if (fingerprint) {
+			fetch('/api/fingerprint', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(fingerprint)
+			});
 		}
 		// console.log('fingerprint', fingerprint);
 	});
 </script>
 
 <h1 class="my-4 text-2xl font-bold">Welcome to crm-fp</h1>
-<form method="POST" action="?/createFp">
-	<input class="input" name="id" value={fingerprint?.id || ''} />
-	<input
-		class="input"
-		name="useragent"
-		value={fingerprint?.useragent ? JSON.stringify(fingerprint?.useragent) : ''}
-	/>
-	<input
-		class="input"
-		name="data"
-		value={fingerprint?.rawData ? JSON.stringify(fingerprint?.rawData) : ''}
-	/>
-	<input class="input" name="serverData" value={fingerprint?.serverData || ''} />
-	<button class="btn">Submit</button>
-</form>
+
 {#snippet folder(fileInfo: FileTreeItem)}
 	<li>
 		<details open>
