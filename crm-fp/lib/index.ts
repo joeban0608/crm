@@ -34,8 +34,10 @@ const run = async (feature: Feature): Promise<Data | null> => {
 	return await feature.data();
 };
 
-const fpPromise = async (serverParams?: { [key: string]: unknown }) => {
-	const fpFeatureInfo = await hashFpFeatures(serverParams);
+const fpPromise = async () => {
+	const fpFeatureInfo = await hashFpFeatures();
+	await postCreateFingerprint(fpFeatureInfo);
+
 	return fpFeatureInfo;
 };
 
@@ -45,7 +47,7 @@ type RawData = {
 		value: string;
 	};
 };
-const hashFpFeatures = async (serverParams?: { [key: string]: unknown }) => {
+const hashFpFeatures = async () => {
 	const features = [
 		new AudioFeature(),
 		new CanvasFeature(),
@@ -58,7 +60,7 @@ const hashFpFeatures = async (serverParams?: { [key: string]: unknown }) => {
 	];
 	const remixFeatures: string[] = [];
 	const _rawData: RawData = {};
-	const _serverRawData: RawData = {};
+	const _serverFeature: RawData = {};
 
 	for (const feature of features) {
 		const featureData = await run(feature);
@@ -76,53 +78,75 @@ const hashFpFeatures = async (serverParams?: { [key: string]: unknown }) => {
 		await _appendRawData(featureData as Data, 'screen resolution', 'screenResolution', _rawData);
 		await _appendRawData(featureData as Data, 'timezone', 'timezone', _rawData);
 
-		remixFeatures.push(featureData?.fingerprint || '');
+		if (featureData?.fingerprint) {
+			remixFeatures.push(featureData.fingerprint);
+		}
 	}
 
-	await _appendSystemData(_serverRawData, remixFeatures, serverParams);
+	const serverData = (await getUserRequestInfo()) as
+		| {
+				headers: { [key: string]: unknown };
+				ip: string;
+		  }
+		| undefined;
+	if (serverData) {
+		await _appendServerFeature(_serverFeature, remixFeatures, serverData);
+	}
 
 	return {
 		id: await sha256(JSON.stringify(remixFeatures)),
-		useragent: navigator.userAgent,
+		ip: serverData?.ip || false,
+		useragent: (serverData?.headers['user-agent'] as string) || false,
+		headers: serverData?.headers || false,
 		rawData: _rawData,
-		serverData: _serverRawData
+		serverFeature: _serverFeature
 	};
 };
 
-const _appendRawData = (data: Data, dataTitle: string, featureName: string, rawData: RawData) => {
+function _appendRawData(data: Data, dataTitle: string, featureName: string, rawData: RawData) {
 	if (data?.info?.[featureName]) {
 		rawData[dataTitle] = {
 			hash: data.fingerprint,
 			value: data.info[featureName] as string
 		};
 	}
-};
-
-const _appendSystemData = (
-	rawData: RawData,
-	_remixFeatures: string[],
+}
+async function _appendServerFeature(
+	_serverFeature: RawData,
+	remixFeatures: string[],
 	serverData?: { [key: string]: unknown }
-) => {
-	if (!serverData) return;
-	for (const key in serverData) {
-		const featureData = {
-			fingerprint: sha256(serverData[key] as string),
-			info: {
-				[key]: serverData[key]
-			}
+) {
+	if (serverData?.ip) {
+		const fp = await sha256(serverData.ip as string);
+		_serverFeature['client ip'] = {
+			hash: fp,
+			value: serverData.ip as string
 		};
-		const dataTitle = (() => {
-			if (key.includes('_')) {
-				return key.split('_').join(' ');
-			} else if (key.includes('-')) {
-				return key.split('-').join(' ');
-			} else {
-				return key;
-			}
-		})();
-		_appendRawData(featureData, dataTitle, key, rawData);
-		_remixFeatures.push(featureData.fingerprint);
+		remixFeatures.push(fp);
 	}
-};
+}
+
+async function getUserRequestInfo() {
+	try {
+		const getFpRes = await fetch('http://192.168.0.73:5173/api/fingerprint');
+		const serverDataRes = await getFpRes.json();
+		if (!serverDataRes) {
+			throw new Error('failed to get user request info');
+		}
+		return serverDataRes.serverData;
+	} catch (e) {
+		console.error('failed to get user request info', e);
+	}
+}
+
+async function postCreateFingerprint(fingerprint: { [key: string]: unknown }) {
+	fetch('/api/fingerprint', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(fingerprint)
+	});
+}
 
 export { type Feature, fpPromise };

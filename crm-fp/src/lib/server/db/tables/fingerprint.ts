@@ -11,7 +11,7 @@ export default class Fingerprints extends DatabaseAdmin {
 		fingerprintId: string,
 		useragent: string,
 		data: string | null,
-		serverData: string | null
+		serverFeature: string | null
 	) {
 		return await this.database
 			.insert(Fingerprints._tables.fingerprint)
@@ -20,7 +20,7 @@ export default class Fingerprints extends DatabaseAdmin {
 				fp_id: fingerprintId,
 				useragent: useragent,
 				data,
-				server_data: serverData
+				server_feature: serverFeature
 			})
 			.returning();
 	}

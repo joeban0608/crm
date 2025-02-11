@@ -2,26 +2,22 @@
 	import { onMount } from 'svelte';
 	import { fpPromise } from '../../dist/index';
 	import { buildFingerprintStructure, type FileTreeItem } from '$lib/helper';
-	import type { PageData } from './$types';
 
 	let fingerprint = $state<null | { [key: string]: any }>(null);
-	let { data }: { data: PageData } = $props();
 
 	onMount(async () => {
-		const serverData = {
-			client_ip: data.clientIp
-		};
-		fingerprint = await fpPromise(serverData);
-
-		if (fingerprint) {
-			fetch('/api/fingerprint', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify(fingerprint)
-			});
-		}
+		fingerprint = await fpPromise();
+		console.log('fingerprint', fingerprint);
+		// fetch('/api/fingerprint');
+		// if (fingerprint) {
+		// fetch('/api/fingerprint', {
+		// 	method: 'POST',
+		// 	headers: {
+		// 		'Content-Type': 'application/json'
+		// 	},
+		// 	body: JSON.stringify(fingerprint)
+		// });
+		// }
 		// console.log('fingerprint', fingerprint);
 	});
 </script>
