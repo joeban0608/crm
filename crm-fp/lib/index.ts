@@ -1,3 +1,4 @@
+import { BASE_API_URL } from './constant';
 import AudioFeature from './features/audio';
 import CanvasFeature from './features/canvas';
 import ColorGamutFeature from './features/colorGamut';
@@ -128,7 +129,7 @@ async function _appendServerFeature(
 
 async function getUserRequestInfo() {
 	try {
-		const getFpRes = await fetch('http://192.168.0.73:5173/api/fingerprint');
+		const getFpRes = await fetch(`${BASE_API_URL}/api/fingerprint`);
 		const serverDataRes = await getFpRes.json();
 		if (!serverDataRes) {
 			throw new Error('failed to get user request info');
@@ -140,7 +141,7 @@ async function getUserRequestInfo() {
 }
 
 async function postCreateFingerprint(fingerprint: { [key: string]: unknown }) {
-	fetch('/api/fingerprint', {
+	fetch(`${BASE_API_URL}/api/fingerprint`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'
