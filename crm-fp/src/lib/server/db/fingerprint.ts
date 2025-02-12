@@ -1,4 +1,4 @@
-import { DatabaseAdmin, db } from '..';
+import { DatabaseAdmin, db } from '.';
 
 export default class Fingerprints extends DatabaseAdmin {
 	// fingerprint_id: string;

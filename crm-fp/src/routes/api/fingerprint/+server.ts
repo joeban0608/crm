@@ -1,4 +1,4 @@
-import Fingerprints from '$lib/server/db/tables/fingerprint';
+import Fingerprints from '$lib/server/db/fingerprint';
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 
