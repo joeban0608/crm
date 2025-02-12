@@ -8,6 +8,7 @@ import LanguagesFeature from './features/language';
 import ScreenResolutionFeature from './features/screen';
 import TimezoneFeature from './features/timezone';
 import { sha256 } from './hash';
+import { tracking } from './tracker';
 
 type Data = {
 	fingerprint: string;
@@ -37,9 +38,10 @@ const run = async (feature: Feature): Promise<Data | null> => {
 
 const fpPromise = async () => {
 	const fpFeatureInfo = await hashFpFeatures();
-	await postCreateFingerprint(fpFeatureInfo);
-
-	return fpFeatureInfo;
+	const createVisitorRes = await postCreateFingerprint(fpFeatureInfo);
+	const createVisitorData = await createVisitorRes.json();
+	// console.log('createVisitorRes', createVisitorData);
+	return await createVisitorData.data;
 };
 
 type RawData = {
@@ -141,7 +143,7 @@ async function getUserRequestInfo() {
 }
 
 async function postCreateFingerprint(fingerprint: { [key: string]: unknown }) {
-	fetch(`${BASE_API_URL}/api/fingerprint`, {
+	return fetch(`${BASE_API_URL}/api/fingerprint`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'
@@ -150,4 +152,4 @@ async function postCreateFingerprint(fingerprint: { [key: string]: unknown }) {
 	});
 }
 
-export { type Feature, fpPromise };
+export { type Feature, fpPromise, tracking };

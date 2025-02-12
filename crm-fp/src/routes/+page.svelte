@@ -1,13 +1,28 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { fpPromise } from '../../dist/index';
+	import { fpPromise, tracking } from '../../dist/index';
 	import { buildFingerprintStructure, type FileTreeItem } from '$lib/helper';
 
-	let fingerprint = $state<null | { [key: string]: any }>(null);
+	let visitorInfo = $state<null | { [key: string]: any }>(null);
 
 	onMount(async () => {
-		fingerprint = await fpPromise();
-		console.log('fingerprint', fingerprint);
+		visitorInfo = await fpPromise();
+		if (visitorInfo) {
+			await tracking(visitorInfo);
+		}
+		// fetch('/api/log', {
+		// 	method: 'POST',
+		// 	headers: {
+		// 		'Content-Type': 'application/json'
+		// 	},
+		// 	body: JSON.stringify({
+		// 		visitorId: '1f7d58f9-92e6-4b43-bc94-414c633821a5',
+		// 		eventType: '222',
+		// 		eventTarget: '333',
+		// 		eventData: ['444', '555'],
+		// 		url: 'https://www.google.com'
+		// 	})
+		// });
 		// fetch('/api/fingerprint');
 		// if (fingerprint) {
 		// fetch('/api/fingerprint', {
@@ -92,8 +107,8 @@
 	</li>
 {/snippet}
 
-{#if fingerprint}
-	{@const fingerprintStructure = buildFingerprintStructure(fingerprint)}
+{#if visitorInfo}
+	{@const fingerprintStructure = buildFingerprintStructure(visitorInfo)}
 	<ul class="menu menu-xs bg-base-200 w-full rounded-lg">
 		{#each fingerprintStructure as fileInfo}
 			{#if fileInfo.type === 'folder'}
