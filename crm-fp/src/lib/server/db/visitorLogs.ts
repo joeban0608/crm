@@ -1,26 +1,18 @@
 import { DatabaseAdmin, db } from '.';
-
+export type EventLog = { type: string; createAt: string; details: Event };
 export default class VisitorLogs extends DatabaseAdmin {
 	constructor() {
 		super(db);
 	}
 
-	async createLog(
-		visitorId: string,
-		eventType: string,
-		eventTarget: string,
-		eventData: object,
-		url: string
-	) {
+	async createLog(visitorId: string, eventLogs: EventLog[], url: string, referrer?: string) {
 		await this.database
 			.insert(VisitorLogs._tables.visitorLogs)
 			.values({
 				visitor_id: visitorId,
-				event_type: eventType,
-				event_target: eventTarget,
-				event_data: JSON.stringify(eventData),
+				event_logs: eventLogs,
 				url,
-				timestamp: new Date()
+				referrer: referrer ?? null
 			})
 			.returning();
 	}
