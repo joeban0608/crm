@@ -1,15 +1,15 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { fpPromise, tracking } from '../../dist/index';
+	import { fpPromise } from '../../dist/index';
 	import { buildFingerprintStructure, type FileTreeItem } from '$lib/helper';
 
 	let visitorInfo = $state<null | { [key: string]: any }>(null);
 
 	onMount(async () => {
 		visitorInfo = await fpPromise();
-		if (visitorInfo) {
-			await tracking(visitorInfo);
-		}
+		// if (visitorInfo) {
+		// 	await tracking(visitorInfo);
+		// }
 		// fetch('/api/log', {
 		// 	method: 'POST',
 		// 	headers: {
@@ -36,6 +36,7 @@
 		// console.log('fingerprint', fingerprint);
 	});
 </script>
+
 
 <h1 class="my-4 text-2xl font-bold">Welcome to crm-fp</h1>
 

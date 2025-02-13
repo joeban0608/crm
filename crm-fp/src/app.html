@@ -6,6 +6,15 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		%sveltekit.head%
 		<script src="../dist/index.umd.js"></script>
+		<script defer>
+			(async () => {
+				const visitorInfo = await window.CRMFingerprint.fpPromise();
+				if (visitorInfo) {
+					console.log('start tracking');
+					await window.CRMFingerprint.tracking(visitorInfo);
+				}
+			})();
+		</script>
 	</head>
 	<body data-sveltekit-preload-data="hover">
 		<div style="display: contents">%sveltekit.body%</div>

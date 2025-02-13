@@ -1,15 +1,6 @@
 import { relations } from 'drizzle-orm';
 import { pgTable, text, timestamp, serial, jsonb } from 'drizzle-orm/pg-core';
 
-export const fingerprint = pgTable('fingerprint', {
-	visitor_id: text('id').primaryKey(),
-	fp_id: text('fp_id'),
-	useragent: text('useragent'),
-	data: text('data'),
-	server_feature: text('server_feature'),
-	createdAt: timestamp('created_at').notNull().defaultNow()
-});
-
 export const visitors = pgTable('visitors', {
 	id: text('id').primaryKey(),
 	fingerprint: text('fingerprint'),
@@ -27,8 +18,8 @@ export const visitorLogs = pgTable('visitor_logs', {
 		onDelete: 'cascade'
 	}),
 	event_logs: jsonb('event_logs'),
-	url: text('url'),
-	referrer: text('referrer'),
+	// url: text('url'),
+	// referrer: text('referrer'),
 	timestamp: timestamp('timestamp').notNull().defaultNow()
 });
 
