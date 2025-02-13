@@ -10,7 +10,7 @@ export default class Visitors extends DatabaseAdmin {
 		fingerprintId: string,
 		ipAddress: string,
 		useragent: string,
-		data: string | null,
+		browserFeature: string | null,
 		serverFeature: string | null
 	) {
 		return await this.database
@@ -20,7 +20,7 @@ export default class Visitors extends DatabaseAdmin {
 				ip_address: ipAddress,
 				fingerprint: fingerprintId,
 				user_agent: useragent,
-				data,
+				browser_feature: browserFeature,
 				server_feature: serverFeature
 			})
 			.returning();

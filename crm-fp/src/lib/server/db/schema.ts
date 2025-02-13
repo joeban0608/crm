@@ -15,7 +15,7 @@ export const visitors = pgTable('visitors', {
 	fingerprint: text('fingerprint'),
 	ip_address: text('ip_address'),
 	user_agent: text('user_agent'),
-	data: jsonb('data'),
+	browser_feature: jsonb('browser_feature'),
 	server_feature: jsonb('server_feature'),
 	created_at: timestamp('created_at').notNull().defaultNow(),
 	updated_at: timestamp('updated_at').notNull().defaultNow()
