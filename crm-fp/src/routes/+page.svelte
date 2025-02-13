@@ -1,42 +1,16 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import { fpPromise } from '../../dist/index';
 	import { buildFingerprintStructure, type FileTreeItem } from '$lib/helper';
-
+	import { fpPromise, tracking } from '../../dist/index';
 	let visitorInfo = $state<null | { [key: string]: any }>(null);
 
+	import { onMount } from 'svelte';
 	onMount(async () => {
 		visitorInfo = await fpPromise();
-		// if (visitorInfo) {
-		// 	await tracking(visitorInfo);
-		// }
-		// fetch('/api/log', {
-		// 	method: 'POST',
-		// 	headers: {
-		// 		'Content-Type': 'application/json'
-		// 	},
-		// 	body: JSON.stringify({
-		// 		visitorId: '1f7d58f9-92e6-4b43-bc94-414c633821a5',
-		// 		eventType: '222',
-		// 		eventTarget: '333',
-		// 		eventData: ['444', '555'],
-		// 		url: 'https://www.google.com'
-		// 	})
-		// });
-		// fetch('/api/fingerprint');
-		// if (fingerprint) {
-		// fetch('/api/fingerprint', {
-		// 	method: 'POST',
-		// 	headers: {
-		// 		'Content-Type': 'application/json'
-		// 	},
-		// 	body: JSON.stringify(fingerprint)
-		// });
-		// }
-		// console.log('fingerprint', fingerprint);
+		if (visitorInfo) {
+			await tracking(visitorInfo);
+		}
 	});
 </script>
-
 
 <h1 class="my-4 text-2xl font-bold">Welcome to crm-fp</h1>
 
