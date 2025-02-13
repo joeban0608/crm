@@ -26,10 +26,9 @@ export const visitorLogs = pgTable('visitor_logs', {
 	visitor_id: text('visitor_id').references(() => visitors.id, {
 		onDelete: 'cascade'
 	}),
-	event_type: text('event_type'),
-	event_target: text('event_target'),
-	event_data: jsonb('event_data'),
+	event_logs: jsonb('event_logs'),
 	url: text('url'),
+	referrer: text('referrer'),
 	timestamp: timestamp('timestamp').notNull().defaultNow()
 });
 

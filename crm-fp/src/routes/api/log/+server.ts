@@ -1,6 +1,6 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import VisitorLogs from '$lib/server/db/visitorLogs';
+import VisitorLogs, { type EventLog } from '$lib/server/db/visitorLogs';
 import Visitors from '$lib/server/db/visitor';
 
 export const GET: RequestHandler = async () => {
@@ -10,10 +10,9 @@ export const GET: RequestHandler = async () => {
 
 export const POST: RequestHandler = async (event) => {
 	const logData = await event.request.json();
-	const { visitorId, eventType, eventTarget, eventData, url } = logData;
+	const { visitorId, eventLogs, url, referrer } = logData;
 
 	if (!visitorId) return json({ error: 'visitorId is required' }, { status: 400 });
-	if (!eventType) return json({ error: 'eventType is required' }, { status: 400 });
 
 	const admin = {
 		db: {
@@ -27,10 +26,9 @@ export const POST: RequestHandler = async (event) => {
 
 	const createLogRes = await admin.db.visitorLogs.createLog(
 		visitorData.id,
-		eventType,
-		eventTarget,
-		eventData,
-		url
+		eventLogs as EventLog[],
+		url,
+		referrer
 	);
 	return json({ message: 'Event logged', data: createLogRes }, { status: 201 });
 };
