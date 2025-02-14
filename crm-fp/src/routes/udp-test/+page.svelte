@@ -1,16 +1,20 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-
+	import pako from 'pako';
 	let { data }: { data: PageData } = $props();
 	let message = $state(0);
 	let udpData: null | { message?: unknown; error?: unknown } = $state(null);
+	function compressMessage(message: unknown) {
+		const compressed = pako.deflate(JSON.stringify(message));
+		return compressed;
+	}
 	async function sendMessage() {
 		const response = await fetch('/api/udp', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify({ message })
+			body: JSON.stringify({ message: compressMessage(message) })
 		});
 
 		const data = await response.json();

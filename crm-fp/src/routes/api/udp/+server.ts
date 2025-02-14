@@ -1,6 +1,7 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import dgram from 'dgram';
+import pako from 'pako';
 
 const UDP_HOST = 'localhost';
 const UDP_PORT = 41234;
@@ -34,7 +35,8 @@ export const POST: RequestHandler = async (event) => {
 	if (!body.message) {
 		return json({ error: 'message is required' }, { status: 400 });
 	}
-	const message = Buffer.from(body.message.toString());
+	const restoredMsg = JSON.parse(pako.inflate(body.message, { to: 'string' }));
+	const bufferMsg = Buffer.from(restoredMsg.toString());
 	const udpClient = dgram.createSocket('udp4'); // 使用臨時端口
 
 	// 設置超時機制，確保客戶端在一定時間後自動關閉
@@ -48,20 +50,19 @@ export const POST: RequestHandler = async (event) => {
 	// 包裝在 Promise 中
 	const sendUdpMessage = () =>
 		new Promise((resolve, reject) => {
-			udpClient.send(message, UDP_PORT, UDP_HOST, (err) => {
+			udpClient.send(bufferMsg, UDP_PORT, UDP_HOST, (err) => {
 				if (err) {
 					console.error('UDP 傳輸錯誤:', err);
 					reject('udp transport error');
 				} else {
-					const sum = parseInt(body.message) + store;
+					const sum = parseInt(restoredMsg) + store;
 					store = sum;
-					console.log('store', store);
 					if (sum >= TARGET_NUMBER) {
 						console.log('已達到目標數字，結束 UDP 傳輸');
 						flag = false;
 						udpClient.close();
 					}
-					console.log('收到訊息:', body.message);
+					console.log('收到訊息:', restoredMsg);
 					resolve('訊息已發送, 目前總和: ' + sum);
 				}
 
