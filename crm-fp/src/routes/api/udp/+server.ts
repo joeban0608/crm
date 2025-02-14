@@ -2,7 +2,6 @@ import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import dgram from 'dgram';
 
-const udpClient = dgram.createSocket('udp4');
 const udpServer = dgram.createSocket('udp4');
 const UDP_HOST = 'localhost';
 const UDP_PORT = 41234;
@@ -25,6 +24,7 @@ export const POST: RequestHandler = async (event) => {
 	// 包裝在 Promise 中
 	const sendUdpMessage = () =>
 		new Promise((resolve, reject) => {
+			const udpClient = dgram.createSocket('udp4');
 			udpClient.send(message, UDP_PORT, UDP_HOST, (err) => {
 				if (err) {
 					console.error('UDP 傳輸錯誤:', err);
