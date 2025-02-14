@@ -2,8 +2,13 @@
 	import type { PageData } from './$types';
 	import { page } from '$app/state';
 	let { data }: { data: PageData } = $props();
-	$effect(() => {
-		console.log('page', page.params.slug);
+	import { fpPromise, tracking } from '../../../../dist/index';
+	import { onMount } from 'svelte';
+	onMount(async () => {
+		const visitorInfo = await fpPromise();
+		if (visitorInfo) {
+			await tracking(visitorInfo);
+		}
 	});
 </script>
 
