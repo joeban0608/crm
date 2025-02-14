@@ -3,7 +3,7 @@
 
 	let { data }: { data: PageData } = $props();
 	let message = $state(0);
-	let udpData: null | { message: unknown } = $state(null);
+	let udpData: null | { message?: unknown; error?: unknown } = $state(null);
 	async function sendMessage() {
 		const response = await fetch('/api/udp', {
 			method: 'POST',
@@ -15,7 +15,7 @@
 
 		const data = await response.json();
 		udpData = data as { message: unknown };
-		console.log('訊息已發送:', data);
+		console.log('訊息已發送:', udpData);
 	}
 </script>
 
@@ -32,5 +32,7 @@
 	<div class="divider"></div>
 	{#if udpData?.message}
 		<p>{udpData.message}</p>
+	{:else if udpData?.error}
+		<p class="text-error">{JSON.stringify(udpData.error)}</p>
 	{/if}
 </main>
