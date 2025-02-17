@@ -1,5 +1,10 @@
-import { BASE_API_URL } from './constant';
-
+declare global {
+	interface Window {
+		pako: {
+			deflate: (input: string) => Uint8Array;
+		};
+	}
+}
 type EventLog = {
 	type: string;
 	createAt: string;
@@ -9,6 +14,42 @@ type EventLog = {
 let startTime: number; // 記錄進入時間
 const eventLogs: EventLog[] = []; // 追蹤事件的陣列
 
+const ws = new WebSocket('ws://localhost:8080');
+ws.onopen = () => {
+	console.log('WebSocket 連線建立');
+};
+
+ws.onmessage = (event) => {
+	console.log('後端回應:', event.data);
+};
+
+ws.onerror = (error) => {
+	console.error('❌ WebSocket 錯誤:', error);
+};
+
+ws.onclose = () => {
+	console.log('❌ WebSocket 連線已關閉');
+};
+function compressMessage(message: unknown) {
+	if (window.pako) {
+		const compressed = window.pako.deflate(JSON.stringify(message));
+		return compressed;
+	} else {
+		throw new Error('pako is not defined');
+	}
+}
+
+async function sendMessage(message: { [key: string]: unknown }) {
+	if (ws && ws.readyState === WebSocket.OPEN) {
+		ws.send(JSON.stringify({ message: compressMessage(message) }));
+		console.log('📤 訊息已發送:', message);
+	} else if (!message) {
+		console.error('❌ 訊息發送失敗: ' + message);
+	} else {
+		console.error('❌ WebSocket 尚未連線');
+	}
+}
+
 export async function tracking(visitorInfo: { [key: string]: unknown }) {
 	const visitorId = visitorInfo.id as string;
 	if (!visitorId) throw new Error('visitorId is required when tracking');
@@ -16,7 +57,7 @@ export async function tracking(visitorInfo: { [key: string]: unknown }) {
 	// 當頁面載入時，紀錄開始時間
 	startTime = Date.now();
 	console.log('sendPageView init');
-	sendPageView(visitorId, 'init');
+	sendPageView(visitorId, 'init' );
 
 	// 監聽用戶離開頁面時，發送停留時間
 	window.addEventListener('beforeunload', () => {
@@ -54,31 +95,32 @@ function sendPageView(visitorId: string, pageViewType: string) {
 		createAt: new Date().toISOString(),
 		details: {
 			url: window.location.href,
-			referrer: document.referrer,
+			// referrer: document.referrer,
 			duration: duration,
 			viewType: pageViewType
 		}
 	});
 
 	// 發送並清空 eventLogs
-	sendLogs({ visitorId, eventLogs });
+	// postSendLogs({ visitorId, eventLogs });
+	sendMessage({ visitorId, eventLogs });
 	eventLogs.length = 0; // **清除陣列，避免累積**
 	startTime = Date.now();
 }
 
-async function sendLogs(eventData: { visitorId: string; eventLogs: EventLog[] }) {
-	try {
-		await fetch(`${BASE_API_URL}/api/log`, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify(eventData)
-		});
-	} catch (error) {
-		console.error('Error sending logs:', error);
-	}
-}
+// async function postSendLogs(eventData: { visitorId: string; eventLogs: EventLog[] }) {
+// 	try {
+// 		await fetch(`${BASE_API_URL}/api/log`, {
+// 			method: 'POST',
+// 			headers: {
+// 				'Content-Type': 'application/json'
+// 			},
+// 			body: JSON.stringify(eventData)
+// 		});
+// 	} catch (error) {
+// 		console.error('Error sending logs:', error);
+// 	}
+// }
 
 // function addAllEvents(eventLogs: EventLog[], visitorId: string) {
 // 	// 找出所有的事件類型
