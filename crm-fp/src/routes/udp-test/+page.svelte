@@ -53,7 +53,7 @@
 	// }
 	async function sendMessage() {
 		if (ws && ws.readyState === WebSocket.OPEN) {
-			ws.send(JSON.stringify(compressMessage({ message })));
+			ws.send(JSON.stringify({ message: compressMessage(message) }));
 			console.log('📤 訊息已發送:', message);
 		} else if (!message) {
 			console.error('❌ 訊息發送失敗: ' + message);

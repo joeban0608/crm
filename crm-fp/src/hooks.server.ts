@@ -30,17 +30,15 @@ wss.on('connection', (ws) => {
 	console.log('✅ WebSocket 連線成功');
 	ws.send(JSON.stringify({ message: 'WebSocket 連線成功' }));
 
-	ws.on('message', async (message) => {
-		// 確保 message 是 Buffer
-		const bufferData = Buffer.isBuffer(message)
-			? message
-			: Buffer.from(new Uint8Array(message instanceof ArrayBuffer ? message : new ArrayBuffer(0)));
+	ws.on('message', async (msg: ArrayBuffer) => {
+		const bufferData = Buffer.from(new Uint8Array(msg));
+		const data = JSON.parse(bufferData.toString()) as { message: pako.Data };
 
-		let restoredMsg: { message: unknown } | null = null;
+		let restoredMsg: string | null = null;
 		try {
 			// 嘗試解壓縮
 			try {
-				restoredMsg = JSON.parse(pako.inflate(JSON.parse(bufferData.toString()), { to: 'string' })); // 直接解析 JSON
+				restoredMsg = JSON.parse(pako.inflate(data.message, { to: 'string' })); // 直接解析 JSON
 			} catch {
 				console.error('decompressed error');
 			}
@@ -59,7 +57,7 @@ wss.on('connection', (ws) => {
 					console.error('UDP 傳輸錯誤:', err);
 					ws.send(JSON.stringify({ error: 'UDP 傳輸錯誤' }));
 				} else {
-					const sum = parseInt(restoredMsg?.message as string) + store;
+					const sum = parseInt(restoredMsg as string) + store;
 					store = sum;
 					ws.send(JSON.stringify({ message: `訊息已發送, 目前總和: ${sum}` }));
 
