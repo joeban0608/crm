@@ -35,6 +35,7 @@ export const POST: RequestHandler = async (event) => {
 	if (!body.message) {
 		return json({ error: 'message is required' }, { status: 400 });
 	}
+	console.log('body.message', body.message);
 	const restoredMsg = JSON.parse(pako.inflate(body.message, { to: 'string' }));
 	const bufferMsg = Buffer.from(restoredMsg.toString());
 	const udpClient = dgram.createSocket('udp4'); // 使用臨時端口
