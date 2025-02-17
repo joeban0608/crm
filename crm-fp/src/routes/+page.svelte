@@ -5,10 +5,10 @@
 
 	import { onMount } from 'svelte';
 	onMount(async () => {
-		visitorInfo = await fpPromise();
-		if (visitorInfo) {
-			await tracking(visitorInfo);
-		}
+		// visitorInfo = await fpPromise();
+		// if (visitorInfo) {
+		// 	await tracking(visitorInfo);
+		// }
 	});
 </script>
 
