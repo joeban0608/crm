@@ -1,3 +1,5 @@
+import { BASE_API_URL } from './constant';
+
 declare global {
 	interface Window {
 		pako: {
@@ -14,39 +16,12 @@ type EventLog = {
 let startTime: number; // 記錄進入時間
 const eventLogs: EventLog[] = []; // 追蹤事件的陣列
 
-const ws = new WebSocket('ws://localhost:8080');
-ws.onopen = () => {
-	console.log('WebSocket 連線建立');
-};
-
-ws.onmessage = (event) => {
-	console.log('後端回應:', event.data);
-};
-
-ws.onerror = (error) => {
-	console.error('❌ WebSocket 錯誤:', error);
-};
-
-ws.onclose = () => {
-	console.log('❌ WebSocket 連線已關閉');
-};
 function compressMessage(message: unknown) {
 	if (window.pako) {
 		const compressed = window.pako.deflate(JSON.stringify(message));
 		return compressed;
 	} else {
 		throw new Error('pako is not defined');
-	}
-}
-
-async function sendMessage(message: { [key: string]: unknown }) {
-	if (ws && ws.readyState === WebSocket.OPEN) {
-		ws.send(JSON.stringify({ message: compressMessage(message) }));
-		console.log('📤 訊息已發送:', message);
-	} else if (!message) {
-		console.error('❌ 訊息發送失敗: ' + message);
-	} else {
-		console.error('❌ WebSocket 尚未連線');
 	}
 }
 
@@ -57,7 +32,7 @@ export async function tracking(visitorInfo: { [key: string]: unknown }) {
 	// 當頁面載入時，紀錄開始時間
 	startTime = Date.now();
 	console.log('sendPageView init');
-	sendPageView(visitorId, 'init' );
+	sendPageView(visitorId, 'init');
 
 	// 監聽用戶離開頁面時，發送停留時間
 	window.addEventListener('beforeunload', () => {
@@ -103,9 +78,29 @@ function sendPageView(visitorId: string, pageViewType: string) {
 
 	// 發送並清空 eventLogs
 	// postSendLogs({ visitorId, eventLogs });
-	sendMessage({ visitorId, eventLogs });
+	postSendLogToPubsub({ visitorId, eventLogs });
 	eventLogs.length = 0; // **清除陣列，避免累積**
 	startTime = Date.now();
+}
+
+async function postSendLogToPubsub(
+	eventData: { visitorId: string; eventLogs: EventLog[] },
+	topic_name_or_id = 'projects/seo-manager-429705/topics/fp-test'
+) {
+	try {
+		const res = await fetch(`${BASE_API_URL}/api/pubsub/messages`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ topic_name_or_id, message: compressMessage(eventData) })
+		});
+		const getLogRes = await res.json();
+		console.log('getLogRes', getLogRes);
+		return getLogRes;
+	} catch (error) {
+		console.error('Error sending logs:', error);
+	}
 }
 
 // async function postSendLogs(eventData: { visitorId: string; eventLogs: EventLog[] }) {

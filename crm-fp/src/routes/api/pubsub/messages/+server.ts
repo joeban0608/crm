@@ -1,6 +1,7 @@
 import { PubSub } from '@google-cloud/pubsub';
 import type { RequestHandler } from './$types';
 import { json } from '@sveltejs/kit';
+import Pako from 'pako';
 const pubSubClient = new PubSub();
 
 export const GET: RequestHandler = async () => {
@@ -12,6 +13,12 @@ export const POST: RequestHandler = async (event) => {
 	const body = await req.json();
 	const topicNameOrId = body.topic_name_or_id;
 	const message = body.message;
+	let restoredMsg: string | null = null;
+	try {
+		restoredMsg = JSON.parse(Pako.inflate(message, { to: 'string' })); // 直接解析 JSON
+	} catch {
+		console.error('decompressed error');
+	}
 
 	if (!body.topic_name_or_id) {
 		return json({ error: 'topic_name_or_id is required' }, { status: 400 });
@@ -24,7 +31,7 @@ export const POST: RequestHandler = async (event) => {
 	// [END pubsub_publish_with_error_handler]
 	// [END pubsub_quickstart_publisher]
 
-	const mid = await publishMessage(topicNameOrId, JSON.stringify(message)).catch((err) => {
+	const mid = await publishMessage(topicNameOrId, JSON.stringify(restoredMsg)).catch((err) => {
 		console.error(err.message);
 		process.exitCode = 1;
 	});
