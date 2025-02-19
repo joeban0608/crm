@@ -48,6 +48,7 @@
 		"vitest": "^3.0.0"
 	},
 	"dependencies": {
+		"@google-cloud/pubsub": "^4.10.0",
 		"drizzle-orm": "^0.38.4",
 		"pako": "^2.1.0",
 		"path": "^0.12.7",
