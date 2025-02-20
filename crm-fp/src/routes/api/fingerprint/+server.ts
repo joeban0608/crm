@@ -15,7 +15,7 @@ export const GET: RequestHandler = async (event) => {
 };
 
 export async function POST(event) {
-	const ipAddress = event.request.headers.get('x-forwarded-for') || event.getClientAddress();
+	const ipAddress = event?.request?.headers?.get('x-forwarded-for') || event?.getClientAddress();
 	const admin = {
 		db: {
 			visitor: new Visitors()
