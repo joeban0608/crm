@@ -37,6 +37,7 @@ export async function tracking(visitorInfo: { [key: string]: unknown }) {
 	// 監聽用戶離開頁面時，發送停留時間
 	window.addEventListener('beforeunload', () => {
 		console.log('beforeunload'); // 重整或離開頁面觸發，無法 call listener
+		// TODO: safari beforeunload 事件 reload 時會 error
 		sendPageView(visitorId, 'beforeunload');
 	});
 	// window.addEventListener('popstate', () => {
