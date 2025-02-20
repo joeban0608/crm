@@ -20,6 +20,7 @@ export const POST: RequestHandler = async (event) => {
 		console.error('decompressed error');
 	}
 
+	// from bundle js tracker.ts
 	if (!body.topic_name_or_id) {
 		return json({ error: 'topic_name_or_id is required' }, { status: 400 });
 	}
@@ -30,11 +31,13 @@ export const POST: RequestHandler = async (event) => {
 
 	// [END pubsub_publish_with_error_handler]
 	// [END pubsub_quickstart_publisher]
-
+	// have to : gcloud auth application-default login
 	const mid = await publishMessage(topicNameOrId, JSON.stringify(restoredMsg)).catch((err) => {
 		console.error(err.message);
-		process.exitCode = 1;
+		return json({ error: 'publish message failed' }, { status: 500 });
+		// process.exitCode = 1;
 	});
+
 	if (!mid) {
 		return json({ error: 'publish message failed' }, { status: 500 });
 	}
@@ -50,17 +53,14 @@ async function publishMessage(__topicNameOrId: string, __data: string) {
 	const topic = pubSubClient.topic(__topicNameOrId);
 
 	try {
-		const messageId = topic.publishMessage({ data: dataBuffer });
+		const messageId = await topic.publishMessage({ data: dataBuffer });
 		console.log(`Message ${messageId} published.`);
 		return messageId;
 	} catch (error) {
 		if (error instanceof Error) {
-			console.error(`Received error while publishing: ${error.message}`);
+			throw new Error(`Received error while publishing: ${error.message}`);
 		} else {
-			console.error('Received unknown error while publishing');
+			throw new Error('Received unknown error while publishing');
 		}
-		process.exitCode = 1;
 	}
 }
-
-// __publishMessageToPubSub__('projects/seo-manager-429705/topics/fp-test', 'Hello, World!');
