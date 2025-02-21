@@ -13,6 +13,8 @@
 </script>
 
 <h1 class="my-4 text-2xl font-bold">Welcome to crm-fp</h1>
+<button class="btn">click me</button>
+<input type="text" placeholder="Type here" class="input input-bordered w-full max-w-xs" />
 
 {#snippet folder(fileInfo: FileTreeItem)}
 	<li>
