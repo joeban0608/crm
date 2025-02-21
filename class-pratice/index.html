@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>查看 Console 輸出</h1>
+
+    <script type="module">
+      import { User, BankAccount } from "./auth/index.js";
+      const user = new User("小明", 20); // ✅ 你好，我是 小明，今年 20 歲！
+      // 建立 BankAccount 物件
+      const myAccount = new BankAccount(user.name, user.age, 1000);
+
+      myAccount.greet(); // ✅ 繼承自 User： 你好，我是 小華，今年 30 歲！
+      myAccount.deposit(500);
+      myAccount.withdraw(300);
+      console.log(myAccount.getBalance()); // 帳戶餘額：1200 元
+
+      const user2 = new User("Joe", 33); // ✅ 你好，我是 小明，今年 20 歲！
+      const myAccount2 = new BankAccount(user2.name, user2.age, 1000000);
+      myAccount2.greet();
+      myAccount2.deposit(10000);
+      myAccount2.withdraw(5000);
+      console.log(myAccount2.getBalance());
+    </script>
+  </body>
+</html>
