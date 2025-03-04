@@ -21,7 +21,8 @@
 							const fpInfo = await window.CRMFingerprint.collectFingerprint();
 							console.log('fpInfo', fpInfo);
 							try {
-								// const visitorInfo = await window.CRMFingerprint.fpPromise();
+								const visitorInfo = await window.CRMFingerprint.fpPromise();
+								console.log('visitorInfo', visitorInfo);
 								// if (visitorInfo) {
 								// 	console.log('start tracking');
 								// 	await window.CRMFingerprint.tracking(visitorInfo);

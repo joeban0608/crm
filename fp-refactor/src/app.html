@@ -5,8 +5,26 @@
 		<link rel="icon" href="%sveltekit.assets%/favicon.png" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		%sveltekit.head%
+		<script src="../dist/index.umd.js"></script>
 	</head>
 	<body data-sveltekit-preload-data="hover">
 		<div style="display: contents">%sveltekit.body%</div>
+		<script defer>
+			(async () => {
+				const fpInfo = await window.CRMFingerprint.collectFingerprint();
+				console.log('fpInfo', fpInfo);
+				try {
+					const visitorInfo = await window.CRMFingerprint.fpPromise();
+					console.log('visitorInfo', visitorInfo);
+				} catch (error) {
+					console.error('Error fetching fingerprint:', error);
+				}
+
+				// if (visitorInfo) {
+				// 	console.log('start tracking');
+				// 	await window.CRMFingerprint.tracking(visitorInfo);
+				// }
+			})();
+		</script>
 	</body>
 </html>

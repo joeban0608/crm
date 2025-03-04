@@ -1,11 +1,15 @@
 import tailwindcss from '@tailwindcss/vite';
 import { svelteTesting } from '@testing-library/svelte/vite';
 import { sveltekit } from '@sveltejs/kit/vite';
-import { defineConfig } from 'vite';
+import { defineConfig, searchForWorkspaceRoot } from 'vite';
 
 export default defineConfig({
 	plugins: [sveltekit(), tailwindcss()],
-
+	server: {
+		fs: {
+			allow: [searchForWorkspaceRoot(process.cwd()), '/dist/*']
+		}
+	},
 	test: {
 		workspace: [
 			{
