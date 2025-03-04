@@ -8,6 +8,13 @@
       "when": 1739335078161,
       "tag": "0000_init",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1741085524015,
+      "tag": "0001_curved_wild_child",
+      "breakpoints": true
     }
   ]
 }
