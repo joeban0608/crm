@@ -74,7 +74,7 @@ function p(e) {
     2756734187,
     3204031479,
     3329325298
-  ], i = [
+  ], s = [
     1779033703,
     3144134277,
     1013904242,
@@ -95,24 +95,24 @@ function p(e) {
     z.push(r.slice(o, o + 64));
   return z.forEach((o) => {
     const d = new Array(64);
-    for (let s = 0; s < 16; s++)
-      d[s] = o[s * 4] << 24 | o[s * 4 + 1] << 16 | o[s * 4 + 2] << 8 | o[s * 4 + 3];
-    for (let s = 16; s < 64; s++) {
-      const Q = t(d[s - 15], 7) ^ t(d[s - 15], 18) ^ d[s - 15] >>> 3, Z = t(d[s - 2], 17) ^ t(d[s - 2], 19) ^ d[s - 2] >>> 10;
-      d[s] = d[s - 16] + Q + d[s - 7] + Z | 0;
+    for (let i = 0; i < 16; i++)
+      d[i] = o[i * 4] << 24 | o[i * 4 + 1] << 16 | o[i * 4 + 2] << 8 | o[i * 4 + 3];
+    for (let i = 16; i < 64; i++) {
+      const Q = t(d[i - 15], 7) ^ t(d[i - 15], 18) ^ d[i - 15] >>> 3, Z = t(d[i - 2], 17) ^ t(d[i - 2], 19) ^ d[i - 2] >>> 10;
+      d[i] = d[i - 16] + Q + d[i - 7] + Z | 0;
     }
-    let [w, T, R, J, y, B, I, K] = i;
-    for (let s = 0; s < 64; s++) {
-      const Q = t(y, 6) ^ t(y, 11) ^ t(y, 25), Z = y & B ^ ~y & I, Y = K + Q + Z + f[s] + d[s] | 0, rt = t(w, 2) ^ t(w, 13) ^ t(w, 22), it = w & T ^ w & R ^ T & R, st = rt + it | 0;
-      K = I, I = B, B = y, y = J + Y | 0, J = R, R = T, T = w, w = Y + st | 0;
+    let [w, T, R, J, y, B, I, K] = s;
+    for (let i = 0; i < 64; i++) {
+      const Q = t(y, 6) ^ t(y, 11) ^ t(y, 25), Z = y & B ^ ~y & I, Y = K + Q + Z + f[i] + d[i] | 0, rt = t(w, 2) ^ t(w, 13) ^ t(w, 22), st = w & T ^ w & R ^ T & R, it = rt + st | 0;
+      K = I, I = B, B = y, y = J + Y | 0, J = R, R = T, T = w, w = Y + it | 0;
     }
-    i[0] = i[0] + w | 0, i[1] = i[1] + T | 0, i[2] = i[2] + R | 0, i[3] = i[3] + J | 0, i[4] = i[4] + y | 0, i[5] = i[5] + B | 0, i[6] = i[6] + I | 0, i[7] = i[7] + K | 0;
-  }), i.map((o) => (o >>> 0).toString(16).padStart(8, "0")).join("");
+    s[0] = s[0] + w | 0, s[1] = s[1] + T | 0, s[2] = s[2] + R | 0, s[3] = s[3] + J | 0, s[4] = s[4] + y | 0, s[5] = s[5] + B | 0, s[6] = s[6] + I | 0, s[7] = s[7] + K | 0;
+  }), s.map((o) => (o >>> 0).toString(16).padStart(8, "0")).join("");
 }
-const tt = "http://localhost:3000";
+const tt = "http://34.47.190.194";
 async function ut() {
   try {
-    const t = await (await fetch(`${tt}/api/fingerprint`)).json();
+    const t = await (await fetch(`${tt}/api/fp/ussd`)).json();
     if (!t) throw new Error("failed to get user request info");
     return t.serverData;
   } catch (e) {
@@ -155,8 +155,8 @@ b = new WeakMap(), D = new WeakMap(), q = new WeakMap(), L = new WeakSet(), et =
     const r = t.createOscillator();
     r.type = "triangle", r.frequency.value = 1e4;
     const f = t.createDynamicsCompressor();
-    f.threshold.value = -50, f.knee.value = 40, f.ratio.value = 12, f.attack.value = 0, f.release.value = 0.2, r.connect(f), f.connect(t.destination), r.start(), t.oncomplete = (i) => {
-      const g = i.renderedBuffer.getChannelData(0), F = k(this, L, nt).call(this, g);
+    f.threshold.value = -50, f.knee.value = 40, f.ratio.value = 12, f.attack.value = 0, f.release.value = 0.2, r.connect(f), f.connect(t.destination), r.start(), t.oncomplete = (s) => {
+      const g = s.renderedBuffer.getChannelData(0), F = k(this, L, nt).call(this, g);
       a(F);
     }, t.startRendering();
   });
@@ -334,8 +334,8 @@ class wt {
 }
 v = new WeakMap(), H = new WeakSet(), // https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Date/getTimezoneOffset
 at = function() {
-  const a = -(/* @__PURE__ */ new Date()).getTimezoneOffset(), r = a >= 0 ? "+" : "-", f = Math.floor(Math.abs(a) / 60).toString().padStart(2, "0"), i = (Math.abs(a) % 60).toString().padStart(2, "0");
-  return `UTC${r}${f}:${i}`;
+  const a = -(/* @__PURE__ */ new Date()).getTimezoneOffset(), r = a >= 0 ? "+" : "-", f = Math.floor(Math.abs(a) / 60).toString().padStart(2, "0"), s = (Math.abs(a) % 60).toString().padStart(2, "0");
+  return `UTC${r}${f}:${s}`;
 };
 const yt = [
   new ht(),
@@ -353,10 +353,10 @@ async function mt(e) {
 async function vt() {
   var f;
   const e = [], t = {}, a = {};
-  for (const i of yt) {
-    const g = await mt(i);
+  for (const s of yt) {
+    const g = await mt(s);
     if (!g) continue;
-    const F = i.name.replace(/\s/g, "").replace(/Feature$/, "").replace(/^[A-Z]/, (z) => z.toLowerCase());
+    const F = s.name.replace(/\s/g, "").replace(/Feature$/, "").replace(/^[A-Z]/, (z) => z.toLowerCase());
     t[F] = {
       hash: g.fingerprint,
       value: g.value
@@ -364,8 +364,8 @@ async function vt() {
   }
   const r = await ut();
   if (r != null && r.ip) {
-    const i = await p(r.ip);
-    a.client_ip = { hash: i, value: r.ip }, e.push(i);
+    const s = await p(r.ip);
+    a.client_ip = { hash: s, value: r.ip }, e.push(s);
   }
   return {
     id: await p(JSON.stringify(e)),

@@ -1,10 +1,11 @@
 // import { EventLog } from "./tracker";
 
-const BASE_API_URL = 'http://localhost:3000';
+import { BASE_API_URL } from './constant';
 
 export async function getUserRequestInfo() {
 	try {
-		const res = await fetch(`${BASE_API_URL}/api/fingerprint`);
+		// ussd: user server side data
+		const res = await fetch(`${BASE_API_URL}/api/fp/ussd`);
 		const data = await res.json();
 		if (!data) throw new Error('failed to get user request info');
 		return data.serverData;

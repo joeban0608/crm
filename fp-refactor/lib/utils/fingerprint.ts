@@ -30,6 +30,7 @@ export async function collectFingerprint() {
 
 	// 2️⃣ 收集 Server 端資訊
 	const serverData = await getUserRequestInfo();
+	// console.log('serverData', serverData);
 	if (serverData?.ip) {
 		const ipHash = await sha256(serverData.ip);
 		serverFeature['client_ip'] = { hash: ipHash, value: serverData.ip };
