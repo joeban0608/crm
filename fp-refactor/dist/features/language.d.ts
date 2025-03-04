@@ -6,8 +6,6 @@ export default class LanguagesFeature implements Feature {
     support(): Promise<boolean>;
     data(): Promise<{
         fingerprint: string;
-        info: {
-            languages: string;
-        };
+        value: string;
     } | null>;
 }

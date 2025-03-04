@@ -25,9 +25,7 @@ export default class LanguagesFeature implements Feature {
 
 		return {
 			fingerprint: await sha256(this.#data),
-			info: {
-				languages: this.#data
-			}
+			value: this.#data
 		};
 	}
 }

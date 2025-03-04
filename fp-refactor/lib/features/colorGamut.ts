@@ -5,7 +5,7 @@ export default class ColorGamutFeature implements Feature {
 	// ref: https://developer.mozilla.org/en-US/docs/Web/CSS/@media/color-gamut
 	// rec2020 > p3 > srgb
 	static gamutList = ['rec2020', 'p3', 'srgb'];
-	name = 'ColorGamut Feature';
+	name = 'Color Gamut Feature';
 	enabled = true;
 	#data: string | null = null;
 	#displayValue: string | null = null;
@@ -29,9 +29,7 @@ export default class ColorGamutFeature implements Feature {
 
 		return {
 			fingerprint: await sha256(this.#data),
-			info: {
-				colorGamut: this.#displayValue
-			}
+			value: this.#displayValue
 		};
 	}
 }

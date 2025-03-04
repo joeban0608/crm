@@ -13,10 +13,10 @@ export interface Feature {
     support: () => Promise<boolean>;
     data: () => Promise<{
         fingerprint: string;
-        info?: Record<string, unknown>;
+        value?: unknown;
     } | null>;
 }
 export declare function runFeature(feature: Feature): Promise<{
     fingerprint: string;
-    info?: Record<string, unknown>;
+    value?: unknown;
 } | null>;

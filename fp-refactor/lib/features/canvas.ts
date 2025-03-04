@@ -33,7 +33,7 @@ export default class CanvasFeature implements Feature {
 		this.#data = this.#ctx.canvas.toDataURL();
 		return {
 			fingerprint: await sha256(this.#data),
-			info: {
+			value: {
 				image: this.#data
 			}
 		};

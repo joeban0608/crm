@@ -1,13 +1,13 @@
-var st = Object.defineProperty;
+var lt = Object.defineProperty;
 var _ = (e) => {
   throw TypeError(e);
 };
-var ot = (e, t, a) => t in e ? st(e, t, { enumerable: !0, configurable: !0, writable: !0, value: a }) : e[t] = a;
+var ot = (e, t, a) => t in e ? lt(e, t, { enumerable: !0, configurable: !0, writable: !0, value: a }) : e[t] = a;
 var u = (e, t, a) => ot(e, typeof t != "symbol" ? t + "" : t, a), G = (e, t, a) => t.has(e) || _("Cannot " + a);
-var n = (e, t, a) => (G(e, t, "read from private field"), a ? a.call(e) : t.get(e)), o = (e, t, a) => t.has(e) ? _("Cannot add the same private member more than once") : t instanceof WeakSet ? t.add(e) : t.set(e, a), c = (e, t, a, r) => (G(e, t, "write to private field"), r ? r.call(e, a) : t.set(e, a), a), k = (e, t, a) => (G(e, t, "access private method"), a);
-function g(e) {
-  function t(l, d) {
-    return l >>> d | l << 32 - d;
+var n = (e, t, a) => (G(e, t, "read from private field"), a ? a.call(e) : t.get(e)), l = (e, t, a) => t.has(e) ? _("Cannot add the same private member more than once") : t instanceof WeakSet ? t.add(e) : t.set(e, a), c = (e, t, a, r) => (G(e, t, "write to private field"), r ? r.call(e, a) : t.set(e, a), a), k = (e, t, a) => (G(e, t, "access private method"), a);
+function p(e) {
+  function t(o, d) {
+    return o >>> d | o << 32 - d;
   }
   const a = new TextEncoder().encode(e), r = Array.from(a), f = [
     1116352408,
@@ -83,91 +83,96 @@ function g(e) {
     2600822924,
     528734635,
     1541459225
-  ], p = r.length * 8;
+  ], g = r.length * 8;
   for (r.push(128); (r.length * 8 + 64) % 512 !== 0; )
     r.push(0);
-  const S = new Array(8).fill(0);
-  for (let l = 0; l < 8; l++)
-    S[7 - l] = p >>> l * 8 & 255;
-  r.push(...S);
-  const X = [];
-  for (let l = 0; l < r.length; l += 64)
-    X.push(r.slice(l, l + 64));
-  return X.forEach((l) => {
+  const F = new Array(8).fill(0);
+  for (let o = 0; o < 8; o++)
+    F[7 - o] = g >>> o * 8 & 255;
+  r.push(...F);
+  const z = [];
+  for (let o = 0; o < r.length; o += 64)
+    z.push(r.slice(o, o + 64));
+  return z.forEach((o) => {
     const d = new Array(64);
     for (let s = 0; s < 16; s++)
-      d[s] = l[s * 4] << 24 | l[s * 4 + 1] << 16 | l[s * 4 + 2] << 8 | l[s * 4 + 3];
+      d[s] = o[s * 4] << 24 | o[s * 4 + 1] << 16 | o[s * 4 + 2] << 8 | o[s * 4 + 3];
     for (let s = 16; s < 64; s++) {
-      const P = t(d[s - 15], 7) ^ t(d[s - 15], 18) ^ d[s - 15] >>> 3, Q = t(d[s - 2], 17) ^ t(d[s - 2], 19) ^ d[s - 2] >>> 10;
-      d[s] = d[s - 16] + P + d[s - 7] + Q | 0;
+      const Q = t(d[s - 15], 7) ^ t(d[s - 15], 18) ^ d[s - 15] >>> 3, Z = t(d[s - 2], 17) ^ t(d[s - 2], 19) ^ d[s - 2] >>> 10;
+      d[s] = d[s - 16] + Q + d[s - 7] + Z | 0;
     }
-    let [w, T, R, J, y, D, I, K] = i;
+    let [w, T, R, J, y, B, I, K] = i;
     for (let s = 0; s < 64; s++) {
-      const P = t(y, 6) ^ t(y, 11) ^ t(y, 25), Q = y & D ^ ~y & I, Y = K + P + Q + f[s] + d[s] | 0, at = t(w, 2) ^ t(w, 13) ^ t(w, 22), rt = w & T ^ w & R ^ T & R, it = at + rt | 0;
-      K = I, I = D, D = y, y = J + Y | 0, J = R, R = T, T = w, w = Y + it | 0;
+      const Q = t(y, 6) ^ t(y, 11) ^ t(y, 25), Z = y & B ^ ~y & I, Y = K + Q + Z + f[s] + d[s] | 0, rt = t(w, 2) ^ t(w, 13) ^ t(w, 22), it = w & T ^ w & R ^ T & R, st = rt + it | 0;
+      K = I, I = B, B = y, y = J + Y | 0, J = R, R = T, T = w, w = Y + st | 0;
     }
-    i[0] = i[0] + w | 0, i[1] = i[1] + T | 0, i[2] = i[2] + R | 0, i[3] = i[3] + J | 0, i[4] = i[4] + y | 0, i[5] = i[5] + D | 0, i[6] = i[6] + I | 0, i[7] = i[7] + K | 0;
-  }), i.map((l) => (l >>> 0).toString(16).padStart(8, "0")).join("");
+    i[0] = i[0] + w | 0, i[1] = i[1] + T | 0, i[2] = i[2] + R | 0, i[3] = i[3] + J | 0, i[4] = i[4] + y | 0, i[5] = i[5] + B | 0, i[6] = i[6] + I | 0, i[7] = i[7] + K | 0;
+  }), i.map((o) => (o >>> 0).toString(16).padStart(8, "0")).join("");
 }
-const lt = "http://localhost:3000";
+const tt = "http://localhost:3000";
 async function ut() {
   try {
-    const t = await (await fetch(`${lt}/api/fingerprint`)).json();
+    const t = await (await fetch(`${tt}/api/fingerprint`)).json();
     if (!t) throw new Error("failed to get user request info");
     return t.serverData;
   } catch (e) {
     console.error("failed to get user request info", e);
   }
 }
-var C, E, q, $, tt, et;
-class ct {
+async function ct(e) {
+  return fetch(`${tt}/api/fingerprint`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(e)
+  });
+}
+var b, D, q, L, et, nt;
+class ht {
   constructor() {
-    o(this, $);
+    l(this, L);
     u(this, "name", "Audio Feature");
     u(this, "enabled", !0);
-    o(this, C, null);
-    o(this, E, null);
-    o(this, q, 5e3);
+    l(this, b, null);
+    l(this, D, null);
+    l(this, q, 5e3);
   }
   // TODO: 不同裝置各瀏覽器測試結果目前都一樣，需要進行更多的測試
   async support() {
     const t = window.OfflineAudioContext || window.webkitOfflineAudioContext;
-    return t ? (c(this, C, new t(1, n(this, q), 44100)), n(this, C) !== null) : !1;
+    return t ? (c(this, b, new t(1, n(this, q), 44100)), n(this, b) !== null) : !1;
   }
   async data() {
-    if (n(this, C) === null) return null;
-    const t = await k(this, $, tt).call(this, n(this, C));
-    return t === null ? null : (c(this, E, t.toString()), {
-      fingerprint: await g(n(this, E)),
-      info: {
-        audio: t
-      }
+    if (n(this, b) === null) return null;
+    const t = await k(this, L, et).call(this, n(this, b));
+    return t === null ? null : (c(this, D, t.toString()), {
+      fingerprint: await p(n(this, D)),
+      value: t
     });
   }
 }
-C = new WeakMap(), E = new WeakMap(), q = new WeakMap(), $ = new WeakSet(), tt = function(t) {
+b = new WeakMap(), D = new WeakMap(), q = new WeakMap(), L = new WeakSet(), et = function(t) {
   return new Promise((a) => {
     const r = t.createOscillator();
     r.type = "triangle", r.frequency.value = 1e4;
     const f = t.createDynamicsCompressor();
     f.threshold.value = -50, f.knee.value = 40, f.ratio.value = 12, f.attack.value = 0, f.release.value = 0.2, r.connect(f), f.connect(t.destination), r.start(), t.oncomplete = (i) => {
-      const p = i.renderedBuffer.getChannelData(0), S = k(this, $, et).call(this, p);
-      a(S);
+      const g = i.renderedBuffer.getChannelData(0), F = k(this, L, nt).call(this, g);
+      a(F);
     }, t.startRendering();
   });
-}, et = function(t) {
+}, nt = function(t) {
   let a = 0;
   for (let r = 0; r < t.length; ++r)
     a += Math.abs(t[r]);
   return a;
 };
-var h, x;
-class ht {
+var h, S;
+class ft {
   constructor() {
     u(this, "name", "Canvas Feature");
     u(this, "enabled", !0);
-    o(this, h, null);
-    o(this, x, null);
+    l(this, h, null);
+    l(this, S, null);
   }
   // TODO: Safari 瀏覽器的 canvas 不同裝置指纹目前會一模一樣，需要進行更多的測試
   // chrome, edge 目前測試不同裝置，會不一樣
@@ -175,22 +180,22 @@ class ht {
     return document ? (c(this, h, document.createElement("canvas").getContext("2d")), n(this, h) !== null) : !1;
   }
   async data() {
-    return n(this, h) === null ? null : (n(this, h).textBaseline = "top", n(this, h).font = "14px 'Arial'", n(this, h).textBaseline = "alphabetic", n(this, h).fillStyle = "#f60", n(this, h).fillRect(100, 1, 55, 20), n(this, h).fillStyle = "#069", n(this, h).fillText("Cyber Universe Canvas", 2, 15), n(this, h).fillStyle = "rgba(102, 204, 0, 0.7)", n(this, h).fillText("Cyber Universe Canvas", 4, 17), c(this, x, n(this, h).canvas.toDataURL()), {
-      fingerprint: await g(n(this, x)),
-      info: {
-        image: n(this, x)
+    return n(this, h) === null ? null : (n(this, h).textBaseline = "top", n(this, h).font = "14px 'Arial'", n(this, h).textBaseline = "alphabetic", n(this, h).fillStyle = "#f60", n(this, h).fillRect(100, 1, 55, 20), n(this, h).fillStyle = "#069", n(this, h).fillText("Cyber Universe Canvas", 2, 15), n(this, h).fillStyle = "rgba(102, 204, 0, 0.7)", n(this, h).fillText("Cyber Universe Canvas", 4, 17), c(this, S, n(this, h).canvas.toDataURL()), {
+      fingerprint: await p(n(this, S)),
+      value: {
+        image: n(this, S)
       }
     });
   }
 }
-h = new WeakMap(), x = new WeakMap();
-var A, U;
+h = new WeakMap(), S = new WeakMap();
+var A, E;
 const N = class N {
   constructor() {
-    u(this, "name", "ColorGamut Feature");
+    u(this, "name", "Color Gamut Feature");
     u(this, "enabled", !0);
-    o(this, A, null);
-    o(this, U, null);
+    l(this, A, null);
+    l(this, E, null);
   }
   async support() {
     return !0;
@@ -199,103 +204,95 @@ const N = class N {
     for (const t of N.gamutList) {
       const a = `(color-gamut: ${t})`;
       if (matchMedia(a).matches) {
-        c(this, A, `gamut: ${t}`), c(this, U, t);
+        c(this, A, `gamut: ${t}`), c(this, E, t);
         break;
       }
     }
     return n(this, A) === null ? null : {
-      fingerprint: await g(n(this, A)),
-      info: {
-        colorGamut: n(this, U)
-      }
+      fingerprint: await p(n(this, A)),
+      value: n(this, E)
     };
   }
 };
-A = new WeakMap(), U = new WeakMap(), // ref: https://developer.mozilla.org/en-US/docs/Web/CSS/@media/color-gamut
+A = new WeakMap(), E = new WeakMap(), // ref: https://developer.mozilla.org/en-US/docs/Web/CSS/@media/color-gamut
 // rec2020 > p3 > srgb
 u(N, "gamutList", ["rec2020", "p3", "srgb"]);
-let Z = N;
-var F, V;
-const j = class j {
+let W = N;
+var x, U;
+const P = class P {
   constructor() {
     u(this, "name", "HDR Feature");
     u(this, "enabled", !0);
-    o(this, F, null);
-    o(this, V, null);
+    l(this, x, null);
+    l(this, U, null);
   }
   async support() {
     return !0;
   }
   async data() {
-    for (const t of j.hdrList) {
+    for (const t of P.hdrList) {
       const a = `(dynamic-range: ${t})`;
       if (matchMedia(a).matches) {
-        c(this, F, `dynamic-range: ${t}`), c(this, V, t);
+        c(this, x, `dynamic-range: ${t}`), c(this, U, t);
         break;
       }
     }
-    return n(this, F) === null ? null : {
-      fingerprint: await g(n(this, F)),
-      info: {
-        hdr: n(this, V)
-      }
+    return n(this, x) === null ? null : {
+      fingerprint: await p(n(this, x)),
+      value: n(this, U)
     };
   }
 };
-F = new WeakMap(), V = new WeakMap(), // ref: https://www.w3.org/TR/mediaqueries-5/#dynamic-range
-u(j, "hdrList", ["high", "standard"]);
-let W = j;
-var L, z, M;
-class ft {
+x = new WeakMap(), U = new WeakMap(), // ref: https://www.w3.org/TR/mediaqueries-5/#dynamic-range
+u(P, "hdrList", ["high", "standard"]);
+let X = P;
+var $, V, M;
+class dt {
   constructor() {
     u(this, "name", "Hardware Concurrency Feature");
     u(this, "enabled", !0);
-    o(this, L, null);
-    o(this, z, null);
-    o(this, M, null);
+    l(this, $, null);
+    l(this, V, null);
+    l(this, M, null);
   }
   async support() {
     return !!navigator;
   }
   async data() {
-    return navigator.hardwareConcurrency && (c(this, L, navigator.hardwareConcurrency.toString()), c(this, M, navigator.hardwareConcurrency)), n(this, L) ? (c(this, z, "hardware concurrency: " + n(this, L)), {
-      fingerprint: await g(n(this, z)),
-      info: {
-        hardwareConcurrency: n(this, M)
-      }
+    return navigator.hardwareConcurrency && (c(this, $, navigator.hardwareConcurrency.toString()), c(this, M, navigator.hardwareConcurrency)), n(this, $) ? (c(this, V, "hardware concurrency: " + n(this, $)), {
+      fingerprint: await p(n(this, V)),
+      value: n(this, M)
     }) : null;
   }
 }
-L = new WeakMap(), z = new WeakMap(), M = new WeakMap();
-var v, O;
-class dt {
+$ = new WeakMap(), V = new WeakMap(), M = new WeakMap();
+var C, O;
+class pt {
   constructor() {
     u(this, "name", "Languages Feature");
     u(this, "enabled", !0);
-    o(this, v, []);
-    o(this, O, null);
+    l(this, C, []);
+    l(this, O, null);
   }
   async support() {
     return !!navigator;
   }
   async data() {
     var t;
-    return navigator.language && n(this, v).push([navigator.language]), Array.isArray(navigator.languages) && n(this, v).push(navigator.languages), (t = n(this, v)) != null && t.length ? (c(this, O, JSON.stringify(n(this, v))), {
-      fingerprint: await g(n(this, O)),
-      info: {
-        languages: n(this, O)
-      }
+    return navigator.language && n(this, C).push([navigator.language]), Array.isArray(navigator.languages) && n(this, C).push(navigator.languages), (t = n(this, C)) != null && t.length ? (c(this, O, JSON.stringify(n(this, C))), {
+      fingerprint: await p(n(this, O)),
+      value: n(this, O)
     }) : null;
   }
 }
-v = new WeakMap(), O = new WeakMap();
-var m, B;
+C = new WeakMap(), O = new WeakMap();
+var m, j;
 class gt {
   constructor() {
-    u(this, "name", "Screen resolution Feature");
+    u(this, "name", "Screen Resolution Feature");
     u(this, "enabled", !0);
-    o(this, m, null);
-    o(this, B, null);
+    l(this, m, null);
+    l(this, j, null);
   }
   async support() {
     if (!(window.OfflineAudioContext || window.webkitOfflineAudioContext)) return !1;
@@ -305,22 +302,20 @@ class gt {
   async data() {
     if (n(this, m) === null) return null;
     const t = `${n(this, m).width} x ${n(this, m).height}`;
-    return c(this, B, t), {
-      fingerprint: await g(n(this, B)),
-      info: {
-        screenResolution: t
-      }
+    return c(this, j, t), {
+      fingerprint: await p(n(this, j)),
+      value: t
     };
   }
 }
-m = new WeakMap(), B = new WeakMap();
-var b, H, nt;
-class pt {
+m = new WeakMap(), j = new WeakMap();
+var v, H, at;
+class wt {
   constructor() {
-    o(this, H);
+    l(this, H);
     u(this, "name", "Timezone Feature");
     u(this, "enabled", !0);
-    o(this, b, null);
+    l(this, v, null);
   }
   async support() {
     return !0;
@@ -328,54 +323,52 @@ class pt {
   async data() {
     if (Intl.DateTimeFormat) {
       const t = new Intl.DateTimeFormat().resolvedOptions().timeZone;
-      c(this, b, t);
+      c(this, v, t);
     } else
-      c(this, b, k(this, H, nt).call(this));
-    return n(this, b) === null ? null : {
-      fingerprint: await g(n(this, b)),
-      info: {
-        timezone: n(this, b)
-      }
+      c(this, v, k(this, H, at).call(this));
+    return n(this, v) === null ? null : {
+      fingerprint: await p(n(this, v)),
+      value: n(this, v)
     };
   }
 }
-b = new WeakMap(), H = new WeakSet(), // https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Date/getTimezoneOffset
-nt = function() {
+v = new WeakMap(), H = new WeakSet(), // https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Date/getTimezoneOffset
+at = function() {
   const a = -(/* @__PURE__ */ new Date()).getTimezoneOffset(), r = a >= 0 ? "+" : "-", f = Math.floor(Math.abs(a) / 60).toString().padStart(2, "0"), i = (Math.abs(a) % 60).toString().padStart(2, "0");
   return `UTC${r}${f}:${i}`;
 };
-const wt = [
-  new ct(),
+const yt = [
   new ht(),
-  new Z(),
-  new W(),
   new ft(),
+  new W(),
+  new X(),
   new dt(),
+  new pt(),
   new gt(),
-  new pt()
+  new wt()
 ];
-async function yt(e) {
+async function mt(e) {
   return e.enabled ? await e.support() ? await e.data() : (console.log(`Feature ${e.name} is not supported`), null) : (console.log(`Feature ${e.name} is disabled`), null);
 }
-async function bt() {
+async function vt() {
   var f;
   const e = [], t = {}, a = {};
-  for (const i of wt) {
-    const p = await yt(i);
-    if (!p) continue;
-    const S = i.name.toLowerCase().replace(/\s/g, "");
-    t[S] = {
-      hash: p.fingerprint,
-      value: JSON.stringify(p.info)
-    }, e.push(p.fingerprint);
+  for (const i of yt) {
+    const g = await mt(i);
+    if (!g) continue;
+    const F = i.name.replace(/\s/g, "").replace(/Feature$/, "").replace(/^[A-Z]/, (z) => z.toLowerCase());
+    t[F] = {
+      hash: g.fingerprint,
+      value: g.value
+    }, e.push(g.fingerprint);
   }
   const r = await ut();
   if (r != null && r.ip) {
-    const i = await g(r.ip);
+    const i = await p(r.ip);
     a.client_ip = { hash: i, value: r.ip }, e.push(i);
   }
   return {
-    id: await g(JSON.stringify(e)),
+    id: await p(JSON.stringify(e)),
     ip: (r == null ? void 0 : r.ip) || !1,
     useragent: ((f = r == null ? void 0 : r.headers) == null ? void 0 : f["user-agent"]) ?? !1,
     headers: (r == null ? void 0 : r.headers) ?? !1,
@@ -383,6 +376,11 @@ async function bt() {
     serverFeature: a
   };
 }
+async function Ct() {
+  const e = await vt();
+  return (await (await ct(e)).json()).data;
+}
 export {
-  bt as collectFingerprint
+  vt as collectFingerprint,
+  Ct as fpPromise
 };

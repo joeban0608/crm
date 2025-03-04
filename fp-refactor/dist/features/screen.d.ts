@@ -6,8 +6,6 @@ export default class ScreenResolutionFeature implements Feature {
     support(): Promise<boolean>;
     data(): Promise<{
         fingerprint: string;
-        info: {
-            screenResolution: string;
-        };
+        value: string;
     } | null>;
 }

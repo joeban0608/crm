@@ -18,7 +18,7 @@ export default class HdrFeature implements Feature {
 			const mediaQuery = `(dynamic-range: ${hdr})`;
 			if (matchMedia(mediaQuery).matches) {
 				this.#data = `dynamic-range: ${hdr}`;
-        this.#displayValue = hdr;
+				this.#displayValue = hdr;
 				break;
 			}
 		}
@@ -28,9 +28,7 @@ export default class HdrFeature implements Feature {
 
 		return {
 			fingerprint: await sha256(this.#data),
-			info: {
-				hdr: this.#displayValue
-			}
+			value: this.#displayValue
 		};
 	}
 }

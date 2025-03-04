@@ -7,8 +7,6 @@ export default class HdrFeature implements Feature {
     support(): Promise<boolean>;
     data(): Promise<{
         fingerprint: string;
-        info: {
-            hdr: string | null;
-        };
+        value: string | null;
     } | null>;
 }

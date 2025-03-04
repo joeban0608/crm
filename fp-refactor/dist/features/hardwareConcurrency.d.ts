@@ -6,8 +6,6 @@ export default class HardwareConcurrencyFeature implements Feature {
     support(): Promise<boolean>;
     data(): Promise<{
         fingerprint: string;
-        info: {
-            hardwareConcurrency: number | null;
-        };
+        value: number | null;
     } | null>;
 }

@@ -6,8 +6,6 @@ export default class TimezoneFeature implements Feature {
     support(): Promise<boolean>;
     data(): Promise<{
         fingerprint: string;
-        info: {
-            timezone: string;
-        };
+        value: string;
     } | null>;
 }

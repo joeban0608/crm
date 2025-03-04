@@ -6,7 +6,7 @@ export default class CanvasFeature implements Feature {
     support(): Promise<boolean>;
     data(): Promise<{
         fingerprint: string;
-        info: {
+        value: {
             image: string;
         };
     } | null>;

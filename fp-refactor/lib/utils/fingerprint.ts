@@ -2,7 +2,7 @@ import { sha256 } from '../utils/hash';
 import { getUserRequestInfo } from '../utils/api';
 import { features, runFeature } from '../features/index';
 
-type RawData = Record<string, { hash: string; value: string }>;
+type RawData = Record<string, { hash: string; value: unknown }>;
 
 export async function collectFingerprint() {
 	const remixFeatures: string[] = [];
@@ -15,10 +15,14 @@ export async function collectFingerprint() {
 		if (!featureData) continue;
 
 		// 存儲 feature 指紋
-		const featureKey = feature.name.toLowerCase().replace(/\s/g, '');
+		const featureKey = feature.name
+			.replace(/\s/g, '') // 去掉所有空格
+			.replace(/Feature$/, '') // 去掉結尾的 'Feature'
+			.replace(/^[A-Z]/, (match) => match.toLowerCase()); // 將首字母轉小寫
+
 		rawData[featureKey] = {
 			hash: featureData.fingerprint,
-			value: JSON.stringify(featureData.info)
+			value: featureData.value
 		};
 
 		remixFeatures.push(featureData.fingerprint);

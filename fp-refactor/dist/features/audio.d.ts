@@ -6,8 +6,6 @@ export default class AudioFeature implements Feature {
     support(): Promise<boolean>;
     data(): Promise<{
         fingerprint: string;
-        info: {
-            audio: number;
-        };
+        value: number;
     } | null>;
 }

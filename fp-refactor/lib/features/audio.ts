@@ -29,9 +29,7 @@ export default class AudioFeature implements Feature {
 
 		return {
 			fingerprint: await sha256(this.#data),
-			info: {
-				audio: audioValue
-			}
+			value: audioValue
 		};
 	}
 

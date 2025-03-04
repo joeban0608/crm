@@ -4,7 +4,7 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Document</title>
-		<script src="https://storage.googleapis.com/tt-fp/fp.v1.0.0.umd.js"></script>
+		<script src="https://storage.googleapis.com/tt-fp/fp.v1.0.5.umd.js"></script>
 	</head>
 	<body>
 		<h1>Test fp</h1>
@@ -18,12 +18,19 @@
 				if (window.CRMFingerprint) {
 					try {
 						(async () => {
-							const visitorInfo = await window.CRMFingerprint.collectFingerprint();
-							// if (visitorInfo) {
-							// 	console.log('start tracking');
-							// 	await window.CRMFingerprint.tracking(visitorInfo);
-							// }
-							fpElement.textContent = `Fingerprint: ${visitorInfo.id}`;
+							const fpInfo = await window.CRMFingerprint.collectFingerprint();
+							console.log('fpInfo', fpInfo);
+							try {
+								// const visitorInfo = await window.CRMFingerprint.fpPromise();
+								// if (visitorInfo) {
+								// 	console.log('start tracking');
+								// 	await window.CRMFingerprint.tracking(visitorInfo);
+								// }
+							} catch (error) {
+								console.error('Error get visitorInfo:', error);
+							}
+
+							fpElement.textContent = `Fingerprint: ${fpInfo.id}`;
 						})();
 					} catch (error) {
 						console.error('Error fetching fingerprint:', error);

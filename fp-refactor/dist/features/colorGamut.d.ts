@@ -7,8 +7,6 @@ export default class ColorGamutFeature implements Feature {
     support(): Promise<boolean>;
     data(): Promise<{
         fingerprint: string;
-        info: {
-            colorGamut: string | null;
-        };
+        value: string | null;
     } | null>;
 }

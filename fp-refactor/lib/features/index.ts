@@ -22,7 +22,7 @@ export interface Feature {
 	name: string;
 	enabled: boolean;
 	support: () => Promise<boolean>;
-	data: () => Promise<{ fingerprint: string; info?: Record<string, unknown> } | null>;
+	data: () => Promise<{ fingerprint: string; value?: unknown } | null>;
 }
 
 export async function runFeature(feature: Feature) {

@@ -25,9 +25,7 @@ export default class TimezoneFeature implements Feature {
 
 		return {
 			fingerprint: await sha256(this.#data),
-			info: {
-				timezone: this.#data
-			}
+			value: this.#data
 		};
 	}
 

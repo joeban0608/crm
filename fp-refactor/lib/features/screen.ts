@@ -2,7 +2,7 @@ import type { Feature } from '.';
 import { sha256 } from '../utils/hash';
 
 export default class ScreenResolutionFeature implements Feature {
-	name = 'Screen resolution Feature';
+	name = 'Screen Resolution Feature';
 	enabled = true;
 	#ctx: Screen | null = null;
 	#data: string | null = null;
@@ -23,13 +23,11 @@ export default class ScreenResolutionFeature implements Feature {
 		if (this.#ctx === null) return null;
 
 		const screenValue = `${this.#ctx.width} x ${this.#ctx.height}`;
-		this.#data = screenValue
+		this.#data = screenValue;
 
 		return {
 			fingerprint: await sha256(this.#data),
-			info: {
-				screenResolution: screenValue
-			}
+			value: screenValue
 		};
 	}
 }
